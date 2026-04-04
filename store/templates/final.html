@@ -1,0 +1,100 @@
+<footer class="py-lg-5 py-3">
+    <div class="container-fluid px-lg-5 px-3">
+        <div class="row footer-top">
+            <div class="col-lg-3 footer-grid">
+                <div class="footer-title">
+                    <h3>Sobre Nosotros</h3>
+                </div>
+                <div class="footer-text">
+
+                    <ul class="links">
+                        <li>
+                            <a href="{% url 'nosotros' %}">Nosotros</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'proceso_compra' %}">Proceso de compra de lentes</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'porque_IC' %}">Por qué elegir Optica IC</a>
+                        </li>
+                    </ul>
+
+                    <ul class="footer-social text-left mt-lg-4 mt-3">
+
+                        <li class="mx-2">
+                            <a href="https://www.facebook.com/SoyOpticaIC" target="_blank">
+                                <span class="fab fa-facebook-f"></span>
+                            </a>
+                        </li>
+                        <li class="mx-2">
+                            <a href="#">
+                                <span class="fab fa-twitter"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 footer-grid">
+                <div class="footer-title">
+                    <h3>Contactanos</h3>
+                </div>
+                <div class="contact-info">
+                    <h4>Dirección :</h4>
+                    <p>Jr. Camaná 560 </p>
+                    <div class="Telefono">
+                        <h4>Teléfonos de Contacto :</h4>
+                        <p>Tienda : 01 4004305</p>
+                        <p>Ventas : 952305913</p>
+                        <p>Atencion de reclamos: 914300701</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 footer-grid">
+                <div class="footer-title">
+                    <h3>Enlaces</h3>
+                </div>
+                <ul class="links">
+                    <li>
+                        <a href="{% url 'store' %}">Inicio</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'shop_oftalmicas' '1' %}">Lentes Oftálmicos</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'shop_sol' '2' %}">Lentes de Sol2</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'shop_contacto' '3' %}">Lentes de Contacto</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'servicios' %}">Venta online</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-3 footer-grid">
+                <div class="footer-title">
+                    <h3>Legal</h3>
+                </div>
+                <ul class="links">
+                    <div class="contact-info">
+                        <h4>Términos y condiciones :</h4>
+                    </div>
+                    <li>
+                        <a href="{% url 'legal' %}">Devoluciones y cambios</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'legal' %}">Garantía</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright mt-4">
+            <p class="copy-right text-center ">&copy; 2022 Óptica IC
+            </p>
+        </div>
+    </div>
+</footer>
+
+
+
+

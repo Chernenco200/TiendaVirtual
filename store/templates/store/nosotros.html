@@ -1,0 +1,57 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+
+
+	<!-- breadcrumbs -->
+	<div class="breadcrumb_dress">
+		<div class="container">
+			<ul>
+				<li><a href="{% url 'home' %}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a> <i>/</i></li>
+				<li>Nosotros</li>
+			</ul>
+		</div>
+	</div>
+	<!-- //breadcrumbs --> 
+	<div class="about">
+		<div class="container">	
+			<div class="w3ls_about_grids">
+				<div class="col-md-6 w3ls_about_grid_left">
+                    <h4>QUIÉNES SOMOS</h4>
+					<p style="text-align:justify;">Nuestra empresa nace el 05 de marzo de 2016 como Import Center, una empresa importadora y distribuidora de monturas oftálmicas. Al 01 de noviembre del mismo año, se creó Óptica IC como parte del grupo Import Center, con el objetivo de ofrecer ventas de monturas al por menor a precios de mayorista. 
+                
+                        ImportCenter y Óptica IC, se encuentran ubicados en el Centro de Lima, en el cual  se concentra la mayor cantidad de ópticas a nivel nacional con más de 700 ópticas entre grandes y pequeñas.
+                        
+                        En este mercado se evidencia una feroz competencia la cual se refleja, en la mayoría de casos, en los precios, y en muy pocos casos en la calidad del producto o servicio. Es justamente este último punto el que nos motivó a crear Óptica IC.</p>
+					<div class="col-xs-2 w3ls_about_grid_left1">
+						<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
+					</div>
+					<div class="col-xs-10 w3ls_about_grid_left2">
+                        <h4>OBJETIVOS DE LARGO PLAZO</h4>
+						<p>Ser reconocidos a nivel nacional, constituir una cadena de empresas generando trabajo y bienesta para la sociedad.</p>
+					</div>
+					<div class="clearfix"> </div>
+					<div class="col-xs-2 w3ls_about_grid_left1">
+						<span class="glyphicon glyphicon-flash" aria-hidden="true"></span>
+					</div>
+					<div class="col-xs-10 w3ls_about_grid_left2">
+                        <h4>OBJETIVOS DE CORTO PLAZO</h4>
+						<p>Consolidarnos en el mercado en base a muestra política de precios justos, atención personalizada y cero reclamos.</p>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+
+
+
+				<div class="col-md-6 w3ls_about_grid_left">
+                    <h4>CONOCE NUESTRA TIENDA</h4>
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/d7eNmRme2ew" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <p style="text-align:justify;">Estamos ubicados en: Jr Camaná 560 - Cercado de Lima <a itemprop="url" href="https://goo.gl/maps/cbSJ321wxhUda5Hi8" target="_blank"><b>(Ver ubicación)</b></a></p>
+
+                </div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+
+{% endblock content %}

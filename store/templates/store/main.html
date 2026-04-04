@@ -1,0 +1,350 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Ópticas IC | Home</title>
+<!-- for-mobile-apps -->
+
+<link rel="shortcut icon" href="{% static 'images/LOGO3.png' %}">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Lentes en Centro de Lima, Camaná ic econolentes, econopticas, GMO, tommy hilfiger, nano, guess, Rayban, oackley, 
+	fiorella Conte, lentes niños" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+	function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- //for-mobile-apps -->
+<!-- Custom Theme files -->
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
+<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
+<link href="{% static 'css/fasthover.css' %}" rel="stylesheet" type="text/css" media="all" />
+<link href="{% static 'css/popuo-box.css' %}" rel="stylesheet" type="text/css" media="all" />
+<!-- //Custom Theme files -->
+<!-- font-awesome icons -->
+<link href="{% static 'css/font-awesome.css' %}" rel="stylesheet"> 
+<!-- //font-awesome icons -->
+<!-- js -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/jquery.countdown.css' %}" /> <!-- countdown --> 
+<!-- //js -->  
+<!-- web fonts --> 
+<link href='//fonts.googleapis.com/css?family=Glegoo:400,700' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<!-- //web fonts -->  
+<!-- start-smooth-scrolling -->
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$(".scroll").click(function(event){		
+			event.preventDefault();
+			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+		});
+	});
+</script>
+<!-- //end-smooth-scrolling --> 
+</head> 
+<body>
+	<!-- for bootstrap working -->
+	<script type="text/javascript" src="{% static 'js/bootstrap-3.1.1.min.js' %}"></script>
+	<!-- //for bootstrap working -->
+	<!-- header modal -->
+	<script>
+		$('#myModal88').modal('show');
+	</script>  
+	<!-- header modal -->
+	<!-- header -->
+	<div class="header" id="home1">
+		<div class="container">
+			<div class="w3l_login">
+				<a href="#" data-toggle="modal" data-target="#myModal88"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+			</div>
+			<div class="w3l_logo">
+				<h1><a href="{% url 'home' %}"><img src="{% static 'images/LOGO2.png' %}" width="160" height="70" alt=""></a></h1>
+			</div>
+			<div class="text-center search">
+				<input class="search_box" type="checkbox" id="search_box">
+				<label class="icon-search" for="search_box"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></label>
+				<div class="search_form">
+					<form action="#" method="post">
+						<input type="text" name="Search" placeholder="Search...">
+						<input type="submit" value="Send">
+					</form>
+				</div>
+			</div>
+			<div class="cart cart box_1"> 
+				<form action="#" method="p2017ost" class="last"> 
+					<input type="hidden" name="cmd" value="_cart" />
+					<input type="hidden" name="display" value="1" />
+					<button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
+				</form>   
+			</div>  
+		</div>
+	</div>
+	<!-- //header -->
+	<!-- navigation -->
+	<div class="navigation">
+		<div class="container">
+			<nav class="navbar navbar-default">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header nav_2">
+					<button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div> 
+				<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+					<ul class="nav navbar-nav">
+						<li><a href="{% url 'home' %}" class="act">Home</a></li>	
+						<!-- Mega Menu -->
+						<li class="dropdown">
+							<a href="{% url 'lentes_oftalmicos' %}" class="dropdown-toggle" data-toggle="dropdown">Lentes Oftálmicas<b class="caret"></b></a>
+							<ul class="dropdown-menu multi-column columns-3">
+								<div class="row">
+									<div class="col-sm-2">
+										<ul class="multi-column-dropdown">
+											<h6>Categorias</h6>
+											<li><a href="{% url 'lentes_categoria' 'Hombre' %}">Hombre</a></li>
+											<li><a href="{% url 'lentes_categoria' 'Mujer' %}">Mujer</a></li> 
+											<li><a href="{% url 'lentes_categoria' 'Nino' %}">Niños</a></li>
+											<li><a href="{% url 'lentes_oftalmicos' %}">Ver Todo</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-2">
+										<ul class="multi-column-dropdown">
+											<h6>Marcas</h6>
+											<li><a href="{% url 'lentes_marca' 'Ray-Ban' %}">Ray-Ban</a></li>
+											<li><a href="{% url 'lentes_marca' 'Oakley' %}">OaKley</a></li>
+											<li><a href="{% url 'lentes_marca' 'Nike' %}">Nike<span>New</span></a></li>
+											<li><a href="{% url 'lentes_marca' 'Guess' %}">Guess</a></li>
+											<li><a href="{% url 'lentes_marca' 'Tommy-Hilfiger' %}">Tommy Hilfiger</a></li>
+											<li><a href="{% url 'lentes_marca' 'Arnette' %}">Arnette<span>New</span></a></li>
+											<li><a href="{% url 'lentes_marca' 'Nano' %}">NANO <span>New</span></a></li>
+											
+											<li><a href="{% url 'lentes_oftalmicos' %}">Ver Todo</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-2">
+										<ul class="multi-column-dropdown">
+											<h6>Talla</h6>
+											<li><a href="{% url 'lentes_talla' 'Grande' %}">Grande</a></li>
+											<li><a href="{% url 'lentes_talla' 'Mediana' %}">Mediana</a></li>
+											<li><a href="{% url 'lentes_talla' 'Chica' %}">Chica</a></li>
+											<li><a href="{% url 'lentes_oftalmicos' %}">Ver Todo</a></li>
+										</ul>
+									</div>
+
+									<div class="col-sm-2">
+										<ul class="multi-column-dropdown">
+											<h6>Forma</h6>
+											<li><a href="{% url 'lentes_forma' 'Agatado' %}">Agatado</a></li>
+											<li><a href="{% url 'lentes_forma' 'Almendra' %}">Almendra</a></li>
+											<li><a href="{% url 'lentes_forma' 'Piloto' %}">Piloto</a></li>
+											<li><a href="{% url 'lentes_forma' 'Cuadrado' %}">Cuadro</a></li>
+											<li><a href="{% url 'lentes_forma' 'Redondo' %}">Redondo</a></li>
+											<li><a href="{% url 'lentes_forma' 'Exagonal' %}">Exagonal</a></li>
+											<li><a href="{% url 'lentes_forma' 'Otros' %}">Otros</a></li>
+											<li><a href="{% url 'lentes_oftalmicos' %}">Ver Todo</a></li>
+										</ul>
+									</div>
+
+
+
+									<div class="col-sm-4">
+										<div class="w3ls_products_pos">
+											<h4>30%<i>Off/-</i></h4>
+											<img src="{% static 'images/1.jpg' %}" alt=" " class="img-responsive" />
+										</div>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="{% url 'lentes_de_sol' %}" class="dropdown-toggle" data-toggle="dropdown">Lentes de sol<b class="caret"></b></a>
+							<ul class="dropdown-menu multi-column columns-3">
+								<div class="row">
+									<div class="col-sm-3">
+										<ul class="multi-column-dropdown">
+											<h6>Categorias</h6>
+											<li><a href="{% url 'gafas_genero' 'Hombre' %}">Hombre</a></li>
+											<li><a href="{% url 'gafas_genero' 'Mujer' %}" >Mujer</a></li> 
+											<li><a href="{% url 'gafas_genero' 'Nino' %}">Niño</a></li>
+											<li><a href="{% url 'lentes_de_sol' %}">Ver Todo<span>New</span></a></li>
+										</ul>
+									</div>
+									<div class="col-sm-3">
+										<ul class="multi-column-dropdown">
+											<h6>Marcas</h6>
+											<li><a href="{% url 'gafas_marca' 'Ray-Ban' %}">Ray-Ban</a></li>
+											<li><a href="{% url 'gafas_marca' 'Oakley' %}">Oakley</a></li>
+											<li><a href="{% url 'gafas_marca' 'Arnette' %}">Arnette</a></li>
+											<li><a href="{% url 'gafas_marca' 'Nano' %}">Nano</a></li>
+											<li><a href="{% url 'gafas_marca' 'Razza' %}">Razza</a></li>
+											<li><a href="{% url 'lentes_de_sol' %}">Ver Todo<span>New</span></a></li>
+
+										</ul>
+									</div>
+									<div class="col-sm-2">
+										<ul class="multi-column-dropdown">
+											<h6>Talla</h6>
+                            				<li><a href="{% url 'gafas_talla' 'Grande' %}">Grande</a></li>
+											<li><a href="{% url 'gafas_talla' 'Mediana' %}">Mediana</a></li>
+											<li><a href="{% url 'gafas_talla' 'Chica' %}">Chica</a></li>
+											<li><a href="{% url 'lentes_de_sol' %}">Ver Todo</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-4">
+										<div class="w3ls_products_pos">
+											<h4>30%<i>Off/-</i></h4>
+											<img src="{% static 'images/1.jpg' %}" alt=" " class="img-responsive" />
+										</div>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="{% url 'lentes_de_contacto' %}" class="dropdown-toggle" data-toggle="dropdown">Lentes de Concato<b class="caret"></b></a>
+							<ul class="dropdown-menu multi-column columns-3">
+								<div class="row">
+									<div class="col-sm-3">
+										<ul class="multi-column-dropdown">
+											<h6>Uso</h6>
+											<li><a href="{% url 'lentes_uso_contacto' 'Diario' %}">Diario</a></li>
+											<li><a href="{% url 'lentes_uso_contacto' 'Mensual' %}">Mensual <span>New</span></a></li> 
+											<li><a href="{% url 'lentes_uso_contacto' 'Anual' %}">Anual</a></li>
+											<li><a href="{% url 'lentes_uso_contacto' 'Cosmetico' %}">Cosmético</a></li>
+											<li><a href="{% url 'lentes_de_contacto' %}">Ver Todo<span>New</span></a></li>
+										</ul>
+									</div>
+									<div class="col-sm-3">
+										<ul class="multi-column-dropdown">
+											<h6>Marcas</h6>
+											<li><a href="{% url 'lentes_marca_contacto' 'Acuvue' %}">Acuvue</a></li>
+											<li><a href="{% url 'lentes_marca_contacto' 'Air-Optix' %}">Air Optix</a></li>
+											<li><a href="{% url 'lentes_marca_contacto' 'Dailies-Aqua' %}">Dailies Aqua <span>New</span></a></li>
+											<li><a href="{% url 'lentes_marca_contacto' 'Freshlook' %}">Freshlook</a></li>
+											<li><a href="{% url 'lentes_marca_contacto' 'Licryl' %}">Licryl</a></li>
+											<li><a href="{% url 'lentes_marca_contacto' 'Soflens' %}">Soflens <span>New</span></a></li>
+											<li><a href="{% url 'lentes_marca_contacto' 'Purevision' %}">Purevision <span>New</span></a></li>
+											<li><a href="{% url 'lentes_de_contacto' %}">Ver Todas<span>New</span></a></li>
+										</ul>
+									</div>
+									<div class="col-sm-2">
+										<ul class="multi-column-dropdown">
+											<h6>Condición</h6>
+											<li><a href="{% url 'lentes_condicion_contacto' 'Miopia-e-Hipermetropia' %}">Miopia e Hipermetropia</a></li>
+											<li><a href="{% url 'lentes_condicion_contacto' 'Astigmatismo' %}">Astigmatismo</a></li>
+											<li><a href="{% url 'lentes_condicion_contacto' 'Presbicia' %}">Presbicia</a></li>
+											<li><a href="{% url 'lentes_de_contacto' %}">Ver Todas</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-4">
+										<div class="w3ls_products_pos">
+											<h4>30%<i>Off/-</i></h4>
+											<img src="{% static 'images/1.jpg' %}" alt=" " class="img-responsive" />
+										</div>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<!-- //navigation -->
+
+	{% block content %}
+	{% endblock content %}
+
+
+	<!-- footer -->
+	<div class="footer">
+		<div class="container">
+			<div class="w3_footer_grids">
+				<div class="col-md-3 w3_footer_grid">
+					<h3>Contacto</h3>
+					<p>Los horarios de atención son:<De Lunes a Sabado de 09:00 A 19:30. </p>
+					<p>Domingos y Feriados de 10:30 A 18:30. </p>
+					<ul class="address">
+						<li><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i>Jr. Camaná 560, <span>Cercado de Lima-Perú.</span></li>
+						<li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a href="mailto:info@example.com">importcenter01@gmail.com</a></li>
+						<li><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i>952305913</li>
+					</ul>
+				</div>
+				<div class="col-md-3 w3_footer_grid">
+					<h3>Información</h3>
+					<ul class="info"> 
+						<li><a href="{% url 'nosotros' %}">Nosotros</a></li>
+						<li><a href="{% url 'legal' %}">Legal</a></li>
+						<li><a href="{% url 'legal' %}">Garantías</a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 w3_footer_grid">
+					<h3>Categorías</h3>
+					<ul class="info"> 
+						<li><a href="{% url 'lentes_oftalmicos' %}">Lentes Oftálmicos</a></li>
+						<li><a href="{% url 'lentes_de_sol' %}">Lentes de Sol</a></li>
+						<li><a href="{% url 'lentes_de_contacto' %}">Lentes de Contacto</a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 w3_footer_grid">
+					<h3>Perfil</h3>
+					<ul class="info"> 
+						<li><a href="{% url 'home' %}">Home</a></li>
+						<li><a href="">Today's Deals</a></li>
+					</ul>
+					<h4>Síguenos</h4>
+					<div class="agileits_social_button">
+						<ul>
+							<li><a href="https://www.facebook.com/SoyOpticaIC" target="_blank"> </a></li>
+							
+								
+							</a>
+							<li><a href="#" class="twitter"> </a></li>
+							<li><a href="https://goo.gl/maps/pcW9JhXcpZapwYHT7" target="_blank" class="google"> </a></li>
+							<li><a href="#" class="pinterest"> </a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+		<div class="footer-copy">
+			<div class="footer-copy1">
+				<div class="footer-copy-pos">
+					<a href="#home1" class="scroll"><img src="{% static 'images/arrow.png' %}" alt=" " class="img-responsive" /></a>
+				</div>
+			</div>
+			<div class="container">
+				<p>&copy; 2023 Ópticas IC. Todos los derechos reservados.</p>
+			</div>
+		</div>
+	</div>
+	<!-- //footer --> 
+
+
+   
+	<!-- cart-js -->
+	<script src="{% static 'js/minicart.js' %}"></script>
+	<script>
+        w3ls.render();
+
+        w3ls.cart.on('w3sb_checkout', function (evt) {
+        	var items, len, i;
+
+        	if (this.subtotal() > 0) {
+        		items = this.items();
+
+        		for (i = 0, len = items.length; i < len; i++) { 
+        		}
+        	}
+        });
+    </script>  
+	<!-- //cart-js -->   
+</body>
+</html>

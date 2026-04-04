@@ -1,0 +1,38 @@
+{% load myapp_extras %}
+	<div class="row mt-3 justify-content-center">
+								<nav>
+									<ul class="pagination">
+										{% if products.has_previous %}
+											<li class="page-item">
+												<a class="page-link" href={% my_url 1 'page' request.GET.urlencode %}>Primera</a>	
+											</li>
+											<li class="page-item">
+												<a class="page-link" href={% my_url products.previous_page_number 'page' request.GET.urlencode %}>&laquo;</a>	
+																			
+											</li>
+									
+										{% endif %}
+							
+										{% for pagina in paginas %}	
+											<li class="page-item{% if pagina_actual == pagina %} active{% endif %}">
+												<a class="page-link" href={% my_url pagina 'page' request.GET.urlencode %}>{{pagina}}</a>
+						
+
+											</li>    
+										{% endfor %}
+							
+							
+							
+										{% if products.has_next %}
+											<li class="page-item">
+												<a class="page-link" href={% my_url products.next_page_number 'page' request.GET.urlencode %}">&raquo;</a>	
+											</li>
+											<li class="page-item">
+												<a class="page-link" href={% my_url products.paginator.num_pages 'page' request.GET.urlencode %}>Última</a>	
+											</li>
+										
+										{% endif %}
+							
+									</ul>
+								</nav>
+							</div>

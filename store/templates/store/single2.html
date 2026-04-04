@@ -1,0 +1,302 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% load myapp_extras %}
+
+{% block content %}
+
+<div class="single product-single-page">
+    <div class="container">
+        <div class="row product-single-wrap">
+
+            <!-- MITAD IZQUIERDA -->
+            <div class="col-md-6 single-left product-gallery-col">
+                <div class="flexslider product-flexslider">
+                    <ul class="slides">
+                        {% if product.imagenF %}
+                        <li data-thumb="{{ product.imagenF.url }}">
+                            <div class="thumb-image">
+                                <img src="{{ product.imagenF.url }}" data-imagezoom="true" class="img-responsive" alt="{{ product.descripcion }}">
+                            </div>
+                        </li>
+                        {% endif %}
+
+                        {% if product.imagenD %}
+                        <li data-thumb="{{ product.imagenD.url }}">
+                            <div class="thumb-image">
+                                <img src="{{ product.imagenD.url }}" data-imagezoom="true" class="img-responsive" alt="{{ product.descripcion }}">
+                            </div>
+                        </li>
+                        {% endif %}
+
+                        {% if product.imagenL %}
+                        <li data-thumb="{{ product.imagenL.url }}">
+                            <div class="thumb-image">
+                                <img src="{{ product.imagenL.url }}" data-imagezoom="true" class="img-responsive" alt="{{ product.descripcion }}">
+                            </div>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+            <!-- MITAD DERECHA -->
+            <div class="col-md-6 single-right product-info-col">
+                <h1 class="product-title">{{ product.descripcion }}</h1>
+
+                <div class="rating product-rating">
+					<div class="product-rating">
+						<span class="star filled">★</span>
+						<span class="star filled">★</span>
+						<span class="star filled">★</span>
+						<span class="star filled">★</span>
+						<span class="star">★</span>
+					</div>
+                </div>
+
+                <div class="product-attrs">
+                    <div class="attr-row"><span>Marca:</span><span>{{ product.marca }}</span></div>
+                    <div class="attr-row"><span>Condición:</span><span>{{ product.condicion }}</span></div>
+                    <div class="attr-row"><span>Uso:</span><span>{{ product.uso }}</span></div>
+                </div>
+
+                <div class="simpleCart_shelfItem product-buy-box">
+                    <div class="product-price-box">
+                        <i class="item_price">S/ {{ product.precio_venta }}</i>
+                    </div>
+
+                    <form action="#" method="post" class="product-cart-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="cmd" value="_cart">
+                        <input type="hidden" name="add" value="1">
+                        <input type="hidden" name="w3ls_item" value="{{ product.descripcion }}">
+                        <input type="hidden" name="amount" value="{{ product.precio_venta }}">
+                        <button type="submit" class="w3ls-cart product-cart-btn">Agregar al carrito</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script defer src="{% static 'js/jquery.flexslider.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/flexslider.css' %}" type="text/css" media="screen" />
+<script src="{% static 'js/imagezoom.js' %}"></script>
+
+<script>
+    $(window).load(function() {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            controlNav: "thumbnails"
+        });
+    });
+</script>
+
+<script src="{% static 'js/minicart.js' %}"></script>
+<script>
+    w3ls.render();
+    w3ls.cart.on('w3sb_checkout', function (evt) {
+        var items, len, i;
+        if (this.subtotal() > 0) {
+            items = this.items();
+            for (i = 0, len = items.length; i < len; i++) {}
+        }
+    });
+</script>
+
+<style>
+.product-single-page{
+    padding: 30px 0 50px;
+}
+
+.product-single-wrap{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.star{
+    color:#ccc;
+}
+
+.star.filled{
+    color:#FFB400;
+}
+
+.product-gallery-col,
+.product-info-col{
+    min-height: 1px;
+}
+
+.product-gallery-col{
+    padding-right: 30px;
+}
+
+.product-info-col{
+    padding-left: 30px;
+}
+
+.product-title{
+    font-size: 42px;
+    line-height: 1.2;
+    margin: 0 0 18px;
+    color: #222;
+    font-weight: 600;
+}
+
+.product-rating{
+    font-size:32px;
+    margin:10px 0 20px;
+}
+
+.rating{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 4px;
+}
+
+.rating input{
+    display: none;
+}
+
+.rating label{
+    width: 32px;
+    font-size: 32px;
+    color: #ccc;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.rating label::before{
+    content: "★";
+}
+
+.rating label:hover,
+.rating label:hover ~ label{
+    color: #FFB400;
+}
+
+.rating input:checked ~ label{
+    color: #FFB400;
+}
+
+.product-attrs{
+    border-top: 1px solid #ececec;
+    border-bottom: 1px solid #ececec;
+    padding: 16px 0;
+    margin-bottom: 24px;
+}
+
+.attr-row{
+    display:grid;
+    grid-template-columns:120px auto;
+    padding:6px 0;
+    font-size:17px;
+}
+
+.attr-row span{
+    width:120px;
+    color:#666;
+}
+
+.attr-row strong{
+    color:#222;
+    font-weight:600;
+}
+
+.product-price-box{
+    margin-bottom: 18px;
+}
+
+.product-price-box .item_price{
+    font-size: 44px;
+    font-weight: 700;
+    color: #111;
+    font-style: normal;
+}
+
+.product-cart-btn{
+    min-width: 280px;
+    height: 54px;
+    border-radius: 30px;
+    font-size: 22px;
+    font-weight: 600;
+    background: #2f3c4d;
+    border: none;
+    color: #fff;
+}
+
+.product-cart-btn:hover{
+    background: #1f2b39;
+}
+
+.product-measures{
+    margin-top: 28px;
+    padding: 18px;
+    background: #f8f8f8;
+    border-radius: 14px;
+}
+
+.measure-title{
+    font-size: 30px;
+    margin: 0 0 18px;
+    color: #2f4ae2;
+    font-weight: 700;
+}
+
+.measure-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.measure-item{
+    text-align: center;
+}
+
+.measure-item img{
+    width: 110px;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto 8px;
+}
+
+.measure-item p{
+    margin: 0;
+    font-size: 15px;
+    color: #222;
+}
+
+.product-flexslider .slides img{
+    width: 100%;
+    object-fit: contain;
+}
+
+@media (max-width: 991px){
+    .product-gallery-col,
+    .product-info-col{
+        width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .product-title{
+        font-size: 32px;
+        margin-top: 20px;
+    }
+
+    .measure-grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .product-cart-btn{
+        min-width: 100%;
+    }
+}
+</style>
+
+{% endblock content %}
+
+
+

@@ -1,0 +1,147 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+
+	<!-- banner -->
+	<div class="banner">
+
+	</div>
+	<!-- //banner --> 
+	<!-- banner-bottom -->
+
+	<!-- //banner-bottom --> 
+	<!-- modal-video -->
+
+
+	<!-- //modal-video -->
+
+	<!-- special-deals -->
+	<div class="special-deals">
+		<div class="container">
+			<h2>Categorias</h2>
+			<div class="w3agile_special_deals_grids">
+				<div class="col-md-7 w3agile_special_deals_grid_left">
+					<div class="w3agile_special_deals_grid_left_grid">
+						<img src="{% static 'images/21.jpg' %}" alt=" " class="img-responsive" />
+						<div class="w3agile_special_deals_grid_left_grid_pos1">
+							<h5>+500<span>Monturas</span></h5>
+						</div>
+						<div class="w3agile_special_deals_grid_left_grid_pos">
+							<h4><span><a href="{% url 'lentes_categoria' 'Hombre' %}">Ver PRODUCTOS</a></span></h4>
+						</div>
+					</div>
+					<div class="w3agile_special_deals_grid_left_grid">
+						<img src="{% static 'images/53.jpg' %}" alt=" " class="img-responsive" />
+						<div class="w3agile_special_deals_grid_left_grid_pos1">
+							<h5>+500<span>Monturas</span></h5>
+						</div>
+						<div class="w3agile_special_deals_grid_left_grid_pos">
+							<p></p>
+							<h4> <span><a href="{% url 'lentes_categoria' 'Mujer' %}">Ver PRODUCTOS</a></span></h4>
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5 w3agile_special_deals_grid_right">
+					<img src="{% static 'images/20.jpg' %}" alt=" " class="img-responsive" />
+					<div class="w3agile_special_deals_grid_right_pos">
+						<h4><span></span></h4>
+						<p></p>
+						<h4><span><a href="{% url 'lentes_categoria' 'Nino' %}">Ver PRODUCTOS</a></span></h4>
+					</div>
+					<div class="w3agile_special_deals_grid_left_grid_pos1">
+						<h5>+500<span>Monturas</span></h5>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<!-- //special-deals -->
+
+	<!-- banner-bottom1 -->
+	<!-- //banner-bottom1 --> 
+
+	<!-- new-products -->
+
+	<!-- //new-products -->
+	<!-- top-brands -->
+	<div class="top-brands">
+		<div class="container">
+			<h3>Grandes Marcas</h3>
+			<div class="">
+				<ul id="flexiselDemo1">			
+					<li>
+						<img src="{% static 'images/tb1.jpg' %}" alt="#" class="img-responsive" />
+					</li>
+					<li>
+						<img src="{% static 'images/tb2.jpg' %}" alt=" " class="img-responsive" />
+					</li>
+					<li>
+						<img src="{% static 'images/tb3.jpg' %}" alt=" " class="img-responsive" />
+					</li>
+					<li>
+						<img src="{% static 'images/tb4.jpg' %}" alt=" " class="img-responsive" />
+					</li>
+					<li>
+						<img src="{% static 'images/tb5.jpg' %}" alt=" " class="img-responsive" />
+					</li>
+					<li>
+						<img src="{% static 'images/tb6.jpg' %}" alt=" " class="img-responsive" />
+					</li>
+				</ul>
+			</div>
+			<script type="text/javascript">
+					$(window).load(function() {
+						$("#flexiselDemo1").flexisel({
+							visibleItems: 4,
+							animationSpeed: 1000,
+							autoPlay: true,
+							autoPlaySpeed: 3000,    		
+							pauseOnHover: true,
+							enableResponsiveBreakpoints: true,
+							responsiveBreakpoints: { 
+								portrait: { 
+									changePoint:480,
+									visibleItems: 1
+								}, 
+								landscape: { 
+									changePoint:640,
+									visibleItems:2
+								},
+								tablet: { 
+									changePoint:768,
+									visibleItems: 3
+								}
+							}
+						});
+						
+					});
+			</script>
+			<script type="text/javascript" src="{% static 'js/jquery.flexisel.js' %}"></script>
+		</div>
+	</div>
+	<!-- //top-brands --> 
+	<!-- newsletter -->
+	<div class="newsletter">
+		<div class="container">
+			<div class="col-md-6 w3agile_newsletter_left">
+				<h3>Boletín informativo</h3>
+				<p> Suscríbete y mantente informado de las últimas promociones y tendencias.</p>
+			</div>
+			<div class="col-md-6 w3agile_newsletter_right">
+				<form action="#" method="post">
+					<input type="email" name="Email" placeholder="Email" required="">
+					<input type="submit" value="" />
+				</form>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+	<!-- //newsletter -->
+
+<br>
+<br>
+
+
+{% endblock content %}

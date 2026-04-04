@@ -1,0 +1,325 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+
+{% load myapp_extras %}
+
+<!-- <div class="banner banner1">
+	<div class="container">
+		<h2>Grandes ofertas <span>Lentes oftálmicas</span> Con <i>35% de descuento</i></h2> 
+	</div>
+</div> -->
+	<!-- breadcrumbs -->
+<div class="breadcrumb_dress">
+    <div class="container">
+        <ul>
+        <li>Habla con un asesor al <a href="https://wa.me/51952305913?text=Hola,%20quiero%20comunicarme%20con%20un%20asesor" target="_blank">952305913</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="new-products">
+    <div class="container">
+        <h2>Todas las Lentes Oftálmicas</h2>
+        <div class="small text-muted mb-2">Filtrar por:</div>
+    </div>
+</div>
+  
+<div class="container py-3">
+  <!-- Barra de filtros -->
+  <div class="d-flex flex-wrap gap-2 mb-3">
+	<div class="filtros-barra">
+
+    <!-- Marca -->
+	<div class="dropdown">
+		<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+			Marca <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+        {% for item in marcas_opciones %}
+          <li>
+            <a class="dropdown-item"
+               href="?{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}marca={{ item.valor|urlencode }}">
+              {{ item.valor }} ({{ item.total }})
+            </a>
+          </li>
+        {% empty %}
+          <li><span class="dropdown-item-text text-muted">Sin opciones</span></li>
+        {% endfor %}
+    </ul>
+  </div>
+
+    <!-- Género (internamente categoria) -->
+	<div class="dropdown">
+		<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+			Género <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+        {% for item in categorias_opciones %}
+          <li>
+            <a class="dropdown-item"
+               href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}categoria={{ item.valor|urlencode }}">
+              {{ item.valor }} ({{ item.total }})
+            </a>
+          </li>
+        {% empty %}
+          <li><span class="dropdown-item-text text-muted">Sin opciones</span></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Talla -->
+	<div class="dropdown">
+		<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+			Talla <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+        {% for item in tallas_opciones %}
+          <li>
+            <a class="dropdown-item"
+               href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}talla={{ item.valor|urlencode }}">
+              {{ item.valor }} ({{ item.total }})
+            </a>
+          </li>
+        {% empty %}
+          <li><span class="dropdown-item-text text-muted">Sin opciones</span></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Forma -->
+	<div class="dropdown">
+		<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+			Forma <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+        {% for item in formas_opciones %}
+          <li>
+            <a class="dropdown-item"
+               href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}forma={{ item.valor|urlencode }}">
+              {{ item.valor }} ({{ item.total }})
+            </a>
+          </li>
+        {% empty %}
+          <li><span class="dropdown-item-text text-muted">Sin opciones</span></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Material -->
+	<div class="dropdown">
+		<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+			Material <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+        {% for item in materiales_opciones %}
+          <li>
+            <a class="dropdown-item"
+               href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}material={{ item.valor|urlencode }}">
+              {{ item.valor }} ({{ item.total }})
+            </a>
+          </li>
+        {% empty %}
+          <li><span class="dropdown-item-text text-muted">Sin opciones</span></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Color -->
+	<div class="dropdown">
+		<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+			Color <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+        {% for item in colores_opciones %}
+          <li>
+            <a class="dropdown-item"
+               href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}color={{ item.valor|urlencode }}">
+              {{ item.valor }} ({{ item.total }})
+            </a>
+          </li>
+        {% empty %}
+          <li><span class="dropdown-item-text text-muted">Sin opciones</span></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Precio -->
+	<div class="dropdown">
+		<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+			Precio <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">Desde:
+        {% for item in precios_opciones %}
+          <li>
+            <a class="dropdown-item"
+               href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}precio={{ item.valor|urlencode }}">
+              {{ item.label }} ({{ item.total }})
+            </a>
+          </li>
+        {% empty %}
+          <li><span class="dropdown-item-text text-muted">Sin opciones</span></li>
+        {% endfor %}
+      </ul>
+    </div>
+	</div>
+  </div>
+
+  <!-- Chips de filtros activos -->
+  {% if filtros_activos %}
+    <div class="mb-3">
+      <div class="d-flex flex-wrap gap-2 align-items-center">
+        {% for f in filtros_activos %}
+          {% if f.tipo == 'marca' %}
+            <a href="?{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
+               class="badge rounded-pill text-bg-dark text-decoration-none px-3 py-2">
+              {{ f.label }} ×
+            </a>
+          {% elif f.tipo == 'categoria' %}
+            <a href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
+               class="badge rounded-pill text-bg-dark text-decoration-none px-3 py-2">
+              {{ f.label }} ×
+            </a>
+          {% elif f.tipo == 'talla' %}
+            <a href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
+               class="badge rounded-pill text-bg-dark text-decoration-none px-3 py-2">
+              {{ f.label }} ×
+            </a>
+          {% elif f.tipo == 'forma' %}
+            <a href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
+               class="badge rounded-pill text-bg-dark text-decoration-none px-3 py-2">
+              {{ f.label }} ×
+            </a>
+          {% elif f.tipo == 'material' %}
+            <a href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
+               class="badge rounded-pill text-bg-dark text-decoration-none px-3 py-2">
+              {{ f.label }} ×
+            </a>
+          {% elif f.tipo == 'color' %}
+            <a href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
+               class="badge rounded-pill text-bg-dark text-decoration-none px-3 py-2">
+              {{ f.label }} ×
+            </a>
+          {% elif f.tipo == 'precio' %}
+            <a href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}"
+               class="badge rounded-pill text-bg-dark text-decoration-none px-3 py-2">
+              {{ f.label }} ×
+            </a>
+          {% endif %}
+        {% endfor %}
+
+        <a href="{% url 'lentes_oftalmicos' %}" class="small text-decoration-none">
+          Quitar todos
+        </a>
+      </div>
+    </div>
+  {% endif %}
+
+</div>
+
+
+
+<div class="agileinfo_new_products_grids">
+{% for producto in products %}
+<div class="col-md-3 agileinfo_new_products_grid">
+    <div class="agile_ecommerce_tab_left agileinfo_new_products_grid1">
+        <div>
+            <a href="{{ producto.get_absolute_url }}">
+                {% if producto.imagenF %}
+                    <img src="{{ producto.imagenF.url }}" alt="{{ producto.descripcion }}" class="img-responsive">
+                {% endif %}
+            </a>
+
+            <h4>
+                <a href="{{ producto.get_absolute_url }}">{{ producto.descripcion }}</a>
+            </h4>
+
+            <div class="simpleCart_shelfItem">
+                <p>
+                    <span>S/ {{ producto.precio_venta }}</span>
+                    <i class="item_price">S/ {{ producto.precio_venta }}</i>
+                </p>
+                <form action="#" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="cmd" value="_cart">
+                    <input type="hidden" name="add" value="1">
+                    <input type="hidden" name="w3ls_item" value="{{ producto.descripcion }}">
+                    <input type="hidden" name="amount" value="{{ producto.precio_venta }}">
+                    <button type="submit" class="w3ls-cart">Agregar al carrito</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+				<div class="clearfix"> </div>
+				{% include "Paginacion.html"%}
+			</div>
+		</div>
+	</div>
+
+	<!-- //new-products -->
+		
+
+				
+
+			</div>
+		</div>
+	</div>  
+
+ 
+
+
+
+
+	<!-- //footer -->  
+	<script type="text/javascript">
+		$(window).load(function() {
+			$("#flexiselDemo2").flexisel({
+				visibleItems:4,
+				animationSpeed: 1000,
+				autoPlay: true,
+				autoPlaySpeed: 3000,    		
+				pauseOnHover: true,
+				enableResponsiveBreakpoints: true,
+				responsiveBreakpoints: { 
+					portrait: { 
+						changePoint:568,
+						visibleItems: 1
+					}, 
+					landscape: { 
+						changePoint:667,
+						visibleItems:2
+					},
+					tablet: { 
+						changePoint:768,
+						visibleItems: 3
+					}
+				}
+			});
+			
+		});
+	</script>
+	<script type="text/javascript" src="js/jquery.flexisel.js"></script>
+
+
+<style>
+.filtros-barra{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.filtros-barra .dropdown{
+    display:inline-block;
+}
+
+.filtros-barra .btn{
+    border-radius:20px;
+    padding:6px 14px;
+ }   
+</style>
+
+
+{% endblock content %}

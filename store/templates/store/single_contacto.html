@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+{% load static %}
+<html >
+<head>
+
+	<title>Óptica IC</title>
+	<link rel="shortcut icon" href="{% static 'images/LOGO3.png' %}">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+	<script type="text/javascript">
+		var user = '{{request.user}}'
+
+		function getToken(name) {
+		    var cookieValue = null;
+		    if (document.cookie && document.cookie !== '') {
+		        var cookies = document.cookie.split(';');
+		        for (var i = 0; i < cookies.length; i++) {
+		            var cookie = cookies[i].trim();
+		            // Does this cookie string begin with the name we want?
+		            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+		                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		                break;
+		            }
+		        }
+		    }
+		    return cookieValue;
+		}
+		var csrftoken = getToken('csrftoken')
+
+		function getCookie(name) {
+		    // Split cookie string and get all individual name=value pairs in an array
+		    var cookieArr = document.cookie.split(";");
+
+		    // Loop through the array elements
+		    for(var i = 0; i < cookieArr.length; i++) {
+		        var cookiePair = cookieArr[i].split("=");
+
+		        /* Removing whitespace at the beginning of the cookie name
+		        and compare it with the given string */
+		        if(name == cookiePair[0].trim()) {
+		            // Decode the cookie value and return
+		            return decodeURIComponent(cookiePair[1]);
+		        }
+		    }
+
+		    // Return null if not found
+		    return null;
+		}
+		var cart = JSON.parse(getCookie('cart'))
+
+		if (cart == undefined){
+			cart = {}
+			console.log('Cart Created!', cart)
+			document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
+		}
+		console.log('Cart:', cart)
+	
+	</script>
+
+
+
+	<script>
+			addEventListener("load", function () {
+				setTimeout(hideURLbar, 0);
+			}, false);
+
+			function hideURLbar() {
+				window.scrollTo(0, 1);
+			}
+	</script>
+	<link href="{% static 'css/bootstrap.css' %}" rel='stylesheet' type='text/css' />
+	<link href="{% static 'css/login_overlay.css' %}" rel='stylesheet' type='text/css' />
+	<link href="{% static 'css/style6.css' %}" rel='stylesheet' type='text/css' />
+	<link rel="stylesheet" href="{% static 'css/shop.css' %}" type="text/css" />
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}" type="text/css" media="all">
+	<link rel="stylesheet" href="{% static 'css/owl.theme.css' %}" type="text/css" media="all">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui1.css' %}">
+	<link href="{% static 'css/easy-responsive-tabs.css' %}" rel='stylesheet' type='text/css' />
+	<link rel="stylesheet" href="{% static 'css/flexslider.css' %}" type="text/css" media="screen" />
+	<link href="{% static 'css/style.css' %}" rel='stylesheet' type='text/css' />
+	<link href="{% static 'css/fontawesome-all.css' %}" rel="stylesheet">
+	<link href="//fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
+	<link href="//fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
+		rel="stylesheet">
+
+</head>
+
+<div class="banner-top container-fluid" id="home">
+	<!-- header -->
+	<header>
+		
+			<div class="row">
+				<div class="col-md-3 top-info text-left mt-lg-4">
+					<h6>¿Necesitas ayuda?</h6>
+					<ul>
+						<li>
+							<i class="fas fa-phone"></i> Llama al:</li>
+						<li class="number-phone mt-3">952305913</li>
+					</ul>
+				</div>
+				<div class="col-md-6 logo text-center">
+					<a href="{% url 'nosotros' %}">
+					<img src="{% static 'images/LOGO2.png' %}" width="160" height="70" alt="">
+					</a>
+				</div>
+
+				<div class="col-md-3 top-info-cart text-right mt-lg-4">
+					<div class="float-right form-inline my-2 my-lg-0" >
+						<a href="{% url 'cart' %}">
+						<img  id="cart-icon" src="{% static 'images/cart2.png' %}">
+						</a>
+						<p id="cart-total">{{cartItems}}</p>
+					
+					</div>
+				</div>
+
+			</div>
+	</header>
+</div>	
+
+<!-- navigation -->
+<div class="row sticky-top navigation justify-content-center">
+			
+<nav class="navbar navbar-expand-lg navbar-dark bg-#3c43a4 top-header mb-2">
+	<button class="navbar-toggler mx-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+	aria-expanded="false" aria-label="Toggle navigation">
+	<span class="navbar-toggler-icon">	
+	</span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav nav-mega mx-auto">
+
+			<li class="nav-item active">
+				<a class="nav-link ml-lg-0" href="{% url 'store' %}">Inicio
+					 <span class="sr-only">(current)</span>
+				</a>
+		   </li>
+
+		   <li class="nav-item active">
+				<a class="nav-link ml-lg-0" href="{% url 'shop_oftalmicas' '1' %}">Lentes Oftálmicos
+					 <span class="sr-only">(current)</span>
+				</a>
+		   </li>
+		   
+			<li class="nav-item active">
+				<a class="nav-link ml-lg-0" href="{% url 'shop_sol' '2' %}">Lentes de Sol
+					 <span class="sr-only">(current)</span>
+				</a>
+		   </li>
+
+		   <li class="nav-item active">
+			<a class="nav-link ml-lg-0" href="{% url 'shop_contacto' '3' %}">Lentes de Contacto
+				<span class="sr-only">(current)</span>
+			</a>
+			</li>
+
+   
+
+		   <li class="nav-item active">
+				<a class="nav-link ml-lg-0" href="{% url 'servicios' %}">Venta Online
+					 <span class="sr-only">(current)</span>
+				</a>
+		   </li>>
+
+			
+		</ul>
+
+	</div>
+
+</nav>
+
+
+
+</div>
+<!-- //navigation -->
+	
+<!-- //navigation -->
+
+	
+		
+	
+		<!--//banner -->
+		<!--/shop-->
+		<section class="banner-bottom py-lg-5 py-3">
+			<div class="container">
+				<div class="inner-sec-shop pt-lg-4 pt-3">
+					<div class="row">
+							<div class="col-lg-4 single-right-left ">
+									<div class="grid images_3_of_2">
+										<div class="flexslider1">
+					
+											<ul class="slides">
+												{% for product in products %}
+												<li data-thumb="{{product.imageURL}}">
+													<div class="thumb-image"> <img src="{{product.imageURL}}" data-imagezoom="true" class="img-fluid" alt=" "> </div>
+												</li>
+												<li data-thumb="{{product.image2URL}}">
+													<div class="thumb-image"> <img src="{{product.image2URL}}" data-imagezoom="true" class="img-fluid" alt=" "> </div>
+												</li>
+												<li data-thumb="{{product.image3URL}}">
+													<div class="thumb-image"> <img src="{{product.image3URL}}" data-imagezoom="true" class="img-fluid" alt=" "> </div>
+												</li>
+												{% endfor %}
+											</ul>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+							</div>
+								<div class="col-lg-8 single-right-left simpleCart_shelfItem">
+									{% for product in products %}
+									<h3>{{product.name}}</h3>
+									<h4>{{product.cod}}</h4>
+									<p>Precio: S/{{product.price}}
+									<p>Tipo: {{product.tipo}}
+									<p>Uso: {{product.uso}}
+									<p>Marca: {{product.marcacontato}}
+									</p>
+									<button data-product="{{product.id}}" data-action="add" class="btn btn-outline-primary add-btn update-cart"}">Agregar al carro</button>
+									
+
+									{% endfor %}
+		
+								</div>
+								<div class="clearfix"> </div>
+								<!--/tabs-->
+
+								<!--//tabs-->
+					
+					</div>
+				</div>
+			</div>
+
+		</section>
+		<!--footer -->
+
+
+		<!--jQuery-->
+		<script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
+		<!-- newsletter modal -->
+		<!--search jQuery-->
+		<script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+		<script src="{% static 'js/classie-search.js' %}"></script>
+		<script src="{% static 'js/demo1-search.js' %}"></script>
+		<!--//search jQuery-->
+		<!-- cart-js -->
+		<script src="{% static 'js/minicart.js' %}"></script>
+		<script>
+			googles.render();
+
+			googles.cart.on('googles_checkout', function (evt) {
+				var items, len, i;
+
+				if (this.subtotal() > 0) {
+					items = this.items();
+
+					for (i = 0, len = items.length; i < len; i++) {}
+				}
+			});
+		</script>
+		<!-- //cart-js -->
+		<script>
+			$(document).ready(function () {
+				$(".button-log a").click(function () {
+					$(".overlay-login").fadeToggle(200);
+					$(this).toggleClass('btn-open').toggleClass('btn-close');
+				});
+			});
+			$('.overlay-close1').on('click', function () {
+				$(".overlay-login").fadeToggle(200);
+				$(".button-log a").toggleClass('btn-open').toggleClass('btn-close');
+				open = false;
+			});
+		</script>
+		<!-- carousel -->
+		<!-- price range (top products) -->
+		<script src="{% static 'js/jquery-ui.js' %}"></script>
+		<script>
+			//<![CDATA[ 
+			$(window).load(function () {
+				$("#slider-range").slider({
+					range: true,
+					min: 0,
+					max: 9000,
+					values: [50, 6000],
+					slide: function (event, ui) {
+						$("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+					}
+				});
+				$("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
+
+			}); //]]>
+		</script>
+		<!-- //price range (top products) -->
+
+		<script src="{% static 'js/owl.carousel.js' %}"></script>
+		<script>
+			$(document).ready(function () {
+				$('.owl-carousel').owlCarousel({
+					loop: true,
+					margin: 10,
+					responsiveClass: true,
+					responsive: {
+						0: {
+							items: 1,
+							nav: true
+						},
+						600: {
+							items: 2,
+							nav: false
+						},
+						900: {
+							items: 3,
+							nav: false
+						},
+						1000: {
+							items: 4,
+							nav: true,
+							loop: false,
+							margin: 20
+						}
+					}
+				})
+			})
+		</script>
+
+		<!-- //end-smooth-scrolling -->
+
+		<!-- single -->
+		<script src="{% static 'js/imagezoom.js' %}"></script>
+		<!-- single -->
+		<!-- script for responsive tabs -->
+		<script src="{% static 'js/easy-responsive-tabs.js' %}"></script>
+		<script>
+			$(document).ready(function () {
+				$('#horizontalTab').easyResponsiveTabs({
+					type: 'default', //Types: default, vertical, accordion           
+					width: 'auto', //auto or any width like 600px
+					fit: true, // 100% fit in a container
+					closed: 'accordion', // Start closed if in accordion view
+					activate: function (event) { // Callback function if tab is switched
+						var $tab = $(this);
+						var $info = $('#tabInfo');
+						var $name = $('span', $info);
+						$name.text($tab.text());
+						$info.show();
+					}
+				});
+				$('#verticalTab').easyResponsiveTabs({
+					type: 'vertical',
+					width: 'auto',
+					fit: true
+				});
+			});
+		</script>
+		<!-- FlexSlider -->
+		<script src="{% static 'js/jquery.flexslider.js' %}"></script>
+		<script>
+			// Can also be used with $(document).ready()
+			$(window).load(function () {
+				$('.flexslider1').flexslider({
+					animation: "slide",
+					controlNav: "thumbnails"
+				});
+			});
+		</script>
+		<!-- //FlexSlider-->
+
+		<!-- dropdown nav -->
+		<script>
+			$(document).ready(function () {
+				$(".dropdown").hover(
+					function () {
+						$('.dropdown-menu', this).stop(true, true).slideDown("fast");
+						$(this).toggleClass('open');
+					},
+					function () {
+						$('.dropdown-menu', this).stop(true, true).slideUp("fast");
+						$(this).toggleClass('open');
+					}
+				);
+			});
+		</script>
+		<!-- //dropdown nav -->
+	<script src="{% static 'js/move-top.js' %}"></script>
+    <script src="{% static 'js/easing.js' %}"></script>
+    <script>
+        jQuery(document).ready(function($) {
+            $(".scroll").click(function(event) {
+                event.preventDefault();
+                $('html,body').animate({
+                    scrollTop: $(this.hash).offset().top
+                }, 900);
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            /*
+            						var defaults = {
+            							  containerID: 'toTop', // fading element id
+            							containerHoverID: 'toTopHover', // fading element hover id
+            							scrollSpeed: 1200,
+            							easingType: 'linear' 
+            						 };
+            						*/
+
+            $().UItoTop({
+                easingType: 'easeOutQuart'
+            });
+
+        });
+    </script>
+    <!--// end-smoth-scrolling -->
+
+
+		<script src="{% static 'js/bootstrap.js' %}"></script>
+		<!-- js file -->
+
+		<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+
+		{% include "final.html"%}
+</html>
+
+
+
