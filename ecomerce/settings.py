@@ -31,7 +31,7 @@ SECRET_KEY=config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['opticaic.herokuapp.com', 'www.opticaic.com', 'opticaic.com']
+ALLOWED_HOSTS = ['ecomerce.herokuapp.com']
 
 
 # Application definition
