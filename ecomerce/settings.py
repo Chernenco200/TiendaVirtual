@@ -29,9 +29,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY=config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = ['ecomerce.herokuapp.com']
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
 
 # Application definition
@@ -98,14 +98,7 @@ WSGI_APPLICATION = 'ecomerce.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'productos2',
-        'HOST': 'localhost',
-        'USER': 'BDIC3',
-        'PASSWORD': '<Alfio,3<,,.0>01.,jUan,,..#<>.dsfggs.,&',
-        'PORT': 5432
-    }
+    "default": dj_database_url.config(default=config("DATABASE_URL"))
 }
 
 
@@ -157,11 +150,11 @@ DEFAULT_FILE_STORAGE  =  'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 
-CLOUDINARY_STORAGE  =  { 
-    'CLOUD_NAME' :  'optica-ic' , 
-    'API_KEY' :  '778557335719586' , 
-    'API_SECRET' :  'yuRn62u2KUuqLz5aKyqmBdHbyVQ' 
-}
+#CLOUDINARY_STORAGE  =  { 
+#    'CLOUD_NAME' :  'optica-ic' , 
+#    'API_KEY' :  '778557335719586' , 
+#    'API_SECRET' :  'yuRn62u2KUuqLz5aKyqmBdHbyVQ' 
+#}
 
 #DEFAULT_FILE_STORAGE  =  'cloudinary_storage.storage.MediaCloudinaryStorage'
 
