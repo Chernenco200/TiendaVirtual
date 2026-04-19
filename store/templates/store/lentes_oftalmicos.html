@@ -18,13 +18,14 @@
     </div>
 </div>
 
-<div class="new-products">
-    <div class="container">
-        <h2>Todas las Lentes Oftálmicas</h2>
-        <div class="small text-muted mb-2">Filtrar por:</div>
-    </div>
-</div>
-  
+	<!-- new-products -->
+	<div class="new-products">
+		<div class="container">
+			<h2>Todos los Lentes oftálmicos</h2>
+<p>
+	<div class="small text-muted mb-2">Filtrar por:</div>
+</p>
+
 <div class="container py-3">
   <!-- Barra de filtros -->
   <div class="d-flex flex-wrap gap-2 mb-3">
@@ -46,8 +47,8 @@
         {% empty %}
           <li><span class="dropdown-item-text text-muted">Sin opciones</span></li>
         {% endfor %}
-    </ul>
-  </div>
+      </ul>
+    </div>
 
     <!-- Género (internamente categoria) -->
 	<div class="dropdown">
@@ -208,7 +209,7 @@
           {% endif %}
         {% endfor %}
 
-        <a href="{% url 'lentes_oftalmicos' %}" class="small text-decoration-none">
+        <a href="{% url 'lentes_de_sol' %}" class="small text-decoration-none">
           Quitar todos
         </a>
       </div>
@@ -219,7 +220,7 @@
 
 
 
-<div class="agileinfo_new_products_grids">
+			<div class="agileinfo_new_products_grids">
 {% for producto in products %}
 <div class="col-md-3 agileinfo_new_products_grid">
     <div class="agile_ecommerce_tab_left agileinfo_new_products_grid1">
@@ -236,7 +237,7 @@
 
             <div class="simpleCart_shelfItem">
                 <p>
-                    <span>S/ {{ producto.precio_venta }}</span>
+                    <span>S/ {{ producto.precio_venta|add:60 }}</span>
                     <i class="item_price">S/ {{ producto.precio_venta }}</i>
                 </p>
                 <form action="#" method="post">
