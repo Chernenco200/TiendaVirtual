@@ -138,28 +138,62 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
-STATICFILES_STORAGE='whitenoise.storage.CompressedManifestStaticFilesStorage'
-#STATICFILES_STORAGE  =  'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+# ========= STATIC (Whitenoise) =========
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
-MEDIA_URL = '/images/'
-MEDIA_ROOT =  os.path.join(BASE_DIR, 'static/images')
-DEFAULT_FILE_STORAGE  =  'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
-
-#CLOUDINARY_STORAGE  =  { 
-#    'CLOUD_NAME' :  'optica-ic' , 
-#    'API_KEY' :  '778557335719586' , 
-#    'API_SECRET' :  'yuRn62u2KUuqLz5aKyqmBdHbyVQ' 
-#}
-
-#DEFAULT_FILE_STORAGE  =  'cloudinary_storage.storage.MediaCloudinaryStorage'
+# MEDIA (Cloudinary)
+MEDIA_URL = "/media/"
 
 
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+# ========= MEDIA (Cloudinary) =========
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
+    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
+    "FOLDER": "optica_ic",
+}
+
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+# ========= Seguridad Heroku =========
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+SECURE_SSL_REDIRECT = not DEBUG
+
+# Ajusta si tienes problemas con recursos embebidos
+SECURE_REFERRER_POLICY = "same-origin"# ========= STATIC (Whitenoise) =========
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# MEDIA (Cloudinary)
+MEDIA_URL = "/media/"
+
+
+# ========= MEDIA (Cloudinary) =========
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
+    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
+    "FOLDER": "optica_ic",
+}
+
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 
 
