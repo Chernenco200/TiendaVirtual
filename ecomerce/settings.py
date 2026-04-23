@@ -97,7 +97,11 @@ WSGI_APPLICATION = 'ecomerce.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    "default": dj_database_url.config(default=config("DATABASE_URL"))
+    "default": dj_database_url.config(
+        default=os.environ.get("HEROKU_POSTGRESQL_IVORY_URL") or os.environ.get("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True,
+    )
 }
 
 
