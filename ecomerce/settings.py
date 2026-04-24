@@ -51,8 +51,6 @@ INSTALLED_APPS = [
     'django_userforeignkey',
     'rest_framework',
 
-    'core', 
-
  
 
     

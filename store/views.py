@@ -13,7 +13,7 @@ from .utils import cookieCart, cartData
 
 from .filters import ProductoFilter, ProductoFilter2 
 
-from core.models import Producto  # 👈 usa el modelo original
+
 
 
 def home(request):

@@ -212,7 +212,135 @@ UNIDAD_COMPRA = (
 
 
 
-	
+
+class Producto(models.Model):
+    TIPO_CHOICES = [
+        ('Monturas oftálimcas', 'Monturas oftálimcas'),
+        ('Monturas Solares', 'Monturas Solares'),
+        ('Lentes de Contacto', 'Lentes de Contacto'),
+        ('Monturas de Marca', 'Monturas de Marca'),
+        ('Líquidos', 'Líquidos'),
+        ('Accesorios', 'Accesorios'),  
+    ]
+
+    CATEGORIA_CHOICES = [
+        ('Mujer', 'Mujer'),
+        ('Hombre', 'Hombre'),
+        ('Nino', 'Nino'), 
+    ]
+
+    FORMA_CHOICES = [
+        ('Agatado', 'Agatado'),
+        ('Almendra', 'Almendra'),
+        ('Aviador', 'Aviador'),
+        ('Cuadrado', 'Cuadrado'),
+        ('Redondo', 'Redondo'),
+        ('Exagonal', 'Exagonal'),
+        ('Otros', 'Otros'),  
+    ]
+
+    MATERIAL_CHOICES = [
+        ('Fibra de carbono', 'Fibra de carbono'),
+        ('Acetato', 'Acetato'),
+        ('Carey', 'Carey'),
+        ('TR90', 'TR90'),
+        ('Aluminium', 'Aluminium'),
+        ('Engomado', 'Engomado'),
+        ('Otros', 'Otros'),  
+    ]
+    MARCA_CHOICES = [
+        ('Ray-Ban', 'Ray-Ban'),
+        ('OaKley', 'OaKley'),
+        ('Nike', 'Nike'),
+        ('Guess', 'Guess'),
+        ('Tommy-Hilfiger', 'Tommy-Hilfiger'),
+        ('Arnette', 'Arnette'),
+        ('Nano', 'Nano'),
+        ('Otros', 'Otros'),
+
+        ('Acuvue', 'Acuvue'),
+        ('Air-Optix', 'Air-Optix'),
+        ('Dailies-Aqua', 'Dailies-Aqua'),
+        ('Freshlook', 'Freshlook'),
+        ('Licryl', 'Licryl'),
+        ('Soflens', 'Soflens'),
+        ('Purevision', 'Purevision'),
+		('Otros', 'Otros'),
+		
+    ]
+    CONDICION_CHOICES = [
+        ('Miopia-e-Hipermetropia', 'Miopia-e-Hipermetropia'),
+        ('Astigmatismo', 'Astigmatismo'),
+        ('Presbicia', 'Presbicia'),
+    ]
+
+    USO_CHOICES = [
+        ('Diario', 'Diario'),
+        ('Mensual', 'Mensual'),
+        ('Anual', 'Anual'),
+        ('Cosmetico', 'Cosmetico'),
+    ]
+
+    TALLA_CHOICES = [
+        ('Grande', 'Grande'),
+        ('Mediana', 'Mediana'),
+        ('Chica', 'Chica'),
+    ]
+
+    cod = models.CharField(max_length=20, unique=True)  # por ej. COD-001
+    tipo= models.CharField(max_length=50, choices=TIPO_CHOICES, null=True, blank=True)
+    nuevo = models.BooleanField(default=False, null=True, blank=True)
+    marca = models.CharField(max_length=20, choices=MARCA_CHOICES, blank=True, null=True)
+    categoria= models.CharField(max_length=20, choices=CATEGORIA_CHOICES, null=True, blank=True)
+    material = models.CharField(max_length=20, choices=MATERIAL_CHOICES, null=True, blank=True)
+    forma = models.CharField(max_length=20, choices=FORMA_CHOICES, null=True, blank=True)
+    color = models.CharField(max_length=20, null=True, blank=True)   
+    talla_luna = models.CharField(max_length=5, null=True, blank=True)    
+    puente = models.CharField(max_length=5, null=True, blank=True)
+    largo = models.CharField(max_length=5, null=True, blank=True)
+    ancho = models.CharField(max_length=5, null=True, blank=True)
+    altura = models.CharField(max_length=5, null=True, blank=True)    
+    descripcion = models.CharField(max_length=200, null=True, blank=True)              # ej. LUNA BLANCA 1.56
+    precio_compra = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    precio_venta = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    stock = models.IntegerField(default=0, blank=True, null=True)                 # stock actual
+    talla = models.CharField(max_length=50, choices=TALLA_CHOICES, null=True, blank=True)       # si aplica
+    activo = models.BooleanField(default=True, blank=True, null=True)             # por si luego das de baja productos   
+    costo_promedio = models.DecimalField(max_digits=10, decimal_places=4, default=0, blank=True, null=True)
+    imagenF = models.ImageField(upload_to="productos/", blank=True, null=True)
+    imagenD = models.ImageField(upload_to="productos/", blank=True, null=True)
+    imagenL = models.ImageField(upload_to="productos/", blank=True, null=True)
+    condicion = models.CharField(max_length=50, choices=CONDICION_CHOICES, null=True, blank=True)
+    uso = models.CharField(max_length=20, choices=USO_CHOICES, null=True, blank=True)
+
+    slug = models.SlugField(max_length=300, unique=True, blank=True, null=True)
+  
+    class Meta:
+        db_table = "core_producto"   # 🔴 IMPORTANTE: nombre real de la tabla
+    #    managed = False              # 🔴 NO crear ni modificar esta tabla
+
+
+    def __str__(self):
+        return f"{self.cod} - {self.descripcion}"
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base = f"{self.marca or ''} {self.descripcion or ''} {self.cod or ''}".strip()
+            self.slug = slugify(base)
+
+        original_slug = self.slug
+        contador = 1
+        while Producto.objects.exclude(pk=self.pk).filter(slug=self.slug).exists():
+            self.slug = f"{original_slug}-{contador}"
+            contador += 1
+
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('producto_detalle', kwargs={'slug': self.slug})    
+
+
+
 class Valoracion(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='valoraciones')
     puntuacion = models.IntegerField()
