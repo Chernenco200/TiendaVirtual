@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'store.apps.StoreConfig',
     'django_filters' ,
+    "core", 
     
 
 ]
