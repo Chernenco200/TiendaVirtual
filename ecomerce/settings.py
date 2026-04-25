@@ -31,7 +31,7 @@ SECRET_KEY=config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "0") == "1"
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [host.strip() for host in os.getenv("ALLOWED_HOSTS", "").split(",") if host.strip()]
 
 # Application definition
 
@@ -50,11 +50,7 @@ INSTALLED_APPS = [
 
     'django_userforeignkey',
     'rest_framework',
-
  
-
-    
-
 ]
 
 MIDDLEWARE = [
@@ -202,24 +198,3 @@ STORAGES = {
 
 
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-        },
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["console"],
-            "level": "ERROR",
-            "propagate": True,
-        },
-        "django.request": {
-            "handlers": ["console"],
-            "level": "ERROR",
-            "propagate": True,
-        },
-    },
-}
