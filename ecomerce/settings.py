@@ -93,20 +93,13 @@ WSGI_APPLICATION = 'ecomerce.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 # ========= DATABASE (Heroku Postgres) =========
-if os.environ.get("DATABASE_URL"):
-    DATABASES = {
-        "default": dj_database_url.config(
-            conn_max_age=600,
-            ssl_require=True
-        )
-    }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
+DATABASES = {
+    "default": dj_database_url.config(
+        default=os.environ.get("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True,
+    )
+}
 
 
 
@@ -148,8 +141,8 @@ USE_TZ = True
 
 # ========= STATIC (Whitenoise) =========
 STATIC_URL = "/static/"
-#STATIC_ROOT = BASE_DIR / "staticfiles"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT = BASE_DIR / "staticfiles"
+#STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # MEDIA (Cloudinary)
 MEDIA_URL = "/media/"
 
@@ -179,12 +172,12 @@ SECURE_SSL_REDIRECT = not DEBUG
 
 # Ajusta si tienes problemas con recursos embebidos
 SECURE_REFERRER_POLICY = "same-origin"# ========= STATIC (Whitenoise) =========
-STATIC_URL = "/static/"
+#STATIC_URL = "/static/"
 #STATIC_ROOT = BASE_DIR / "staticfiles"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+#STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # MEDIA (Cloudinary)
-MEDIA_URL = "/media/"
+#MEDIA_URL = "/media/"
 
 
 # ========= MEDIA (Cloudinary) =========
