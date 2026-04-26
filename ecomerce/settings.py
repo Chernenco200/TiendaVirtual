@@ -141,10 +141,21 @@ USE_TZ = True
 
 # ========= STATIC (Whitenoise) =========
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-#STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+#STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # MEDIA (Cloudinary)
 MEDIA_URL = "/media/"
+
+# Ajusta si tienes problemas con recursos embebidos
+SECURE_REFERRER_POLICY = "same-origin"# ========= STATIC (Whitenoise) =========
+#STATIC_URL = "/static/"
+
+
+
+# MEDIA (Cloudinary)
+#MEDIA_URL = "/media/"
+
+
 
 
 # ========= MEDIA (Cloudinary) =========
@@ -170,14 +181,6 @@ SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
 SECURE_SSL_REDIRECT = not DEBUG
 
-# Ajusta si tienes problemas con recursos embebidos
-SECURE_REFERRER_POLICY = "same-origin"# ========= STATIC (Whitenoise) =========
-#STATIC_URL = "/static/"
-#STATIC_ROOT = BASE_DIR / "staticfiles"
-#STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-
-# MEDIA (Cloudinary)
-#MEDIA_URL = "/media/"
 
 
 # ========= MEDIA (Cloudinary) =========
