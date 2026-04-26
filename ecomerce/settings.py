@@ -152,6 +152,13 @@ SECURE_REFERRER_POLICY = "same-origin"# ========= STATIC (Whitenoise) =========
 
 
 
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+
+
 # MEDIA (Cloudinary)
 #MEDIA_URL = "/media/"
 
