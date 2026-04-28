@@ -315,9 +315,9 @@ class Producto(models.Model):
 
     slug = models.SlugField(max_length=300, unique=True, blank=True, null=True)
   
-    class Meta:
-        db_table = "core_producto"   # 🔴 IMPORTANTE: nombre real de la tabla
-        managed = False              # 🔴 NO crear ni modificar esta tabla
+#    class Meta:
+#        db_table = "core_producto"   # 🔴 IMPORTANTE: nombre real de la tabla
+#        managed = False              # 🔴 NO crear ni modificar esta tabla
 
 
     def __str__(self):
