@@ -100,9 +100,10 @@ WSGI_APPLICATION = 'ecomerce.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    "default": HEROKU_POSTGRESQL_IVORY_URL.config(
+    "default": dj_database_url.config(
+        default=os.environ.get("HEROKU_POSTGRESQL_IVORY_URL", f"sqlite:///{BASE_DIR / 'db.sqlite3'}"),
         conn_max_age=600,
-        ssl_require=True
+        ssl_require=not DEBUG,
     )
 }
 
