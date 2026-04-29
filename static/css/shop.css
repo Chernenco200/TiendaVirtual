@@ -247,7 +247,7 @@ button.top_googles_cart {
 	width: 7%;
 }
 
-#staplesbmincart .sbmincart-details-precio {
+#staplesbmincart .sbmincart-details-price {
 	float: left;
 	width: 16%;
 	text-align: right;
@@ -904,7 +904,7 @@ input.checked {
 	margin-left: 8px;
 }
 
-.product_precio h4 a {
+.product_price h4 a {
 	color: #959596;
     font-size: 0.8em;
     font-family: 'Inconsolata', monospace;
@@ -956,19 +956,18 @@ input.checked {
 	text-align: center;
 }
 
-span.item_precio {
+span.item_price {
 	font-size: 18px;
 	color: #d60404;
 }
 
-.info-product-precio del {
+.info-product-price del {
 	font-weight: 300;
 	margin-left: 13px;
 	font-size: 15px;
 }
 
 .product-sec1.product-sec2 {
-	background: url(../images/bg1.jpg)no-repeat 0px 0px;
 	background-attachment: fixed;
 	background-size: cover;
 	-webkit-background-size: cover;
@@ -1306,7 +1305,7 @@ p.para {
 	margin-top: 1em;
 }
 
-span.item_precio {
+span.item_price {
 	font-size: 19px;
 	color: #212020;
 	font-weight: 600;
