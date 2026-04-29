@@ -64,7 +64,7 @@ td.invert-image a img {
 .close1,
 .close2,
 .close3 {
-	background: url('../images/close_1.jpg') no-repeat 0px 0px;
+
     cursor: pointer;
     width: 41px;
     height: 39px;
@@ -519,7 +519,6 @@ button.submit.check_out {
         color: #868282;
     }
     .close1, .close2, .close3 {
-        background: url(../images/close_1.jpg) no-repeat 0px 0px;
         cursor: pointer;
         width: 41px;
         height: 39px;
