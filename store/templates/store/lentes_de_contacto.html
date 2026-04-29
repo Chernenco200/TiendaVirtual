@@ -156,11 +156,17 @@
     <div class="agile_ecommerce_tab_left agileinfo_new_products_grid1">
         <div>
             <a href="{{ producto.get_absolute_url }}">
-                {% if producto.imagenF %}
-                    <img src="{{ producto.imagenF.url }}" alt="{{ producto.descripcion }}" class="img-responsive">
-                {% endif %}
-                <p>IMAGEN: {{ product.imagenF }}</p>
-                <p>URL: {{ product.imagenF.url }}</p>
+{% if producto.imagenF %}
+    <img src="{{ producto.imagenF.url }}" alt="{{ producto.descripcion }}" class="img-responsive">
+
+    <!-- DEBUG -->
+    <p style="font-size:12px; color:red;">
+        IMAGEN: {{ producto.imagenF }}
+    </p>
+    <p style="font-size:12px; color:blue;">
+        URL: {{ producto.imagenF.url }}
+    </p>
+{% endif %}
             </a>
 
             <h4>
