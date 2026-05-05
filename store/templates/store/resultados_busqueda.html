@@ -1,0 +1,52 @@
+{% extends "store/main.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="container" style="margin-top:30px;">
+    <h2>Resultados de búsqueda</h2>
+
+    {% if q %}
+        <p>Buscaste: <strong>{{ q }}</strong></p>
+    {% endif %}
+
+    <div class="row">
+        {% for producto in productos %}
+            <div class="col-md-3 col-sm-6" style="margin-bottom:25px;">
+                <div class="thumbnail">
+
+                    <a href="{{ producto.get_absolute_url }}">
+                        {% if producto.imagenF %}
+                            <img src="{{ producto.imagenF.url }}" 
+                                 alt="{{ producto.descripcion }}" 
+                                 class="img-responsive">
+                        {% else %}
+                            <img src="{% static 'images/no-image.png' %}" 
+                                 alt="Sin imagen" 
+                                 class="img-responsive">
+                        {% endif %}
+                    </a>
+
+                    <div class="caption">
+                        <h4>
+                            <a href="{{ producto.get_absolute_url }}">
+                                {{ producto.descripcion }}
+                            </a>
+                        </h4>
+
+                        {% if producto.marca %}
+                            <p>Marca: {{ producto.marca }}</p>
+                        {% endif %}
+
+                        <p><strong>S/ {{ producto.precio_venta }}</strong></p>
+                    </div>
+
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-md-12">
+                <p>No se encontraron productos.</p>
+            </div>
+        {% endfor %}
+
+{% endblock %}        

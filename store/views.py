@@ -600,7 +600,7 @@ def _render_lentes_de_contacto(request, filtros_iniciales=None):
             qs = qs.filter(uso__iexact=uso)
 
         if condicion and exclude_field != 'condicion':
-            qs = qs.filter(tipo__iexact=condicion)
+            qs = qs.filter(condicion__iexact=condicion)
 
         if precio and exclude_field != 'precio':
             if precio == '0-100':
@@ -727,8 +727,8 @@ def lentes_uso_contacto(request, valor):
 def lentes_marca_contacto(request, valor):
     mapa_marca = {
         'acuvue': 'Acuvue',
-        'air-optix': 'Air Optix',
-        'dailies-aqua': 'Dailies Aqua',
+        'air-optix': 'Air-Optix',
+        'dailies-aqua': 'Dailies-Aqua',
         'freshlook': 'Freshlook',
         'licryl': 'Licryl',
         'soflens': 'Soflens',
@@ -745,7 +745,7 @@ def lentes_marca_contacto(request, valor):
 
 def lentes_condicion_contacto(request, valor):
     mapa_condicion = {
-        'miopia-e-hipermetropia': 'Miopia e Hipermetropia',
+        'miopia-e-hipermetropia': 'Miopia-e-Hipermetropia',
         'astigmatismo': 'Astigmatismo',
         'presbicia': 'Presbicia',
     }
@@ -757,3 +757,44 @@ def lentes_condicion_contacto(request, valor):
     return _render_lentes_de_contacto(request, filtros_iniciales={
         'condicion': condicion_real
     })
+
+
+def buscar_productos(request):
+    q = request.GET.get("q", "")
+    
+    productos = Producto.objects.filter(
+        Q(descripcion__icontains=q) |
+        Q(cod__icontains=q) |
+        Q(marca__icontains=q)
+    ).filter(activo=True) if q else []
+
+    return render(request, "store/resultados_busqueda.html", {
+        "productos": productos,
+        "q": q
+    })
+
+
+def autocomplete_productos(request):
+    q = request.GET.get("q", "")
+    
+    resultados = []
+
+    if q:
+        productos = Producto.objects.filter(
+            Q(descripcion__icontains=q) |
+            Q(cod__icontains=q) |
+            Q(marca__icontains=q)
+        ).filter(activo=True)[:10]
+
+        for p in productos:
+            resultados.append({
+                "text": p.descripcion,
+                "precio": str(p.precio_venta),
+                "url": p.get_absolute_url(),
+                "imagen": p.imagenF.url if p.imagenF else ""
+            })
+
+    return JsonResponse(resultados, safe=False)
+
+
+

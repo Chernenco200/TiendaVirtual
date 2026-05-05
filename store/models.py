@@ -215,10 +215,9 @@ UNIDAD_COMPRA = (
 
 class Producto(models.Model):
     TIPO_CHOICES = [
-        ('Monturas oftálimcas', 'Monturas oftálimcas'),
+        ('Monturas oftálmicas', 'Monturas oftálmicas'),
         ('Monturas Solares', 'Monturas Solares'),
         ('Lentes de Contacto', 'Lentes de Contacto'),
-        ('Monturas de Marca', 'Monturas de Marca'),
         ('Líquidos', 'Líquidos'),
         ('Accesorios', 'Accesorios'),  
     ]
@@ -240,7 +239,7 @@ class Producto(models.Model):
     ]
 
     MATERIAL_CHOICES = [
-        ('Fibra de carbono', 'Fibra de carbono'),
+        ('Fibra-de-carbono', 'Fibra-de-carbono'),
         ('Acetato', 'Acetato'),
         ('Carey', 'Carey'),
         ('TR90', 'TR90'),
@@ -268,6 +267,7 @@ class Producto(models.Model):
 		('Otros', 'Otros'),
 		
     ]
+	
     CONDICION_CHOICES = [
         ('Miopia-e-Hipermetropia', 'Miopia-e-Hipermetropia'),
         ('Astigmatismo', 'Astigmatismo'),
@@ -315,9 +315,9 @@ class Producto(models.Model):
 
     slug = models.SlugField(max_length=300, unique=True, blank=True, null=True)
   
-    class Meta:
-        db_table = "core_producto"   # 🔴 IMPORTANTE: nombre real de la tabla
-        managed = False              # 🔴 NO crear ni modificar esta tabla
+    #class Meta:
+    #    db_table = "core_producto"   # 🔴 IMPORTANTE: nombre real de la tabla
+    #    managed = False              # 🔴 NO crear ni modificar esta tabla
 
 
     def __str__(self):

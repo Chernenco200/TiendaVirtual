@@ -79,7 +79,7 @@
         {% for item in condicion_opciones %}
           <li>
             <a class="dropdown-item"
-               href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if uso_actual %}uso={{ uso_actual|urlencode }}&{% endif %}{% if precio_actual %}precaio={{ precio_actual|urlencode }}&{% endif %}condicion={{ item.valor|urlencode }}">
+               href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if uso_actual %}uso={{ uso_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}condicion={{ item.valor|urlencode }}">
               {{ item.valor }} ({{ item.total }})
             </a>
           </li>
@@ -127,7 +127,7 @@
               {{ f.label }} ×
             </a>
           {% elif f.tipo == 'condicion' %}
-            <a href="?{% if uso_actual %}uso={{ uso_actual|urlencode }}&{% endif %}{% if marca_actual %}marca={{ condicion_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
+            <a href="?{% if uso_actual %}uso={{ uso_actual|urlencode }}&{% endif %}{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
                class="badge rounded-pill text-bg-dark text-decoration-none px-3 py-2">
               {{ f.label }} ×
             </a>

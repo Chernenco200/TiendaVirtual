@@ -53,23 +53,65 @@
 	</script>  
 	<!-- header modal -->
 	<!-- header -->
-	<div class="header" id="home1">
-		<div class="container">
-			<div class="w3l_login">
-				<a href="#" data-toggle="modal" data-target="#myModal88"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-			</div>
-			<div class="w3l_logo">
-				<h1><a href="{% url 'home' %}"><img src="{% static 'images/logo2.png' %}" width="160" height="70" alt=""></a></h1>
-			</div>
-7			<div class="cart cart box_1"> 
-				<form action="#" method="p2017ost" class="last"> 
-					<input type="hidden" name="cmd" value="_cart" />
-					<input type="hidden" name="display" value="1" />
-					<button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
-				</form>   
-			</div>  
-		</div>
-	</div>
+<div class="header" id="home1"> 
+    <div class="container header-flex">
+
+        <!-- CARRITO IZQUIERDA -->
+        <div class="header-left">
+            <div class="cart box_1"> 
+                <form action="#" method="post" class="last"> 
+                    <input type="hidden" name="cmd" value="_cart" />
+                    <input type="hidden" name="display" value="1" />
+
+                    <button class="w3view-cart" type="submit">
+                        <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                    </button>
+                </form>   
+            </div>
+        </div>
+
+        <!-- LOGO + BUSCADOR CENTRO -->
+        <div class="header-center">
+
+            <div class="logo-search">
+
+                <div class="w3l_logo">
+                    <h1>
+                        <a href="{% url 'home' %}">
+                            <img src="{% static 'images/logo2.png' %}" width="160" height="70" alt="">
+                        </a>
+                    </h1>
+                </div>
+
+                <form action="{% url 'buscar_productos' %}" method="get" autocomplete="off" class="search-form">
+                    <div class="search-wrapper">
+
+                        <input 
+                            type="text" 
+                            id="buscador"
+                            name="q" 
+                            class="form-control search-input"
+                            placeholder="Buscar producto..."
+                        >
+
+                        <button class="search-toggle" type="button" id="btn-search">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+
+                        <ul id="resultados" class="dropdown-menu"></ul>
+
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- DERECHA VACÍA PARA CENTRAR -->
+        <div class="header-right"></div>
+
+    </div>
+</div>
 	<!-- //header -->
 	<!-- navigation -->
 	<div class="navigation">
@@ -335,6 +377,164 @@
         	}
         });
     </script>  
-	<!-- //cart-js -->   
+	<!-- //cart-js --> 
+
+	<script>
+	document.addEventListener("DOMContentLoaded", function(){
+
+		const input = document.getElementById("buscador");
+		const resultados = document.getElementById("resultados");
+
+		input.addEventListener("keyup", function(){
+
+			let query = this.value;
+
+			if(query.length < 2){
+				resultados.style.display = "none";
+				return;
+			}
+
+			fetch(`{% url 'autocomplete_productos' %}?q=${encodeURIComponent(query)}`)
+			.then(response => response.json())
+			.then(data => {
+
+				resultados.innerHTML = "";
+
+				if(data.length === 0){
+					resultados.style.display = "none";
+					return;
+				}
+
+				data.forEach(item => {
+
+					let li = document.createElement("li");
+
+					li.innerHTML = `
+						<a href="${item.url}" style="display:flex; align-items:center; gap:10px;">
+							${item.imagen ? `<img src="${item.imagen}" width="40">` : ""}
+							<div>
+								<div>${item.text}</div>
+								<small>S/ ${item.precio}</small>
+							</div>
+						</a>
+					`;
+
+					resultados.appendChild(li);
+				});
+
+				resultados.style.display = "block";
+			});
+		});
+
+		// Ocultar si haces click fuera
+		document.addEventListener("click", function(e){
+			if(!input.contains(e.target)){
+				resultados.style.display = "none";
+			}
+		});
+
+	});
+	</script>	
+
+<style>
+.header .container {
+    position: relative;
+}
+
+.header-actions {
+    position: absolute;
+    right: 15px;
+    top: 35px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.search-form {
+    margin: 0;
+}
+
+.search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 45px;
+    transition: width 0.3s ease;
+}
+
+.search-input {
+    width: 0 !important;
+    opacity: 0;
+    padding: 0;
+    border: 0;
+    height: 42px;
+    transition: all 0.3s ease;
+}
+
+.search-wrapper.active {
+    width: 420px;
+}
+
+.search-wrapper.active .search-input {
+    width: 100% !important;
+    opacity: 1;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+}
+
+.search-toggle {
+    width: 45px;
+    height: 42px;
+    border: none;
+    background: rgb(255, 255, 255);
+    color: rgb(13, 30, 222);
+    font-size: 17px;
+    border-radius: 4px;
+}
+
+#resultados {
+    width: 100%;
+    display: none;
+    position: absolute;
+    top: 44px;
+    left: 0;
+    z-index: 9999;
+}
+
+.cart {
+    margin: 0 !important;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    const box = document.querySelector(".search-wrapper");
+    const btn = document.getElementById("btn-search");
+    const input = document.getElementById("buscador");
+    const resultados = document.getElementById("resultados");
+
+    btn.addEventListener("click", function(e){
+        e.preventDefault();
+        box.classList.toggle("active");
+
+        if(box.classList.contains("active")){
+            input.focus();
+        } else {
+            resultados.style.display = "none";
+        }
+    });
+
+    document.addEventListener("click", function(e){
+        if(!box.contains(e.target)){
+            box.classList.remove("active");
+            resultados.style.display = "none";
+        }
+    });
+
+});
+</script>
+	
+	
 </body>
 </html>

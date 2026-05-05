@@ -90,6 +90,11 @@ urlpatterns = [
         views.lentes_condicion_contacto,
         name='lentes_condicion_contacto'
     ),
+    
+    path("buscar/", views.buscar_productos, name="buscar_productos"),
+    path("autocomplete-productos/", views.autocomplete_productos, name="autocomplete_productos"),
+
+    
 
 
 ]
