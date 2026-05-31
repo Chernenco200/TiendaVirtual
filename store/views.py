@@ -21,6 +21,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 
+
 def home(request):
     products = Producto.objects.filter(nuevo=1)
     myFilter = ProductoFilter(request.GET, queryset=products)
@@ -812,12 +813,21 @@ def whatsapp_webhook(request):
         token = request.GET.get("hub.verify_token")
         challenge = request.GET.get("hub.challenge")
 
+        if not mode and not token and not challenge:
+            return HttpResponse("Webhook WhatsApp activo", status=200)
+
         if mode == "subscribe" and token == VERIFY_TOKEN:
             return HttpResponse(challenge, status=200)
 
-        return HttpResponse("Webhook WhatsApp activo", status=200)
+        return HttpResponse("Token inválido", status=403)
 
     if request.method == "POST":
+        try:
+            data = json.loads(request.body.decode("utf-8"))
+            print("MENSAJE WHATSAPP RECIBIDO:", data)
+        except Exception as e:
+            print("ERROR WEBHOOK:", e)
+
         return JsonResponse({"status": "ok"}, status=200)
 
     return HttpResponse("Método no permitido", status=405)
