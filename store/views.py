@@ -15,6 +15,11 @@ from .filters import ProductoFilter, ProductoFilter2
 
 
 
+from django.views.decorators.csrf import csrf_exempt
+
+
+
+
 
 def home(request):
     products = Producto.objects.filter(nuevo=1)
@@ -798,7 +803,7 @@ def autocomplete_productos(request):
 
 
 
-
+VERIFY_TOKEN = "opticaic_token_2026"
 @csrf_exempt
 def whatsapp_webhook(request):
     if request.method == "GET":
