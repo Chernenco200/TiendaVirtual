@@ -801,23 +801,3 @@ def autocomplete_productos(request):
 
     return JsonResponse(resultados, safe=False)
 
-
-
-VERIFY_TOKEN = "opticaic_token_2026"
-
-@csrf_exempt
-def whatsapp_webhook(request):
-    if request.method == "GET":
-        mode = request.GET.get("hub.mode")
-        token = request.GET.get("hub.verify_token")
-        challenge = request.GET.get("hub.challenge")
-
-        if mode == "subscribe" and token == VERIFY_TOKEN:
-            return HttpResponse(challenge, status=200)
-
-        return HttpResponse("Webhook WhatsApp activo", status=200)
-
-    if request.method == "POST":
-        return JsonResponse({"status": "ok"}, status=200)
-
-    return HttpResponse("Método no permitido", status=405)
