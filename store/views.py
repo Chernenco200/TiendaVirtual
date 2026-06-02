@@ -818,6 +818,12 @@ def whatsapp_webhook(request):
         return HttpResponse("Token inválido", status=403)
 
     if request.method == "POST":
-        return JsonResponse({"status": "ok"}, status=200)
+
+        print("=" * 50)
+        print("WHATSAPP RECIBIDO")
+        print(request.body.decode("utf-8"))
+        print("=" * 50)
+
+        return JsonResponse({"status": "ok"})
 
     return HttpResponse("Método no permitido", status=405)
