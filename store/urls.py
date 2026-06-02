@@ -94,6 +94,10 @@ urlpatterns = [
     path("buscar/", views.buscar_productos, name="buscar_productos"),
     path("autocomplete-productos/", views.autocomplete_productos, name="autocomplete_productos"),
 
-
+    path(
+        "webhook/whatsapp/",
+        whatsapp_webhook,
+        name="whatsapp_webhook"
+    )
 
 ]
