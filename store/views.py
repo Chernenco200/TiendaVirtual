@@ -805,25 +805,19 @@ def autocomplete_productos(request):
 @csrf_exempt
 def whatsapp_webhook(request):
     if request.method == "GET":
-        mode = request.GET.get("hub.mode")
-        token = request.GET.get("hub.verify_token")
-        challenge = request.GET.get("hub.challenge")
+        mode = request.GET.get("hub.mode", "")
+        token = request.GET.get("hub.verify_token", "")
+        challenge = request.GET.get("hub.challenge", "")
 
         if not mode and not token and not challenge:
             return HttpResponse("Webhook WhatsApp activo", status=200)
 
-        if mode == "subscribe" and token == VERIFY_TOKEN:
-            return HttpResponse(challenge, status=200)
+        if mode == "subscribe" and token == "opticaic_token_2026":
+            return HttpResponse(str(challenge), status=200)
 
         return HttpResponse("Token inválido", status=403)
 
     if request.method == "POST":
-        try:
-            data = json.loads(request.body.decode("utf-8"))
-            print("MENSAJE WHATSAPP RECIBIDO:", data)
-        except Exception as e:
-            print("ERROR WEBHOOK:", e)
-
         return JsonResponse({"status": "ok"}, status=200)
 
     return HttpResponse("Método no permitido", status=405)
