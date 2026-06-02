@@ -96,7 +96,7 @@ urlpatterns = [
 
     path(
         "webhook/whatsapp/",
-        whatsapp_webhook,
+        views.whatsapp_webhook,
         name="whatsapp_webhook"
     )
 
