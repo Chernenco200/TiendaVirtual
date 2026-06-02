@@ -801,7 +801,7 @@ def autocomplete_productos(request):
 
     return JsonResponse(resultados, safe=False)
 
-
+VERIFY_TOKEN = "opticaic_token_2026"
 @csrf_exempt
 def whatsapp_webhook(request):
     if request.method == "GET":
