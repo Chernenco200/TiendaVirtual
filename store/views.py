@@ -19,11 +19,6 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 
-import os
-import requests
-
-
-
 
 
 def home(request):
@@ -819,18 +814,18 @@ def enviar_mensaje_whatsapp(numero_destino, mensaje):
         "Content-Type": "application/json",
     }
 
-    data = {
+    payload = {
         "messaging_product": "whatsapp",
         "to": numero_destino,
         "type": "text",
-        "text": {
-            "body": mensaje
-        }
+        "text": {"body": mensaje},
     }
 
-    response = requests.post(url, headers=headers, json=data)
-    print("RESPUESTA META:", response.status_code, response.text)
-    return response
+    r = requests.post(url, headers=headers, json=payload)
+
+    print("RESPUESTA META:", r.status_code, r.text)
+
+    return r
 
 
 @csrf_exempt
@@ -843,27 +838,28 @@ def whatsapp_webhook(request):
         if not mode and not token and not challenge:
             return HttpResponse("Webhook WhatsApp activo", status=200)
 
-        if mode == "subscribe" and token == VERIFY_TOKEN:
+        if mode == "subscribe" and token == "opticaic_token_2026":
             return HttpResponse(str(challenge), status=200)
 
         return HttpResponse("Token inválido", status=403)
 
     if request.method == "POST":
-        data = json.loads(request.body.decode("utf-8"))
-
         print("=" * 50)
         print("WHATSAPP RECIBIDO")
-        print(data)
+        raw_body = request.body.decode("utf-8")
+        print(raw_body)
         print("=" * 50)
 
         try:
+            data = request.body.decode("utf-8")
+            import json
+            data = json.loads(data)
+
             value = data["entry"][0]["changes"][0]["value"]
 
             if "messages" in value:
                 mensaje = value["messages"][0]
                 numero_cliente = mensaje["from"]
-
-                texto_cliente = mensaje.get("text", {}).get("body", "").strip().lower()
 
                 respuesta = """Bienvenido a Óptica IC 👓
 
@@ -874,23 +870,11 @@ Responde con una opción:
 3️⃣ Promociones
 4️⃣ Hablar con un asesor"""
 
-                if texto_cliente == "2":
-                    respuesta = "Nuestro horario de atención es de lunes a sábado de 9:00 a.m. a 8:00 p.m."
-
-                elif texto_cliente == "3":
-                    respuesta = "Promoción actual: consulta por nuestras monturas y lentes multifocales. Escríbenos para más información."
-
-                elif texto_cliente == "4":
-                    respuesta = "Un asesor de Óptica IC te atenderá en breve."
-
-                elif texto_cliente == "1":
-                    respuesta = "Por favor envía tu número de ticket. Ejemplo: TICKET 123"
-
                 enviar_mensaje_whatsapp(numero_cliente, respuesta)
 
         except Exception as e:
             print("ERROR PROCESANDO WHATSAPP:", e)
 
-        return JsonResponse({"status": "ok"}, status=200)
+        return JsonResponse({"status": "ok"})
 
     return HttpResponse("Método no permitido", status=405)
