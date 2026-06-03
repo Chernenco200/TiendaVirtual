@@ -801,8 +801,6 @@ def autocomplete_productos(request):
 
     return JsonResponse(resultados, safe=False)
 
-VERIFY_TOKEN = "opticaic_token_2026"
-@csrf_exempt
 def enviar_mensaje_whatsapp(numero_destino, mensaje):
     token = os.environ.get("WHATSAPP_ACCESS_TOKEN")
     phone_number_id = os.environ.get("WHATSAPP_PHONE_NUMBER_ID")
