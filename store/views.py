@@ -821,58 +821,12 @@ def enviar_mensaje_whatsapp(numero_destino, mensaje):
 
     r = requests.post(url, headers=headers, json=payload)
 
-    print("RESPUESTA META:", r.status_code, r.text)
+    print("URL META:", url)
+    print("TOKEN EXISTE:", "SI" if token else "NO")
+    print("TOKEN INICIO:", token[:15] if token else "SIN TOKEN")
+    print("PHONE_NUMBER_ID:", phone_number_id)
+    print("NUMERO DESTINO:", numero_destino)
+    print("RESPUESTA META STATUS:", r.status_code)
+    print("RESPUESTA META TEXTO:", r.text)
 
     return r
-
-
-@csrf_exempt
-def whatsapp_webhook(request):
-    if request.method == "GET":
-        mode = request.GET.get("hub.mode", "")
-        token = request.GET.get("hub.verify_token", "")
-        challenge = request.GET.get("hub.challenge", "")
-
-        if not mode and not token and not challenge:
-            return HttpResponse("Webhook WhatsApp activo", status=200)
-
-        if mode == "subscribe" and token == "opticaic_token_2026":
-            return HttpResponse(str(challenge), status=200)
-
-        return HttpResponse("Token inválido", status=403)
-
-    if request.method == "POST":
-        print("=" * 50)
-        print("WHATSAPP RECIBIDO")
-        raw_body = request.body.decode("utf-8")
-        print(raw_body)
-        print("=" * 50)
-
-        try:
-            data = request.body.decode("utf-8")
-            import json
-            data = json.loads(data)
-
-            value = data["entry"][0]["changes"][0]["value"]
-
-            if "messages" in value:
-                mensaje = value["messages"][0]
-                numero_cliente = mensaje["from"]
-
-                respuesta = """Bienvenido a Óptica IC 👓
-
-Responde con una opción:
-
-1️⃣ Consultar estado de pedido
-2️⃣ Horario de atención
-3️⃣ Promociones
-4️⃣ Hablar con un asesor"""
-
-                enviar_mensaje_whatsapp(numero_cliente, respuesta)
-
-        except Exception as e:
-            print("ERROR PROCESANDO WHATSAPP:", e)
-
-        return JsonResponse({"status": "ok"})
-
-    return HttpResponse("Método no permitido", status=405)
