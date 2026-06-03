@@ -803,32 +803,6 @@ def autocomplete_productos(request):
 
 VERIFY_TOKEN = "opticaic_token_2026"
 @csrf_exempt
-def enviar_mensaje_whatsapp(numero_destino, mensaje):
-    token = os.environ.get("WHATSAPP_ACCESS_TOKEN")
-    phone_number_id = os.environ.get("WHATSAPP_PHONE_NUMBER_ID")
-
-    url = f"https://graph.facebook.com/v25.0/{phone_number_id}/messages"
-
-    headers = {
-        "Authorization": f"Bearer {token}",
-        "Content-Type": "application/json",
-    }
-
-    payload = {
-        "messaging_product": "whatsapp",
-        "to": numero_destino,
-        "type": "text",
-        "text": {"body": mensaje},
-    }
-
-    r = requests.post(url, headers=headers, json=payload)
-
-    print("RESPUESTA META:", r.status_code, r.text)
-
-    return r
-
-
-@csrf_exempt
 def whatsapp_webhook(request):
     if request.method == "GET":
         mode = request.GET.get("hub.mode", "")
@@ -844,36 +818,11 @@ def whatsapp_webhook(request):
         return HttpResponse("Token inválido", status=403)
 
     if request.method == "POST":
+
         print("=" * 50)
         print("WHATSAPP RECIBIDO")
-        raw_body = request.body.decode("utf-8")
-        print(raw_body)
+        print(request.body.decode("utf-8"))
         print("=" * 50)
-
-        try:
-            data = request.body.decode("utf-8")
-            import json
-            data = json.loads(data)
-
-            value = data["entry"][0]["changes"][0]["value"]
-
-            if "messages" in value:
-                mensaje = value["messages"][0]
-                numero_cliente = mensaje["from"]
-
-                respuesta = """Bienvenido a Óptica IC 👓
-
-Responde con una opción:
-
-1️⃣ Consultar estado de pedido
-2️⃣ Horario de atención
-3️⃣ Promociones
-4️⃣ Hablar con un asesor"""
-
-                enviar_mensaje_whatsapp(numero_cliente, respuesta)
-
-        except Exception as e:
-            print("ERROR PROCESANDO WHATSAPP:", e)
 
         return JsonResponse({"status": "ok"})
 
