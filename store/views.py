@@ -801,6 +801,7 @@ def autocomplete_productos(request):
 
     return JsonResponse(resultados, safe=False)
 
+VERIFY_TOKEN = "opticaic_token_2026"
 def enviar_mensaje_whatsapp(numero_destino, mensaje):
     token = os.environ.get("WHATSAPP_ACCESS_TOKEN")
     phone_number_id = os.environ.get("WHATSAPP_PHONE_NUMBER_ID")
@@ -831,6 +832,7 @@ def enviar_mensaje_whatsapp(numero_destino, mensaje):
 
     return r
 
+
 @csrf_exempt
 def whatsapp_webhook(request):
     if request.method == "GET":
@@ -854,7 +856,10 @@ def whatsapp_webhook(request):
         print("=" * 50)
 
         try:
-            data = json.loads(raw_body)
+            data = request.body.decode("utf-8")
+            import json
+            data = json.loads(data)
+
             value = data["entry"][0]["changes"][0]["value"]
 
             if "messages" in value:
