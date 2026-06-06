@@ -100,4 +100,6 @@ urlpatterns = [
         name="whatsapp_webhook"
     )
 
+    path("prueba-whatsapp/", views.prueba_whatsapp, name="prueba_whatsapp")
+
 ]

@@ -883,3 +883,14 @@ Responde con una opción:
         return JsonResponse({"status": "ok"})
 
     return HttpResponse("Método no permitido", status=405)
+
+
+def prueba_whatsapp(request):
+    r = enviar_mensaje_whatsapp(
+        "51980031833",  # tu número
+        "Mensaje enviado desde Django ✅"
+    )
+
+    return HttpResponse(
+        f"Status: {r.status_code}<br>{r.text}"
+    )
