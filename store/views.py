@@ -801,7 +801,7 @@ def autocomplete_productos(request):
 
     return JsonResponse(resultados, safe=False)
 
-VERIFY_TOKEN = "opticaic_token_2026"
+
 def enviar_mensaje_whatsapp(numero_destino, mensaje):
     token = os.environ.get("WHATSAPP_ACCESS_TOKEN")
     phone_number_id = os.environ.get("WHATSAPP_PHONE_NUMBER_ID")
@@ -820,17 +820,75 @@ def enviar_mensaje_whatsapp(numero_destino, mensaje):
         "text": {"body": mensaje},
     }
 
-    r = requests.post(url, headers=headers, json=payload)
+    return requests.post(url, headers=headers, json=payload)
 
-    print("URL META:", url)
-    print("TOKEN EXISTE:", "SI" if token else "NO")
-    print("TOKEN INICIO:", token[:15] if token else "SIN TOKEN")
-    print("PHONE_NUMBER_ID:", phone_number_id)
-    print("NUMERO DESTINO:", numero_destino)
-    print("RESPUESTA META STATUS:", r.status_code)
-    print("RESPUESTA META TEXTO:", r.text)
 
-    return r
+def menu_principal():
+    return """Bienvenido a Óptica IC 👓
+
+Responde con una opción:
+
+1️⃣ Consultar estado de pedido
+2️⃣ Horario de atención
+3️⃣ Promociones
+4️⃣ Hablar con un asesor"""
+
+
+def obtener_respuesta(mensaje_texto):
+    texto = mensaje_texto.strip().lower()
+
+    if texto in ["hola", "buenos dias", "buenos días", "buenas tardes", "buenas noches", "menu", "menú"]:
+        return menu_principal()
+
+    if texto == "1":
+        return """Para consultar el estado de tu pedido, envíanos el número de recibo.
+
+Ejemplo:
+estado 123"""
+
+    if texto.startswith("estado"):
+        partes = texto.split()
+
+        if len(partes) < 2:
+            return "Por favor envíanos tu número de recibo. Ejemplo: estado 123"
+
+        numero_pedido = partes[1]
+
+        return f"""Estamos revisando el estado de tu pedido N° {numero_pedido} 👓
+
+En breve un asesor confirmará si ya está listo."""
+
+    if texto == "2":
+        return """Nuestro horario de atención es:
+
+Lunes a sábado:
+9:00 a. m. a 8:00 p. m.
+
+Domingos:
+Consultar disponibilidad."""
+
+    if texto == "3":
+        return """Promociones disponibles en Óptica IC 👓
+
+✅ Lentes completos desde precios especiales
+✅ Promo familiar
+✅ Consulta por monturas, lunas y multifocales
+
+Escríbenos qué tipo de lentes necesitas."""
+
+    if texto == "4":
+        return """Un asesor de Óptica IC te atenderá en breve.
+
+También puedes escribir directamente tu consulta por aquí."""
+
+    return """No entendí tu mensaje.
+
+Responde con una opción del menú:
+
+1️⃣ Consultar estado de pedido
+2️⃣ Horario de atención
+3️⃣ Promociones
+4️⃣ Hablar con un asesor"""
 
 
 @csrf_exempt
@@ -843,37 +901,25 @@ def whatsapp_webhook(request):
         if not mode and not token and not challenge:
             return HttpResponse("Webhook WhatsApp activo", status=200)
 
-        if mode == "subscribe" and token == "opticaic_token_2026":
+        if mode == "subscribe" and token == VERIFY_TOKEN:
             return HttpResponse(str(challenge), status=200)
 
         return HttpResponse("Token inválido", status=403)
 
     if request.method == "POST":
-        print("=" * 50)
-        print("WHATSAPP RECIBIDO")
-        raw_body = request.body.decode("utf-8")
-        print(raw_body)
-        print("=" * 50)
-
         try:
-            data = request.body.decode("utf-8")
-            import json
-            data = json.loads(data)
-
+            data = json.loads(request.body.decode("utf-8"))
             value = data["entry"][0]["changes"][0]["value"]
 
             if "messages" in value:
                 mensaje = value["messages"][0]
-                numero_cliente = mensaje["from"]
+                numero_cliente = mensaje.get("from")
 
-                respuesta = """Bienvenido a Óptica IC 👓
-
-Responde con una opción:
-
-1️⃣ Consultar estado de pedido
-2️⃣ Horario de atención
-3️⃣ Promociones
-4️⃣ Hablar con un asesor"""
+                if mensaje.get("type") == "text":
+                    texto_cliente = mensaje["text"]["body"]
+                    respuesta = obtener_respuesta(texto_cliente)
+                else:
+                    respuesta = "Por ahora solo puedo responder mensajes de texto. Escribe menú para ver las opciones."
 
                 enviar_mensaje_whatsapp(numero_cliente, respuesta)
 
@@ -885,15 +931,6 @@ Responde con una opción:
     return HttpResponse("Método no permitido", status=405)
 
 
-def prueba_whatsapp(request):
-    r = enviar_mensaje_whatsapp(
-        "51980031833",  # tu número
-        "Mensaje enviado desde Django ✅"
-    )
-
-    return HttpResponse(
-        f"Status: {r.status_code}<br>{r.text}"
-    )
 
 
 
