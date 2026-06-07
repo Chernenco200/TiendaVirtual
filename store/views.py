@@ -896,18 +896,20 @@ def prueba_whatsapp(request):
     )
 
 
-def info_waba(request):
-    import os, requests
+
+
+def suscribir_waba(request):
     token = os.environ.get("WHATSAPP_ACCESS_TOKEN")
     waba_id = "1315153820041937"
+
+    url = f"https://graph.facebook.com/v25.0/{waba_id}/subscribed_apps"
 
     headers = {
         "Authorization": f"Bearer {token}"
     }
 
-    r = requests.get(
-        f"https://graph.facebook.com/v25.0/{waba_id}/subscribed_apps",
-        headers=headers
-    )
+    r = requests.post(url, headers=headers)
 
-    return HttpResponse(r.text)
+    return HttpResponse(
+        f"Status: {r.status_code}<br><pre>{r.text}</pre>"
+    )
