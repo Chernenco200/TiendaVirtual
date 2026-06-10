@@ -325,7 +325,7 @@ def lentes_marca(request, valor):
     if not marca_real:
         raise Http404("Marca no encontrada")
 
-    return _render_lentes_de_sol(request, filtros_iniciales={
+    return _render_lentes_oftalmicos(request, filtros_iniciales={
         'marca': marca_real
     })
 
@@ -841,7 +841,7 @@ def obtener_respuesta(mensaje_texto):
         return menu_principal()
 
     if texto == "1":
-        return """Para consultar el estado de tu pedido, envíanos el número de recibo.
+        return """Para consultar el estado de tu pedido, envíanos tu número de ticket.
 
 Ejemplo:
 estado 123"""
@@ -862,16 +862,15 @@ En breve un asesor confirmará si ya está listo."""
         return """Nuestro horario de atención es:
 
 Lunes a sábado:
-9:00 a. m. a 8:00 p. m.
+9:00 am. a 7:45 pm.
 
-Domingos:
-Consultar disponibilidad."""
+Domingos y feriados:
+10:30 am.a 6:30 pm.
 
     if texto == "3":
         return """Promociones disponibles en Óptica IC 👓
 
-✅ Lentes completos desde precios especiales
-✅ Promo familiar
+✅ Promo familiar (3X2 en monturas) 
 ✅ Consulta por monturas, lunas y multifocales
 
 Escríbenos qué tipo de lentes necesitas."""
