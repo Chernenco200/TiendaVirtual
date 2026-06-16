@@ -167,7 +167,9 @@
 
             <div class="simpleCart_shelfItem">
                 <p>
-                    <span>S/ {{ producto.precio_promo }}</span>
+                    {% if producto.precio_anterior %}
+                        <span>S/ {{ producto.precio_anterior }}</span>
+                    {% endif %}
                     <i class="item_price">S/ {{ producto.precio_venta }}</i>
                 </p>
                 <form action="#" method="post">
