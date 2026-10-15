@@ -6,16 +6,16 @@ from django.db.models import Count, Q
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 import json
-import datetime 
+import datetime
 from django.core.paginator import Paginator
-from .models import * 
+from .models import *
 from .utils import cookieCart, cartData
 
-from .filters import ProductoFilter, ProductoFilter2 
+from .filters import ProductoFilter, ProductoFilter2
 
 
 
-from django.http import HttpResponse 
+from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import os
 import requests
@@ -30,7 +30,7 @@ def home(request):
     products=paginator.get_page(pagina)
     pagina_actual=int(pagina)
     paginas=range(1, products.paginator.num_pages + 1)
-    
+
     context = {'products':products, 'paginas':paginas,'pagina_actual': pagina_actual, 'myFilter': myFilter}
     return render(request, 'store/home.html', context)
 
@@ -56,7 +56,7 @@ def uso_lentes_de_contacto(request,uso_id):
 	pagina_actual=int(pagina)
 	paginas=range(1, products.paginator.num_pages + 1)
 
-	
+
 	context = {'products':products, 'paginas':paginas,'pagina_actual': pagina_actual, 'myFilter': myFilter}
 	return render(request, 'store/uso_lentes_de_contacto.html', context)
 
@@ -71,7 +71,7 @@ def tipo_lentes_de_contacto(request,tipo_id):
 	pagina_actual=int(pagina)
 	paginas=range(1, products.paginator.num_pages + 1)
 
-	
+
 	context = {'products':products, 'paginas':paginas,'pagina_actual': pagina_actual, 'myFilter': myFilter}
 	return render(request, 'store/tipo_lentes_de_contacto.html', context)
 
@@ -83,7 +83,7 @@ def single(request, id):
 
 def legal(request):
 	context = {}
-	return render(request, 'store/legal.html', context)	
+	return render(request, 'store/legal.html', context)
 
 
 
@@ -127,7 +127,10 @@ def _render_lentes_oftalmicos(request, filtros_iniciales=None):
     base_products = Producto.objects.filter(
         tipo="Monturas oftálmicas",
         stock__gte=1,
-        activo=True
+        activo=True,
+        imagenF__isnull=False
+    ).exclude(
+        imagenF=""
     ).order_by('-precio_venta')
 
     def aplicar_filtros(qs, exclude_field=None):
@@ -303,7 +306,7 @@ def lentes_forma(request, valor):
 
     return _render_lentes_oftalmicos(request, filtros_iniciales={
         'forma': forma_real
-    })    
+    })
 
 
 
@@ -364,8 +367,12 @@ def _render_lentes_de_sol(request, filtros_iniciales=None):
     base_products = Producto.objects.filter(
         tipo="Monturas Solares",
         stock__gte=1,
-        activo=True
+        activo=True,
+        imagenF__isnull=False
+    ).exclude(
+        imagenF=""
     ).order_by('-precio_venta')
+
 
     def aplicar_filtros(qs, exclude_field=None):
         if categoria and exclude_field != 'categoria':
@@ -539,7 +546,7 @@ def gafas_forma(request, valor):
 
     return _render_lentes_de_sol(request, filtros_iniciales={
         'forma': forma_real
-    })    
+    })
 
 
 
@@ -727,7 +734,7 @@ def lentes_uso_contacto(request, valor):
 
     return _render_lentes_de_contacto(request, filtros_iniciales={
         'uso': uso_real
-    })   
+    })
 
 def lentes_marca_contacto(request, valor):
     mapa_marca = {
@@ -766,7 +773,7 @@ def lentes_condicion_contacto(request, valor):
 
 def buscar_productos(request):
     q = request.GET.get("q", "")
-    
+
     productos = Producto.objects.filter(
         Q(descripcion__icontains=q) |
         Q(cod__icontains=q) |
@@ -781,7 +788,7 @@ def buscar_productos(request):
 
 def autocomplete_productos(request):
     q = request.GET.get("q", "")
-    
+
     resultados = []
 
     if q:
