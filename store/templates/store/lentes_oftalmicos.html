@@ -4,32 +4,32 @@
 
 {% load myapp_extras %}
 
-<!-- <div class="banner banner1">
-	<div class="container">
-		<h2>Grandes ofertas <span>Lentes oftálmicas</span> Con <i>35% de descuento</i></h2> 
-	</div>
-</div> -->
-	<!-- breadcrumbs -->
+<!-- breadcrumbs -->
 <div class="breadcrumb_dress">
     <div class="container">
         <ul>
-        <li>Habla con un asesor al <a href="https://wa.me/51952305913?text=Hola,%20quiero%20comunicarme%20con%20un%20asesor" target="_blank">952305913</a></li>
+        <li>Habla con un asesor al <a href="https://wa.me/51952305913?text=Hola,%20quiero%20comunicarme%20con%20un%20asesor" target="_blank" rel="noopener">952305913</a></li>
         </ul>
     </div>
 </div>
 
-	<!-- new-products -->
-	<div class="new-products">
-		<div class="container">
-			<h2>Todos los Lentes oftálmicos</h2>
-<p>
-	<div class="small text-muted mb-2">Filtrar por:</div>
-</p>
+<!-- catálogo -->
+<section class="ic-catalogo">
+  <div class="container">
 
-<div class="container py-3">
-  <!-- Barra de filtros -->
-  <div class="d-flex flex-wrap gap-2 mb-3">
-	<div class="filtros-barra">
+    <nav class="ic-migas" aria-label="Ruta">
+      <a href="/">Inicio</a> / <span>Lentes oftálmicos</span>
+    </nav>
+    <h1 class="ic-titulo">Lentes oftálmicos</h1>
+
+    <!-- Barra superior: total + filtros -->
+    <div class="ic-toolbar">
+      <p class="ic-total">
+        {% if products.paginator %}{{ products.paginator.count }}{% else %}{{ products|length }}{% endif %} productos
+      </p>
+      <div class="ic-filtros">
+        <span class="ic-filtros-label">Filtrar por:</span>
+<div class="filtros-barra">
 
     <!-- Marca -->
 	<div class="dropdown">
@@ -150,7 +150,8 @@
 		<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
 			Precio <span class="caret"></span>
 		</button>
-		<ul class="dropdown-menu">Desde:
+		<ul class="dropdown-menu">
+        <li class="dropdown-header">Desde:</li>
         {% for item in precios_opciones %}
           <li>
             <a class="dropdown-item"
@@ -164,208 +165,275 @@
       </ul>
     </div>
 	</div>
-  </div>
+      </div>
+    </div>
 
-  <!-- Chips de filtros activos -->
-  {% if filtros_activos %}
-    <div class="mb-3">
-      <div class="d-flex flex-wrap gap-2 align-items-center">
+    <!-- Chips de filtros activos -->
+    {% if filtros_activos %}
+    <div class="ic-chips">
+      <div class="ic-chips-lista">
         {% for f in filtros_activos %}
           {% if f.tipo == 'marca' %}
             <a href="?{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
-               class="badge rounded-pill text-bg-dark text-decoration-none px-3 py-2">
-              {{ f.label }} ×
+               class="ic-chip">
+              {{ f.label }} <span aria-hidden="true">×</span><span class="sr-only">Quitar filtro</span>
             </a>
           {% elif f.tipo == 'categoria' %}
             <a href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
-               class="badge rounded-pill text-bg-dark text-decoration-none px-3 py-2">
-              {{ f.label }} ×
+               class="ic-chip">
+              {{ f.label }} <span aria-hidden="true">×</span><span class="sr-only">Quitar filtro</span>
             </a>
           {% elif f.tipo == 'talla' %}
             <a href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
-               class="badge rounded-pill text-bg-dark text-decoration-none px-3 py-2">
-              {{ f.label }} ×
+               class="ic-chip">
+              {{ f.label }} <span aria-hidden="true">×</span><span class="sr-only">Quitar filtro</span>
             </a>
           {% elif f.tipo == 'forma' %}
             <a href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
-               class="badge rounded-pill text-bg-dark text-decoration-none px-3 py-2">
-              {{ f.label }} ×
+               class="ic-chip">
+              {{ f.label }} <span aria-hidden="true">×</span><span class="sr-only">Quitar filtro</span>
             </a>
           {% elif f.tipo == 'material' %}
             <a href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
-               class="badge rounded-pill text-bg-dark text-decoration-none px-3 py-2">
-              {{ f.label }} ×
+               class="ic-chip">
+              {{ f.label }} <span aria-hidden="true">×</span><span class="sr-only">Quitar filtro</span>
             </a>
           {% elif f.tipo == 'color' %}
             <a href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
-               class="badge rounded-pill text-bg-dark text-decoration-none px-3 py-2">
-              {{ f.label }} ×
+               class="ic-chip">
+              {{ f.label }} <span aria-hidden="true">×</span><span class="sr-only">Quitar filtro</span>
             </a>
           {% elif f.tipo == 'precio' %}
             <a href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}"
-               class="badge rounded-pill text-bg-dark text-decoration-none px-3 py-2">
-              {{ f.label }} ×
+               class="ic-chip">
+              {{ f.label }} <span aria-hidden="true">×</span><span class="sr-only">Quitar filtro</span>
             </a>
           {% endif %}
         {% endfor %}
 
-        <a href="{% url 'lentes_oftalmicos' %}" class="small text-decoration-none">
+        <a href="{% url 'lentes_oftalmicos' %}" class="ic-chips-limpiar">
           Quitar todos
         </a>
       </div>
     </div>
   {% endif %}
 
-</div>
+    <!-- Cuadrícula de productos -->
+    <div class="ic-productos-grid">
+      {% for producto in products %}
+      <article class="ic-producto">
 
+        <a class="ic-producto-card" href="{{ producto.get_absolute_url }}">
+          <div class="ic-producto-badges">
+            {% if producto.precio_anterior > producto.precio_venta %}
+              <span class="ic-badge ic-badge--oscuro">Oferta</span>
+            {% endif %}
+            <span class="ic-badge">Obtén 50% en el 2do par</span>
+          </div>
 
+          <div class="ic-producto-imagen">
+            {% if producto.imagenF %}
+              <img src="{{ producto.imagenF.url }}" alt="{{ producto.descripcion }}" loading="lazy">
+            {% else %}
+              <span class="ic-sin-imagen">Imagen no disponible</span>
+            {% endif %}
+          </div>
 
-            <div class="ic-productos-grid">
-                {% for producto in products %}
-                <article class="ic-producto">
-                    <a class="ic-producto-imagen" href="{{ producto.get_absolute_url }}">
-                        {% if producto.imagenF %}
-                        <img src="{{ producto.imagenF.url }}" alt="{{ producto.descripcion }}" loading="lazy">
-                        {% endif %}
-                    </a>
-                    <h4 class="ic-producto-nombre"><a href="{{ producto.get_absolute_url }}">{{ producto.descripcion }}</a></h4>
-                    <div class="simpleCart_shelfItem ic-producto-compra">
-                        <p class="ic-producto-precio">
-                            {% if producto.precio_anterior > 0 %}<span>S/ {{ producto.precio_anterior }}</span>{% endif %}
-                            <i class="item_price">S/ {{ producto.precio_venta }}</i>
-                        </p>
-                        <form action="#" method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="cmd" value="_cart">
-                            <input type="hidden" name="add" value="1">
-                            <input type="hidden" name="w3ls_item" value="{{ producto.descripcion }}">
-                            <input type="hidden" name="amount" value="{{ producto.precio_venta }}">
-                            <button type="submit" class="w3ls-cart">Agregar al carrito</button>
-                        </form>
-                    </div>
-                </article>
-                {% endfor %}
-            </div>
-            <div class="ic-paginacion">{% include "Paginacion.html" %}</div>
+          <span class="ic-producto-banda">Ver detalle</span>
+        </a>
+
+        <div class="ic-producto-info">
+          {% if producto.marca %}<p class="ic-producto-marca">{{ producto.marca }}</p>{% endif %}
+          <h2 class="ic-producto-nombre">
+            <a href="{{ producto.get_absolute_url }}">{{ producto.descripcion }}</a>
+          </h2>
+
+          <div class="simpleCart_shelfItem ic-producto-compra">
+            <p class="ic-producto-precio">
+              {% if producto.precio_anterior > producto.precio_venta %}
+                <s class="ic-precio-anterior">S/{{ producto.precio_anterior }}</s>
+              {% endif %}
+              <span class="item_price ic-precio-actual">S/{{ producto.precio_venta }}</span>
+              {% if producto.precio_anterior > producto.precio_venta %}
+                {% widthratio producto.precio_venta producto.precio_anterior -100 as pct_neg %}
+                <span class="ic-dcto">{{ pct_neg|add:100 }}% dcto</span>
+              {% endif %}
+            </p>
+            <form action="#" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="cmd" value="_cart">
+              <input type="hidden" name="add" value="1">
+              <input type="hidden" name="w3ls_item" value="{{ producto.descripcion }}">
+              <input type="hidden" name="amount" value="{{ producto.precio_venta }}">
+              <button type="submit" class="w3ls-cart ic-btn-carrito">Agregar al carrito</button>
+            </form>
+          </div>
         </div>
+
+      </article>
+      {% empty %}
+      <div class="ic-vacio">
+        <p>No hay monturas con estos filtros.</p>
+        <a href="{% url 'lentes_oftalmicos' %}">Quitar todos los filtros</a>
+      </div>
+      {% endfor %}
     </div>
 
-	<!-- //new-products -->
-		
-
-				
-
-
- 
-
-
-
-
-	<!-- //footer -->  
-	<script type="text/javascript">
-		$(window).load(function() {
-			$("#flexiselDemo2").flexisel({
-				visibleItems:4,
-				animationSpeed: 1000,
-				autoPlay: true,
-				autoPlaySpeed: 3000,    		
-				pauseOnHover: true,
-				enableResponsiveBreakpoints: true,
-				responsiveBreakpoints: { 
-					portrait: { 
-						changePoint:568,
-						visibleItems: 1
-					}, 
-					landscape: { 
-						changePoint:667,
-						visibleItems:2
-					},
-					tablet: { 
-						changePoint:768,
-						visibleItems: 3
-					}
-				}
-			});
-			
-		});
-	</script>
-	<script type="text/javascript" src="js/jquery.flexisel.js"></script>
-
+    <div class="ic-paginacion">{% include "Paginacion.html" %}</div>
+  </div>
+</section>
+<!-- //catálogo -->
 
 <style>
-.filtros-barra{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-bottom:20px;
+/* ===== Todo va dentro de .ic-catalogo para no chocar con los estilos del tema ===== */
+.ic-catalogo{
+  --ic-texto:#1a1a1a;
+  --ic-suave:#6b6b6b;
+  --ic-linea:#d9d9d9;
+  --ic-fondo-card:#ffffff;
+  --ic-banda:#33434d;
+  --ic-badge:#efefef;
+  padding:10px 0 50px;
+  color:var(--ic-texto);
 }
 
-.filtros-barra .dropdown{
-    display:inline-block;
+/* Encabezado */
+.ic-catalogo .ic-migas{ font-size:13px; color:var(--ic-suave); margin:10px 0 6px; }
+.ic-catalogo .ic-migas a{ color:var(--ic-suave); }
+.ic-catalogo .ic-titulo{
+  font-family:"Cormorant Garamond","Times New Roman",serif;
+  font-weight:400; font-size:42px; letter-spacing:.04em;
+  text-transform:uppercase; margin:0 0 22px; line-height:1.1;
 }
 
-.filtros-barra .btn{
-    border-radius:20px;
-    padding:6px 14px;
- }   
+/* Barra superior */
+.ic-catalogo .ic-toolbar{
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
+  gap:12px 20px; border-top:1px solid var(--ic-linea); padding:16px 0; margin-bottom:10px;
+}
+.ic-catalogo .ic-total{ margin:0; color:var(--ic-suave); font-size:15px; letter-spacing:.03em; }
+.ic-catalogo .ic-filtros{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+.ic-catalogo .ic-filtros-label{ font-size:14px; color:var(--ic-suave); margin-right:4px; }
+.ic-catalogo .filtros-barra{ display:flex; flex-wrap:wrap; gap:8px; margin:0; }
+.ic-catalogo .filtros-barra .dropdown{ display:inline-block; }
+.ic-catalogo .filtros-barra .btn{
+  border-radius:0; border:1px solid var(--ic-linea); background:#fff;
+  padding:7px 14px; font-size:14px; color:var(--ic-texto); box-shadow:none;
+}
+.ic-catalogo .filtros-barra .btn:hover,
+.ic-catalogo .filtros-barra .open .btn{ border-color:var(--ic-texto); }
+.ic-catalogo .filtros-barra .dropdown-menu{ max-height:320px; overflow-y:auto; border-radius:0; }
 
-/* Cuadrícula estable: no usa floats de Bootstrap */
-.ic-productos-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 28px 18px;
-    width: 100%;
-    clear: both;
+/* Chips de filtros activos */
+.ic-catalogo .ic-chips{ margin:0 0 20px; }
+.ic-catalogo .ic-chips-lista{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+.ic-catalogo .ic-chip{
+  display:inline-flex; align-items:center; gap:6px; padding:6px 12px;
+  background:var(--ic-banda); color:#fff; font-size:13px; text-decoration:none;
 }
-.ic-producto {
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    text-align: center;
-    padding: 8px;
-    box-sizing: border-box;
+.ic-catalogo .ic-chip:hover{ color:#fff; opacity:.85; text-decoration:none; }
+.ic-catalogo .ic-chips-limpiar{ font-size:13px; color:var(--ic-texto); text-decoration:underline; margin-left:4px; }
+
+/* ===== Cuadrícula: 3 por fila en escritorio ===== */
+.ic-catalogo .ic-productos-grid{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:44px 40px;
+  width:100%;
+  clear:both;
+  margin-top:20px;
 }
-.ic-producto-imagen {
-    height: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+.ic-catalogo .ic-producto{ min-width:0; display:flex; flex-direction:column; text-align:left; }
+
+/* Tarjeta de imagen (como GMO: fondo blanco, sombra suave, banda oscura abajo) */
+.ic-catalogo .ic-producto-card{
+  position:relative; display:flex; flex-direction:column;
+  background:var(--ic-fondo-card);
+  box-shadow:0 1px 6px rgba(0,0,0,.12);
+  text-decoration:none; color:inherit;
+  transition:box-shadow .2s ease;
 }
-.ic-producto-imagen img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+.ic-catalogo .ic-producto-card:hover{ box-shadow:0 4px 16px rgba(0,0,0,.18); text-decoration:none; }
+.ic-catalogo .ic-producto-card:focus-visible{ outline:2px solid var(--ic-banda); outline-offset:3px; }
+
+.ic-catalogo .ic-producto-badges{
+  position:absolute; top:22px; left:0; right:0; z-index:1;
+  display:flex; flex-direction:column; align-items:center; gap:8px; pointer-events:none;
 }
-.ic-producto-nombre {
-    height: 54px;
-    margin: 10px 0 6px;
-    line-height: 18px;
-    font-size: 14px;
-    overflow: hidden;
+.ic-catalogo .ic-badge{
+  background:var(--ic-badge); color:#333; font-size:12px; letter-spacing:.04em;
+  text-transform:uppercase; padding:5px 9px; line-height:1.2;
 }
-.ic-producto-nombre a { overflow-wrap: anywhere; }
-.ic-producto-compra { margin-top: auto; }
-.ic-producto-precio {
-    min-height: 30px;
-    margin: 0 0 10px;
+.ic-catalogo .ic-badge--oscuro{ background:var(--ic-banda); color:#fff; }
+
+.ic-catalogo .ic-producto-imagen{
+  aspect-ratio:1 / 1;
+  display:flex; align-items:center; justify-content:center;
+  padding:70px 24px 30px;
 }
-.ic-producto-precio .item_price { display: inline-block; }
-.ic-producto-compra form { margin: 0; }
-.ic-paginacion { clear: both; margin-top: 28px; }
-@media (max-width: 991px) {
-    .ic-productos-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ic-catalogo .ic-producto-imagen img{
+  display:block; max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain;
+  transition:transform .3s ease;
 }
-@media (max-width: 767px) {
-    .ic-productos-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 10px; }
-    .ic-producto-imagen { height: 125px; }
+.ic-catalogo .ic-producto-card:hover .ic-producto-imagen img{ transform:scale(1.04); }
+.ic-catalogo .ic-sin-imagen{ color:var(--ic-suave); font-size:13px; }
+
+.ic-catalogo .ic-producto-banda{
+  display:block; background:var(--ic-banda); color:#fff; text-align:center;
+  font-size:15px; letter-spacing:.03em; padding:9px 10px;
 }
-@media (max-width: 420px) {
-    .ic-productos-grid { grid-template-columns: 1fr; }
+
+/* Texto bajo la tarjeta */
+.ic-catalogo .ic-producto-info{ display:flex; flex-direction:column; flex:1; padding-top:18px; }
+.ic-catalogo .ic-producto-marca{
+  margin:0 0 6px; font-size:14px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+}
+.ic-catalogo .ic-producto-nombre{
+  margin:0 0 8px; font-size:16px; font-weight:400; line-height:1.4; letter-spacing:.03em;
+  font-family:inherit;
+}
+.ic-catalogo .ic-producto-nombre a{ color:var(--ic-texto); text-decoration:none; overflow-wrap:anywhere; }
+.ic-catalogo .ic-producto-nombre a:hover{ text-decoration:underline; }
+
+.ic-catalogo .ic-producto-compra{ margin-top:auto; }
+.ic-catalogo .ic-producto-precio{
+  display:flex; flex-wrap:wrap; align-items:center; gap:4px 12px; margin:0 0 14px;
+}
+.ic-catalogo .ic-precio-anterior{ color:var(--ic-suave); font-size:15px; }
+.ic-catalogo .ic-precio-actual{ font-size:18px; font-weight:700; letter-spacing:.06em; font-style:normal; }
+.ic-catalogo .ic-dcto{
+  background:var(--ic-banda); color:#fff; font-size:12px; font-weight:700;
+  letter-spacing:.06em; text-transform:uppercase; padding:3px 7px;
+}
+.ic-catalogo .ic-producto-compra form{ margin:0; }
+.ic-catalogo .ic-btn-carrito{
+  width:100%; background:#fff; color:var(--ic-texto); border:1px solid var(--ic-texto);
+  border-radius:0; padding:10px 12px; font-size:14px; letter-spacing:.04em; cursor:pointer;
+  transition:background .2s ease, color .2s ease;
+}
+.ic-catalogo .ic-btn-carrito:hover,
+.ic-catalogo .ic-btn-carrito:focus-visible{ background:var(--ic-texto); color:#fff; }
+
+.ic-catalogo .ic-vacio{ grid-column:1 / -1; text-align:center; padding:60px 0; color:var(--ic-suave); }
+.ic-catalogo .ic-paginacion{ clear:both; margin-top:44px; text-align:center; }
+
+/* ===== Tablet: 2 por fila ===== */
+@media (max-width: 991px){
+  .ic-catalogo .ic-productos-grid{ grid-template-columns:repeat(2, minmax(0, 1fr)); gap:36px 24px; }
+  .ic-catalogo .ic-titulo{ font-size:34px; }
+}
+
+/* ===== Celular: 1 por fila ===== */
+@media (max-width: 575px){
+  .ic-catalogo .ic-productos-grid{ grid-template-columns:1fr; gap:36px; }
+  .ic-catalogo .ic-titulo{ font-size:28px; }
+  .ic-catalogo .ic-toolbar{ flex-direction:column; align-items:flex-start; }
+  .ic-catalogo .ic-producto-imagen{ padding:64px 20px 24px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .ic-catalogo *{ transition:none !important; }
 }
 </style>
-
 
 {% endblock content %}
