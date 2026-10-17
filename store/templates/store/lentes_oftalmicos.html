@@ -253,10 +253,10 @@
               {% if producto.precio_anterior > producto.precio_venta %}
                 <s class="ic-precio-anterior">S/{{ producto.precio_anterior }}</s>
               {% endif %}
-              <span class="item_price ic-precio-actual">S/{{ producto.precio_venta }}</span>
+              <strong class="item_price ic-precio-actual">S/{{ producto.precio_venta }}</strong>
               {% if producto.precio_anterior > producto.precio_venta %}
                 {% widthratio producto.precio_venta producto.precio_anterior -100 as pct_neg %}
-                <span class="ic-dcto">{{ pct_neg|add:100 }}% dcto</span>
+                <em class="ic-dcto">{{ pct_neg|add:100 }}% dcto</em>
               {% endif %}
             </p>
             <form action="#" method="post">
@@ -292,6 +292,7 @@
   --ic-linea:#d9d9d9;
   --ic-fondo-card:#ffffff;
   --ic-banda:#33434d;
+  --ic-navbar:#1f3a5f; /* reemplaza por el azul exacto de tu navbar */
   --ic-badge:#efefef;
   padding:10px 0 50px;
   color:var(--ic-texto);
@@ -379,7 +380,7 @@
 .ic-catalogo .ic-sin-imagen{ color:var(--ic-suave); font-size:13px; }
 
 .ic-catalogo .ic-producto-banda{
-  display:block; background:var(--ic-banda); color:#fff; text-align:center;
+  display:block; background:var(--ic-navbar); color:#fff; text-align:center;
   font-size:15px; letter-spacing:.03em; padding:9px 10px;
 }
 
@@ -399,10 +400,18 @@
 .ic-catalogo .ic-producto-precio{
   display:flex; flex-wrap:wrap; align-items:center; gap:4px 12px; margin:0 0 14px;
 }
-.ic-catalogo .ic-precio-anterior{ color:var(--ic-suave); font-size:15px; }
-.ic-catalogo .ic-precio-actual{ font-size:18px; font-weight:700; letter-spacing:.06em; font-style:normal; }
-.ic-catalogo .ic-dcto{
-  background:var(--ic-banda); color:#fff; font-size:12px; font-weight:700;
+/* El tema aplica line-through a los textos del precio; aquí se fuerza el estilo correcto */
+.ic-catalogo .ic-producto-precio .ic-precio-anterior{
+  text-decoration:line-through !important; color:var(--ic-suave) !important;
+  font-size:15px !important; font-weight:400 !important; font-style:normal !important;
+}
+.ic-catalogo .ic-producto-precio .ic-precio-actual{
+  text-decoration:none !important; color:var(--ic-texto) !important;
+  font-size:18px !important; font-weight:700 !important; letter-spacing:.06em; font-style:normal !important;
+}
+.ic-catalogo .ic-producto-precio .ic-dcto{
+  text-decoration:none !important; font-style:normal !important;
+  background:var(--ic-banda); color:#fff !important; font-size:12px; font-weight:700;
   letter-spacing:.06em; text-transform:uppercase; padding:3px 7px;
 }
 .ic-catalogo .ic-producto-compra form{ margin:0; }
