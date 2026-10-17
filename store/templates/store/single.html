@@ -4,164 +4,178 @@
 
 {% block content %}
 
-<div class="single product-single-page">
+<div class="ic-single">
+
+  <!-- ===== Parte superior: galería + compra ===== -->
+  <section class="ic-single-top">
     <div class="container">
-        <div class="row product-single-wrap">
+      <div class="ic-single-wrap">
 
-            <!-- MITAD IZQUIERDA -->
-            <div class="col-md-6 single-left product-gallery-col">
-                <div class="flexslider product-flexslider">
-                    <ul class="slides">
-                        {% if product.imagenF %}
-                        <li data-thumb="{{ product.imagenF.url }}">
-                            <div class="thumb-image">
-                                <img src="{{ product.imagenF.url }}" data-imagezoom="true" class="img-responsive" alt="{{ product.descripcion }}">
-                            </div>
-                        </li>
-                        {% endif %}
-
-                        {% if product.imagenD %}
-                        <li data-thumb="{{ product.imagenD.url }}">
-                            <div class="thumb-image">
-                                <img src="{{ product.imagenD.url }}" data-imagezoom="true" class="img-responsive" alt="{{ product.descripcion }}">
-                            </div>
-                        </li>
-                        {% endif %}
-
-                        {% if product.imagenL %}
-                        <li data-thumb="{{ product.imagenL.url }}">
-                            <div class="thumb-image">
-                                <img src="{{ product.imagenL.url }}" data-imagezoom="true" class="img-responsive" alt="{{ product.descripcion }}">
-                            </div>
-                        </li>
-                        {% endif %}
-                    </ul>
+        <!-- Galería -->
+        <div class="ic-galeria">
+          <div class="flexslider ic-flexslider">
+            <ul class="slides">
+              {% if product.imagenF %}
+              <li data-thumb="{{ product.imagenF.url }}">
+                <div class="thumb-image">
+                  <img src="{{ product.imagenF.url }}" data-imagezoom="true" class="img-responsive" alt="{{ product.descripcion }} vista frontal">
                 </div>
-
-                {% if product.ancho %}
-                <div class="product-measures">
-               
-                    <h3 class="measure-title">Medidas</h3>
-
-                    <div class="measure-grid">
-                        <div class="measure-item">
-                            <img src="{% static 'images/medidas/Ancho.jpg' %}" alt="Ancho">
-                            <p><strong>Ancho:</strong> {{ product.ancho }} mm</p>
-                        </div>
-
-                        <div class="measure-item">
-                            <img src="{% static 'images/medidas/Largo.jpg' %}" alt="Largo">
-                            <p><strong>Largo:</strong> {{ product.largo }} mm</p>
-                        </div>
-
-                        <div class="measure-item">
-                            <img src="{% static 'images/medidas/Alto.jpg' %}" alt="Alto">
-                            <p><strong>Alto:</strong> {{ product.altura }} mm</p>
-                        </div>
-
-                        <div class="measure-item">
-                            <img src="{% static 'images/medidas/Puente.jpg' %}" alt="Puente">
-                            <p><strong>Puente:</strong> {{ product.puente }} mm</p>
-                        </div>
-
-                        <div class="measure-item">
-                            <img src="{% static 'images/medidas/Talla.jpg' %}" alt="Talla">
-                            <p><strong>Luna:</strong> {{ product.talla_luna }} mm</p>
-                        </div>
-                    </div>
+              </li>
+              {% endif %}
+              {% if product.imagenD %}
+              <li data-thumb="{{ product.imagenD.url }}">
+                <div class="thumb-image">
+                  <img src="{{ product.imagenD.url }}" data-imagezoom="true" class="img-responsive" alt="{{ product.descripcion }} vista diagonal">
                 </div>
+              </li>
+              {% endif %}
+              {% if product.imagenL %}
+              <li data-thumb="{{ product.imagenL.url }}">
+                <div class="thumb-image">
+                  <img src="{{ product.imagenL.url }}" data-imagezoom="true" class="img-responsive" alt="{{ product.descripcion }} vista lateral">
+                </div>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+
+        <!-- Información y compra -->
+        <aside class="ic-info">
+          {% if product.marca %}<p class="ic-marca">{{ product.marca }}</p>{% endif %}
+          <h1 class="ic-nombre">{{ product.descripcion }}</h1>
+
+          <p class="ic-promo-label">Compra tus lunas + montura:</p>
+          <p class="ic-promo">Obtén 50% en el 2do par</p>
+
+          <ul class="ic-beneficios">
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z" fill="currentColor"/></svg>
+              <div>
+                <strong>Asesoría personalizada</strong>
+                <span>Te ayudamos a elegir la talla y las lunas adecuadas.</span>
+              </div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v9H3zM14 9h4l3 3v3h-7z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="7" cy="17" r="1.8" fill="currentColor"/><circle cx="17" cy="17" r="1.8" fill="currentColor"/></svg>
+              <div>
+                <strong>Envíos a todo el Perú</strong>
+                <span>Consulta plazos y costos con un asesor.</span>
+              </div>
+            </li>
+          </ul>
+
+          <div class="simpleCart_shelfItem ic-compra">
+            <div class="ic-precio">
+              <span class="ic-precio-label">Precio:</span>
+              <div class="ic-precio-valores">
+                <div class="ic-precio-linea">
+                  <strong class="item_price ic-precio-actual">S/ {{ product.precio_venta }}</strong>
+                  {% if product.precio_anterior > product.precio_venta %}
+                    {% widthratio product.precio_venta product.precio_anterior -100 as pct_neg %}
+                    <em class="ic-dcto">{{ pct_neg|add:100 }}% dcto</em>
+                  {% endif %}
+                </div>
+                {% if product.precio_anterior > product.precio_venta %}
+                  <s class="ic-precio-anterior">S/ {{ product.precio_anterior }}</s>
                 {% endif %}
+              </div>
             </div>
 
-            <!-- MITAD DERECHA -->
-            <div class="col-md-6 single-right product-info-col">
-                <h1 class="product-title">{{ product.descripcion }}</h1>
+            <form action="#" method="post" class="ic-form-carrito">
+              {% csrf_token %}
+              <input type="hidden" name="cmd" value="_cart">
+              <input type="hidden" name="add" value="1">
+              <input type="hidden" name="w3ls_item" value="{{ product.descripcion }}">
+              <input type="hidden" name="amount" value="{{ product.precio_venta }}">
+              <button type="submit" class="w3ls-cart ic-btn ic-btn-carrito">Agregar al carrito</button>
+            </form>
 
-                <div class="rating product-rating">
-					<div class="product-rating">
-						<span class="star filled">★</span>
-						<span class="star filled">★</span>
-						<span class="star filled">★</span>
-						<span class="star filled">★</span>
-						<span class="star">★</span>
-					</div>
-                </div>
+            <a class="ic-btn ic-btn-whatsapp"
+               href="https://wa.me/51952305913?text=Hola,%20quiero%20comprar%20esta%20montura:%20{{ product.descripcion|urlencode }}%20-%20Precio:%20S/%20{{ product.precio_venta|urlencode }}%20-%20{{ request.build_absolute_uri|urlencode:'' }}"
+               target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
+              Comprar por WhatsApp
+            </a>
+            <p class="ic-ayuda">¿Dudas? Escríbenos y un asesor te responde.</p>
+          </div>
+        </aside>
 
-            <div class="product-attrs">
+      </div>
+    </div>
+  </section>
 
-                {% if product.marca %}
-                <div class="attr-row"><span>Marca:</span><span>{{ product.marca }}</span></div>
-                {% endif %}
+  <!-- ===== Acerca de la montura ===== -->
+  <section class="ic-acerca">
+    <div class="container">
+      <div class="ic-acerca-wrap">
+        <h2 class="ic-acerca-titulo">Acerca de la montura</h2>
 
-                {% if product.material %}
-                <div class="attr-row"><span>Material:</span><span>{{ product.material }}</span></div>
-                {% endif %}
+        <div class="ic-acordeones">
 
-                {% if product.categoria %}
-                <div class="attr-row"><span>Categoría:</span><span>{{ product.categoria }}</span></div>
-                {% endif %}
+          <details class="ic-acordeon" open>
+            <summary>
+              <svg viewBox="0 0 32 16" aria-hidden="true"><circle cx="8" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="24" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13.5 8.5q2.5-2 5 0" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+              Detalles de la montura
+            </summary>
+            <dl class="ic-detalles">
+              {% if product.marca %}<div><dt>Marca:</dt><dd>{{ product.marca }}</dd></div>{% endif %}
+              {% if product.material %}<div><dt>Material:</dt><dd>{{ product.material }}</dd></div>{% endif %}
+              {% if product.forma %}<div><dt>Forma:</dt><dd>{{ product.forma }}</dd></div>{% endif %}
+              {% if product.color %}<div><dt>Color:</dt><dd>{{ product.color }}</dd></div>{% endif %}
+              {% if product.categoria %}<div><dt>Género:</dt><dd>{{ product.categoria }}</dd></div>{% endif %}
+              {% if product.talla %}<div><dt>Talla:</dt><dd>{{ product.talla }}</dd></div>{% endif %}
+              {% if product.condicion %}<div><dt>Condición:</dt><dd>{{ product.condicion }}</dd></div>{% endif %}
+              {% if product.uso %}<div><dt>Uso:</dt><dd>{{ product.uso }}</dd></div>{% endif %}
+            </dl>
+          </details>
 
-                {% if product.color %}
-                <div class="attr-row"><span>Color:</span><span>{{ product.color }}</span></div>
-                {% endif %}
-
-                {% if product.forma %}
-                <div class="attr-row"><span>Forma:</span><span>{{ product.forma }}</span></div>
-                {% endif %}
-
-                {% if product.talla %}
-                <div class="attr-row"><span>Talla:</span><span>{{ product.talla }}</span></div>
-                {% endif %}
-
-                {% if product.talla_luna %}
-                <div class="attr-row"><span>Luna:</span><span>{{ product.talla_luna }} mm</span></div>
-                {% endif %}
-
-                {% if product.puente %}
-                <div class="attr-row"><span>Puente:</span><span>{{ product.puente }} mm</span></div>
-                {% endif %}
-
-                {% if product.ancho %}
-                <div class="attr-row"><span>Ancho:</span><span>{{ product.ancho }} mm</span></div>
-                {% endif %}
-
-                {% if product.largo %}
-                <div class="attr-row"><span>Largo:</span><span>{{ product.largo }} mm</span></div>
-                {% endif %}
-
-                {% if product.altura %}
-                <div class="attr-row"><span>Alto:</span><span>{{ product.altura }} mm</span></div>
-                {% endif %}
-
-                {% if product.condicion %}
-                <div class="attr-row"><span>Condicion:</span><span>{{ product.condicion }}</span></div>
-                {% endif %}
-
-                {% if product.uso %}
-                <div class="attr-row"><span>Uso:</span><span>{{ product.uso }}</span></div>
-                {% endif %}
-
-
+          {% if product.ancho or product.talla_luna or product.puente or product.largo or product.altura %}
+          <details class="ic-acordeon" open>
+            <summary>
+              <svg viewBox="0 0 32 16" aria-hidden="true"><path d="M2 5h28M3 5l2 7h6l2-7M19 5l2 7h6l2-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              Medidas de la montura
+            </summary>
+            <div class="ic-medidas">
+              {% if product.talla_luna %}
+              <div class="ic-medida">
+                <img src="{% static 'images/medidas/Talla.jpg' %}" alt="" loading="lazy">
+                <p><strong>Tamaño de las lunas:</strong> {{ product.talla_luna }} mm</p>
+              </div>
+              {% endif %}
+              {% if product.puente %}
+              <div class="ic-medida">
+                <img src="{% static 'images/medidas/Puente.jpg' %}" alt="" loading="lazy">
+                <p><strong>Ancho del puente:</strong> {{ product.puente }} mm</p>
+              </div>
+              {% endif %}
+              {% if product.largo %}
+              <div class="ic-medida">
+                <img src="{% static 'images/medidas/Largo.jpg' %}" alt="" loading="lazy">
+                <p><strong>Largo de la varilla:</strong> {{ product.largo }} mm</p>
+              </div>
+              {% endif %}
+              {% if product.ancho %}
+              <div class="ic-medida">
+                <img src="{% static 'images/medidas/Ancho.jpg' %}" alt="" loading="lazy">
+                <p><strong>Ancho total:</strong> {{ product.ancho }} mm</p>
+              </div>
+              {% endif %}
+              {% if product.altura %}
+              <div class="ic-medida">
+                <img src="{% static 'images/medidas/Alto.jpg' %}" alt="" loading="lazy">
+                <p><strong>Alto de la luna:</strong> {{ product.altura }} mm</p>
+              </div>
+              {% endif %}
             </div>
-
-                <div class="simpleCart_shelfItem product-buy-box">
-                    <div class="product-price-box">
-                        <i class="item_price">S/ {{ product.precio_venta }}</i>
-                    </div>
-
-                    <form action="#" method="post" class="product-cart-form">
-                        {% csrf_token %}
-                        <input type="hidden" name="cmd" value="_cart">
-                        <input type="hidden" name="add" value="1">
-                        <input type="hidden" name="w3ls_item" value="{{ product.descripcion }}">
-                        <input type="hidden" name="amount" value="{{ product.precio_venta }}">
-                        <button type="submit" class="w3ls-cart product-cart-btn">Agregar al carrito</button>
-                    </form>
-                </div>
-            </div>
+          </details>
+          {% endif %}
 
         </div>
+      </div>
     </div>
+  </section>
+
 </div>
 
 <script defer src="{% static 'js/jquery.flexslider.js' %}"></script>
@@ -169,215 +183,191 @@
 <script src="{% static 'js/imagezoom.js' %}"></script>
 
 <script>
-    $(window).load(function() {
-        $('.flexslider').flexslider({
-            animation: "slide",
-            controlNav: "thumbnails"
-        });
+  $(window).load(function() {
+    $('.flexslider').flexslider({
+      animation: "slide",
+      controlNav: "thumbnails"
     });
+  });
 </script>
 
 <script src="{% static 'js/minicart.js' %}"></script>
 <script>
-    w3ls.render();
-    w3ls.cart.on('w3sb_checkout', function (evt) {
-        var items, len, i;
-        if (this.subtotal() > 0) {
-            items = this.items();
-            for (i = 0, len = items.length; i < len; i++) {}
-        }
-    });
+  w3ls.render();
+  w3ls.cart.on('w3sb_checkout', function (evt) {
+    var items, len, i;
+    if (this.subtotal() > 0) {
+      items = this.items();
+      for (i = 0, len = items.length; i < len; i++) {}
+    }
+  });
 </script>
 
 <style>
-.product-single-page{
-    padding: 30px 0 50px;
+/* ===== Todo dentro de .ic-single para no chocar con el tema ===== */
+.ic-single{
+  --ic-texto:#1a1a1a;
+  --ic-suave:#6b6b6b;
+  --ic-linea:#dcdcdc;
+  --ic-gris:#f4f4f4;
+  --ic-oscuro:#33434d;
+  --ic-navbar:#1f3a5f;   /* el mismo azul que pusiste en el catálogo */
+  --ic-whatsapp:#1ebe57;
+  color:var(--ic-texto);
 }
 
-.product-single-wrap{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
+/* ----- Parte superior ----- */
+.ic-single .ic-single-top{ padding:30px 0 50px; }
+.ic-single .ic-single-wrap{
+  display:grid;
+  grid-template-columns:minmax(0, 1fr) 360px;
+  gap:50px;
+  align-items:start;
 }
 
-.star{
-    color:#ccc;
+/* Galería */
+.ic-single .ic-galeria{ min-width:0; }
+.ic-single .ic-flexslider{ border:0; box-shadow:none; margin:0; background:transparent; }
+.ic-single .ic-flexslider .slides img{
+  width:100%; max-height:520px; object-fit:contain;
+}
+.ic-single .ic-flexslider .flex-control-thumbs{
+  display:flex; justify-content:center; gap:12px; margin-top:18px; position:static;
+}
+.ic-single .ic-flexslider .flex-control-thumbs li{ width:84px; float:none; margin:0; }
+.ic-single .ic-flexslider .flex-control-thumbs img{
+  border:1px solid var(--ic-linea); padding:6px; background:#fff; opacity:.6; cursor:pointer;
+}
+.ic-single .ic-flexslider .flex-control-thumbs .flex-active{ opacity:1; border-color:var(--ic-texto); }
+
+/* Columna de compra */
+.ic-single .ic-info{
+  border-left:1px solid var(--ic-linea);
+  padding-left:30px;
+  position:sticky; top:20px;
+}
+.ic-single .ic-marca{
+  margin:0 0 4px; font-size:14px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+}
+.ic-single .ic-nombre{
+  margin:0 0 18px; font-size:17px; font-weight:400; line-height:1.4; color:var(--ic-suave);
+  font-family:inherit; letter-spacing:.02em;
+}
+.ic-single .ic-promo-label{ margin:0 0 6px; font-size:14px; }
+.ic-single .ic-promo{
+  display:inline-block; margin:0 0 16px; padding:4px 8px;
+  background:#ececec; font-size:12px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
 }
 
-.star.filled{
-    color:#FFB400;
+.ic-single .ic-beneficios{ list-style:none; margin:0; padding:0; border-top:1px solid var(--ic-linea); }
+.ic-single .ic-beneficios li{
+  display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-bottom:1px solid var(--ic-linea);
+}
+.ic-single .ic-beneficios svg{ width:20px; height:20px; flex:none; margin-top:2px; color:var(--ic-texto); }
+.ic-single .ic-beneficios strong{ display:block; font-size:13px; font-weight:600; }
+.ic-single .ic-beneficios span{ display:block; font-size:13px; color:var(--ic-suave); line-height:1.4; }
+
+/* Precio (el tema tacha los textos del precio; se fuerza el estilo correcto) */
+.ic-single .ic-precio{
+  display:flex; justify-content:space-between; align-items:flex-start; gap:12px; padding:16px 0 20px;
+}
+.ic-single .ic-precio .ic-precio-label{
+  font-size:14px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  text-decoration:none !important; color:var(--ic-texto) !important;
+}
+.ic-single .ic-precio-valores{ text-align:right; }
+.ic-single .ic-precio-linea{ display:flex; align-items:center; gap:8px; justify-content:flex-end; }
+.ic-single .ic-precio .ic-precio-actual{
+  text-decoration:none !important; font-style:normal !important; color:var(--ic-texto) !important;
+  font-size:24px !important; font-weight:700 !important; letter-spacing:.04em;
+}
+.ic-single .ic-precio .ic-dcto{
+  text-decoration:none !important; font-style:normal !important; color:#fff !important;
+  background:var(--ic-oscuro); font-size:12px; font-weight:700; letter-spacing:.04em;
+  text-transform:uppercase; padding:3px 7px;
+}
+.ic-single .ic-precio .ic-precio-anterior{
+  display:block; margin-top:4px;
+  text-decoration:line-through !important; color:var(--ic-suave) !important; font-size:14px !important;
 }
 
-.product-gallery-col,
-.product-info-col{
-    min-height: 1px;
+/* Botones */
+.ic-single .ic-form-carrito{ margin:0 0 12px; }
+.ic-single .ic-btn{
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  width:100%; min-height:50px; padding:12px 18px; border:0; border-radius:30px;
+  font-size:15px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  text-decoration:none; cursor:pointer; transition:background .2s ease;
 }
+.ic-single .ic-btn:focus-visible{ outline:2px solid var(--ic-texto); outline-offset:3px; }
+.ic-single .ic-btn-carrito{ background:var(--ic-navbar); color:#fff; }
+.ic-single .ic-btn-carrito:hover{ filter:brightness(.88); }
+.ic-single .ic-btn-whatsapp{ background:var(--ic-whatsapp); color:#fff; }
+.ic-single .ic-btn-whatsapp:hover,
+.ic-single .ic-btn-whatsapp:focus{ background:#17a34a; color:#fff; text-decoration:none; }
+.ic-single .ic-btn-whatsapp svg{ width:20px; height:20px; }
+.ic-single .ic-ayuda{ margin:10px 0 0; text-align:center; font-size:12px; color:var(--ic-suave); }
 
-.product-gallery-col{
-    padding-right: 30px;
+/* ----- Acerca de la montura ----- */
+.ic-single .ic-acerca{ background:var(--ic-gris); padding:50px 0 60px; }
+.ic-single .ic-acerca-wrap{
+  display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 2fr); gap:40px; align-items:start;
 }
-
-.product-info-col{
-    padding-left: 30px;
+.ic-single .ic-acerca-titulo{
+  margin:0; font-family:"Cormorant Garamond","Times New Roman",serif;
+  font-weight:400; font-size:34px; line-height:1.2; text-align:center;
 }
-
-.product-title{
-    font-size: 42px;
-    line-height: 1.2;
-    margin: 0 0 18px;
-    color: #222;
-    font-weight: 600;
+.ic-single .ic-acordeon{ border-bottom:1px solid var(--ic-linea); }
+.ic-single .ic-acordeon summary{
+  display:flex; align-items:center; gap:10px; padding:16px 4px;
+  font-size:17px; font-weight:600; cursor:pointer; list-style:none;
 }
-
-.product-rating{
-    font-size:32px;
-    margin:10px 0 20px;
+.ic-single .ic-acordeon summary::-webkit-details-marker{ display:none; }
+.ic-single .ic-acordeon summary svg{ width:28px; height:14px; flex:none; }
+.ic-single .ic-acordeon summary::after{
+  content:""; margin-left:auto; width:9px; height:9px;
+  border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor;
+  transform:rotate(45deg); transition:transform .2s ease;
 }
+.ic-single .ic-acordeon[open] summary::after{ transform:rotate(-135deg); }
 
-.rating{
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
-    gap: 4px;
+.ic-single .ic-detalles{
+  display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:16px 20px;
+  margin:4px 0 22px; padding:0 14px;
 }
+.ic-single .ic-detalles dt{ font-size:14px; font-weight:600; margin:0 0 2px; }
+.ic-single .ic-detalles dd{ font-size:14px; color:var(--ic-suave); margin:0; }
 
-.rating input{
-    display: none;
+.ic-single .ic-medidas{
+  display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:18px 20px;
+  margin:4px 0 22px; padding:0 14px;
 }
+.ic-single .ic-medida{ display:flex; align-items:center; gap:10px; }
+.ic-single .ic-medida img{ width:72px; height:auto; flex:none; mix-blend-mode:multiply; }
+.ic-single .ic-medida p{ margin:0; font-size:14px; line-height:1.4; }
+.ic-single .ic-medida strong{ display:block; font-weight:600; }
 
-.rating label{
-    width: 32px;
-    font-size: 32px;
-    color: #ccc;
-    cursor: pointer;
-    line-height: 1;
-}
-
-.rating label::before{
-    content: "★";
-}
-
-.rating label:hover,
-.rating label:hover ~ label{
-    color: #FFB400;
-}
-
-.rating input:checked ~ label{
-    color: #FFB400;
-}
-
-.product-attrs{
-    border-top: 1px solid #ececec;
-    border-bottom: 1px solid #ececec;
-    padding: 16px 0;
-    margin-bottom: 24px;
-}
-
-.attr-row{
-    display:grid;
-    grid-template-columns:120px auto;
-    padding:6px 0;
-    font-size:17px;
-}
-
-.attr-row span{
-    width:120px;
-    color:#666;
-}
-
-.attr-row strong{
-    color:#222;
-    font-weight:600;
-}
-
-.product-price-box{
-    margin-bottom: 18px;
-}
-
-.product-price-box .item_price{
-    font-size: 44px;
-    font-weight: 700;
-    color: #111;
-    font-style: normal;
-}
-
-.product-cart-btn{
-    min-width: 280px;
-    height: 54px;
-    border-radius: 30px;
-    font-size: 22px;
-    font-weight: 600;
-    background: #2f3c4d;
-    border: none;
-    color: #fff;
-}
-
-.product-cart-btn:hover{
-    background: #1f2b39;
-}
-
-.product-measures{
-    margin-top: 28px;
-    padding: 18px;
-    background: #f8f8f8;
-    border-radius: 14px;
-}
-
-.measure-title{
-    font-size: 30px;
-    margin: 0 0 18px;
-    color: #2f4ae2;
-    font-weight: 700;
-}
-
-.measure-grid{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-}
-
-.measure-item{
-    text-align: center;
-}
-
-.measure-item img{
-    width: 110px;
-    max-width: 100%;
-    height: auto;
-    margin: 0 auto 8px;
-}
-
-.measure-item p{
-    margin: 0;
-    font-size: 15px;
-    color: #222;
-}
-
-.product-flexslider .slides img{
-    width: 100%;
-    object-fit: contain;
-}
-
+/* ----- Tablet ----- */
 @media (max-width: 991px){
-    .product-gallery-col,
-    .product-info-col{
-        width: 100%;
-        padding-left: 15px;
-        padding-right: 15px;
-    }
+  .ic-single .ic-single-wrap{ grid-template-columns:1fr; gap:24px; }
+  .ic-single .ic-info{ border-left:0; padding-left:0; position:static; max-width:520px; margin:0 auto; width:100%; }
+  .ic-single .ic-acerca-wrap{ grid-template-columns:1fr; gap:16px; }
+  .ic-single .ic-acerca-titulo{ text-align:left; }
+  .ic-single .ic-detalles{ grid-template-columns:repeat(2, minmax(0, 1fr)); }
+  .ic-single .ic-medidas{ grid-template-columns:repeat(2, minmax(0, 1fr)); }
+}
 
-    .product-title{
-        font-size: 32px;
-        margin-top: 20px;
-    }
+/* ----- Celular ----- */
+@media (max-width: 575px){
+  .ic-single .ic-single-top{ padding:16px 0 36px; }
+  .ic-single .ic-flexslider .flex-control-thumbs li{ width:64px; }
+  .ic-single .ic-acerca{ padding:36px 0 44px; }
+  .ic-single .ic-acerca-titulo{ font-size:28px; }
+  .ic-single .ic-medidas{ grid-template-columns:1fr; }
+}
 
-    .measure-grid{
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .product-cart-btn{
-        min-width: 100%;
-    }
+@media (prefers-reduced-motion: reduce){
+  .ic-single *{ transition:none !important; }
 }
 </style>
 
