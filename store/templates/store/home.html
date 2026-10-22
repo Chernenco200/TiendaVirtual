@@ -1,4 +1,37 @@
 {% extends 'store/main.html' %}
+{% block title %}Ópticas IC | Lentes oftálmicos, lentes de sol y lentes de contacto en Lima{% endblock title %}
+{% block og_title %}Ópticas IC | Lentes oftálmicos, de sol y de contacto{% endblock og_title %}
+{% block canonical %}{{ SITE_URL }}/{% endblock canonical %}
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "{{ SITE_URL }}/#website",
+      "name": "Ópticas IC",
+      "alternateName": ["Óptica IC", "Opticas IC", "opticaic.com"],
+      "url": "{{ SITE_URL }}/",
+      "inLanguage": "es-PE"
+    },
+    {
+      "@type": "Organization",
+      "@id": "{{ SITE_URL }}/#organization",
+      "name": "Ópticas IC",
+      "url": "{{ SITE_URL }}/",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+51-952-305-913",
+        "contactType": "customer service",
+        "areaServed": "PE",
+        "availableLanguage": "es"
+      }
+    }
+  ]
+}
+</script>
+{% endblock extra_head %}
 {% load static %}
 {% block content %}
 

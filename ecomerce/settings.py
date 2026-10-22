@@ -35,7 +35,13 @@ ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
 
 CSRF_TRUSTED_ORIGINS = [
     "https://app-tienda-virtual-5dffe7f3f863.herokuapp.com",
+    "https://opticaic.com",
+    "https://www.opticaic.com",
 ]
+
+# SEO: dominio oficial. Google debe ver UNA sola dirección del sitio.
+# En Heroku define la variable SITE_URL (por ejemplo https://opticaic.com o https://www.opticaic.com)
+SITE_URL = os.environ.get("SITE_URL", "https://opticaic.com").rstrip("/")
 
 
 # Application definition
@@ -47,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
 
     'store.apps.StoreConfig',
     'django_filters' ,
@@ -66,6 +73,9 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
 
     'whitenoise.middleware.WhiteNoiseMiddleware',
+
+    # SEO: redirige herokuapp.com y la variante con/sin www al dominio oficial
+    'store.middleware.DominioCanonicoMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -88,6 +98,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'store.context_processors.seo',
             ],
         },
     },
@@ -173,3 +184,12 @@ STORAGES = {
     },
 }
 
+# Errores visibles en "heroku logs"
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {"console": {"class": "logging.StreamHandler"}},
+    "loggers": {
+        "django.request": {"handlers": ["console"], "level": "ERROR", "propagate": False},
+    },
+}
