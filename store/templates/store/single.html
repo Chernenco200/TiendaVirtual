@@ -8,12 +8,14 @@
 {% block canonical %}{{ SITE_URL }}{{ product.get_absolute_url }}{% endblock canonical %}
 {% block og_image %}{% if product.imagenF %}<meta property="og:image" content="{{ product.imagenF.url }}">{% endif %}{% endblock og_image %}
 {% block extra_head %}
+{% if product.imagenF or product.imagenD or product.imagenL %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Product",
   "name": "{{ product.descripcion|escapejs }}",
-  {% if product.imagenF %}"image": ["{{ product.imagenF.url|escapejs }}"],{% endif %}
+  "description": "{{ product.descripcion|escapejs }}{% if product.marca %}, marca {{ product.marca|escapejs }}{% endif %}{% if product.material %}, material {{ product.material|lower|escapejs }}{% endif %}{% if product.forma %}, forma {{ product.forma|lower|escapejs }}{% endif %}{% if product.color %}, color {{ product.color|lower|escapejs }}{% endif %}{% if product.talla_luna and product.puente and product.largo %}. Medidas: {{ product.talla_luna|escapejs }}-{{ product.puente|escapejs }}-{{ product.largo|escapejs }} mm{% endif %}.",
+  "image": [{% if product.imagenF %}"{{ product.imagenF.url|escapejs }}"{% endif %}{% if product.imagenD %}{% if product.imagenF %}, {% endif %}"{{ product.imagenD.url|escapejs }}"{% endif %}{% if product.imagenL %}{% if product.imagenF or product.imagenD %}, {% endif %}"{{ product.imagenL.url|escapejs }}"{% endif %}],
   {% if product.marca %}"brand": {"@type": "Brand", "name": "{{ product.marca|escapejs }}"},{% endif %}
   {% if product.cod %}"sku": "{{ product.cod|escapejs }}",{% endif %}
   {% if product.color %}"color": "{{ product.color|escapejs }}",{% endif %}
@@ -25,10 +27,24 @@
     "price": "{{ product.precio_venta|stringformat:'.2f' }}",
     "itemCondition": "https://schema.org/NewCondition",
     "availability": "{% if product.stock and product.stock > 0 %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
-    "seller": {"@type": "Organization", "name": "Óptica IC"}
+    "seller": {"@type": "Organization", "name": "Óptica IC"},
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": "PE",
+      "merchantReturnLink": "{{ SITE_URL }}/legal/",
+{% if product.tipo == 'Monturas oftálmicas' or product.tipo == 'Monturas Solares' %}
+      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+      "merchantReturnDays": 7,
+      "returnMethod": ["https://schema.org/ReturnInStore", "https://schema.org/ReturnByMail"],
+      "returnFees": "https://schema.org/FreeReturn"
+{% else %}
+      "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+{% endif %}
+    }
   }
 }
 </script>
+{% endif %}
 {% endblock extra_head %}
 
 {% block content %}

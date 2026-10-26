@@ -12,7 +12,8 @@ GENEROS = {"hombre": "Hombre", "mujer": "Mujer", "nino": "Nino"}
 FORMAS = {"agatado": "Agatado", "almendra": "Almendra", "piloto": "Piloto", "cuadrado": "Cuadrado",
           "redondo": "Redondo", "exagonal": "Exagonal"}
 MARCAS = {"ray-ban": "Ray-Ban", "nike": "Nike", "oakley": "Oakley", "guess": "Guess",
-          "tommy-hilfiger": "Tommy-Hilfiger", "arnette": "Arnette", "nano": "Nano", "razza": "Razza"}
+          "tommy-hilfiger": "Tommy-Hilfiger", "arnette": "Arnette", "nano": "Nano", "razza": "Razza",
+          "lacoste": "Lacoste", "skechers": "Skechers"}
 TALLAS = {"grande": "Grande", "mediana": "Mediana", "chica": "Chica"}
 
 PAGINAS_FILTRO = [
@@ -85,7 +86,11 @@ class ProductosSitemap(Sitemap):
     priority = 0.6
 
     def items(self):
-        return _disponibles().exclude(slug__isnull=True).exclude(slug="").order_by("pk")
+        # Igual que los catálogos: solo productos con foto principal
+        return (_disponibles()
+                .exclude(slug__isnull=True).exclude(slug="")
+                .exclude(imagenF__isnull=True).exclude(imagenF="")
+                .order_by("pk"))
 
 
 SITEMAPS = {

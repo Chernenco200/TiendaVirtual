@@ -255,6 +255,9 @@ class Producto(models.Model):
         ('Tommy-Hilfiger', 'Tommy-Hilfiger'),
         ('Arnette', 'Arnette'),
         ('Nano', 'Nano'),
+        ('Lacoste', 'Lacoste'),      # nueva
+        ('Skechers', 'Skechers'),    # nueva
+        ('Razza', 'Razza'),          # nueva
         ('Otros', 'Otros'),
 
         ('Acuvue', 'Acuvue'),

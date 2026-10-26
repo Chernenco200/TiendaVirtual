@@ -1,9 +1,15 @@
 {% extends 'store/main.html' %}
 {% load static %}
-{% block title %}Óptica IC | Lentes oftálmicos, lentes de sol y lentes de contacto en Lima{% endblock title %}
-{% block og_title %}Óptica IC | Lentes oftálmicos, de sol y de contacto{% endblock og_title %}
+{% load myapp_extras %}
+{% block title %}Óptica IC | Monturas Nike, Lacoste, Skechers y más en Lima{% endblock title %}
+{% block meta_description %}Monturas oftálmicas y lentes de sol Nike, Lacoste, Skechers, Tommy Hilfiger, Guess y Nano Vista. Compra online con envío a todo el Perú o visítanos en Jr. Camaná 560, Lima.{% endblock meta_description %}
+{% block og_title %}Óptica IC | Monturas de marca, sin pagar de más{% endblock og_title %}
+{% block og_image %}<meta property="og:image" content="{{ SITE_URL }}{% static 'images/bg1.jpg' %}">{% endblock og_image %}
 {% block canonical %}{{ SITE_URL }}/{% endblock canonical %}
 {% block extra_head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -38,152 +44,341 @@
 }
 </script>
 {% endblock extra_head %}
-{% load static %}
+
 {% block content %}
+{% with wa="https://wa.me/51952305913?text=Hola%2C%20quiero%20comprar%20unos%20lentes" %}
+<div class="ich">
 
-	<!-- banner -->
-	<div class="banner">
+  <!-- ===== Portada ===== -->
+  <section class="ich-hero">
+    <img class="ich-hero-img" src="{% static 'images/bg1.jpg' %}" alt="" width="1279" height="387">
+    <div class="ich-wrap ich-hero-texto">
+      <h1>Monturas de marca, sin pagar de más</h1>
+      <p>Nike, Lacoste, Skechers, Tommy Hilfiger, Guess y Nano Vista. Compra online y te lo enviamos a todo el Perú, o pruébatelos en nuestra tienda del Centro de Lima.</p>
+      <div class="ich-acciones">
+        <a class="ich-btn ich-btn--claro" href="{% url 'lentes_oftalmicos' %}">Ver monturas</a>
+        <a class="ich-btn ich-btn--borde" href="{{ wa }}" target="_blank" rel="noopener">Comprar por WhatsApp</a>
+      </div>
+    </div>
+  </section>
 
-	</div>
-	<!-- //banner --> 
-	<!-- banner-bottom -->
+  <!-- ===== Garantías concretas ===== -->
+  <ul class="ich-wrap ich-confianza">
+    <li><strong>Envío a todo el Perú</strong><span>Por agencia o delivery</span></li>
+    <li><strong>Devolución en 7 días</strong><span>El envío de vuelta lo pagamos</span></li>
+    <li><strong>1 año de garantía</strong><span>En monturas, por fabricación</span></li>
+    <li><strong>Tienda física</strong><span>Jr. Camaná 560, Cercado de Lima</span></li>
+  </ul>
 
-	<!-- //banner-bottom --> 
-	<!-- modal-video -->
+  <!-- ===== Directorio de marcas (elemento principal) ===== -->
+  <section class="ich-wrap ich-marcas" aria-labelledby="ich-marcas-titulo">
+    <div class="ich-marcas-intro">
+      <h2 id="ich-marcas-titulo">Compra por marca</h2>
+      <p>Las marcas que ya conoces, en monturas para medida y lentes de sol.</p>
+      {% if marcas_home_otras %}
+      <p class="ich-marcas-otras">También tenemos
+        {% for m in marcas_home_otras %}<a href="{{ m.url }}">{{ m.nombre }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}.
+      </p>
+      {% endif %}
+    </div>
+    <ol class="ich-directorio">
+      {% for m in marcas_home %}
+      <li>
+        {% if m.url %}
+        <a href="{{ m.url }}">
+          <span class="ich-marca-nombre">{{ m.nombre }}</span>
+          <span class="ich-marca-n">{{ m.n }} modelo{{ m.n|pluralize }}</span>
+        </a>
+        {% else %}
+        <span class="ich-marca-fila ich-marca-fila--pronto">
+          <span class="ich-marca-nombre">{{ m.nombre }}</span>
+          <span class="ich-marca-n">Muy pronto</span>
+        </span>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ol>
+  </section>
 
+  <!-- ===== Categorías ===== -->
+  <section class="ich-wrap ich-categorias" aria-label="Categorías">
+    <a class="ich-cat ich-cat--hombre" href="{% url 'lentes_categoria' 'hombre' %}">
+      <img src="{% static 'images/21.jpg' %}" alt="Monturas para hombre" loading="lazy" width="912" height="298">
+    </a>
+    <a class="ich-cat ich-cat--mujer" href="{% url 'lentes_categoria' 'mujer' %}">
+      <img src="{% static 'images/53.jpg' %}" alt="Monturas para mujer" loading="lazy" width="912" height="298">
+    </a>
+    <a class="ich-cat ich-cat--ninos" href="{% url 'lentes_categoria' 'nino' %}">
+      <img src="{% static 'images/20.jpg' %}" alt="Monturas para niños" loading="lazy" width="400" height="450">
+    </a>
+    <div class="ich-cat-links">
+      <a href="{% url 'lentes_de_sol' %}">Lentes de sol</a>
+      <a href="{% url 'lentes_de_contacto' %}">Lentes de contacto</a>
+    </div>
+  </section>
 
-	<!-- //modal-video -->
+  <!-- ===== Nuevos ingresos ===== -->
+  {% if nuevos %}
+  <section class="ich-wrap ich-nuevos" aria-labelledby="ich-nuevos-titulo">
+    <div class="ich-cabecera">
+      <h2 id="ich-nuevos-titulo">Recién llegados</h2>
+      <a href="{% url 'lentes_oftalmicos' %}">Ver todas las monturas</a>
+    </div>
+    <div class="ich-productos">
+      {% for p in nuevos %}
+      <a class="ich-producto" href="{{ p.get_absolute_url }}">
+        <div class="ich-producto-img">
+          <img src="{{ p.imagenF.url }}" alt="{{ p.descripcion }}" loading="lazy">
+        </div>
+        {% if p.marca %}<p class="ich-producto-marca">{{ p.marca|texto_seo }}</p>{% endif %}
+        <p class="ich-producto-nombre">{{ p.descripcion }}</p>
+        <p class="ich-producto-precio">
+          <strong>S/ {{ p.precio_venta }}</strong>
+          {% if p.precio_anterior and p.precio_anterior > p.precio_venta %}<s>S/ {{ p.precio_anterior }}</s>{% endif %}
+        </p>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
 
-	<!-- special-deals -->
-	<div class="special-deals">
-		<div class="container">
-			<h2>Categorias</h2>
-			<div class="w3agile_special_deals_grids">
-				<div class="col-md-7 w3agile_special_deals_grid_left">
-					<div class="w3agile_special_deals_grid_left_grid">
-						<img src="{% static 'images/21.jpg' %}" alt=" " class="img-responsive" />
-						<div class="w3agile_special_deals_grid_left_grid_pos1">
-							<h5>+500<span>Monturas</span></h5>
-						</div>
-						<div class="w3agile_special_deals_grid_left_grid_pos">
-							<h4><span><a href="{% url 'lentes_categoria' 'Hombre' %}">Ver PRODUCTOS</a></span></h4>
-						</div>
-					</div>
-					<div class="w3agile_special_deals_grid_left_grid">
-						<img src="{% static 'images/53.jpg' %}" alt=" " class="img-responsive" />
-						<div class="w3agile_special_deals_grid_left_grid_pos1">
-							<h5>+500<span>Monturas</span></h5>
-						</div>
-						<div class="w3agile_special_deals_grid_left_grid_pos">
-							<p></p>
-							<h4> <span><a href="{% url 'lentes_categoria' 'Mujer' %}">Ver PRODUCTOS</a></span></h4>
-							
-						</div>
-					</div>
-				</div>
-				<div class="col-md-5 w3agile_special_deals_grid_right">
-					<img src="{% static 'images/20.jpg' %}" alt=" " class="img-responsive" />
-					<div class="w3agile_special_deals_grid_right_pos">
-						<h4><span></span></h4>
-						<p></p>
-						<h4><span><a href="{% url 'lentes_categoria' 'Nino' %}">Ver PRODUCTOS</a></span></h4>
-					</div>
-					<div class="w3agile_special_deals_grid_left_grid_pos1">
-						<h5>+500<span>Monturas</span></h5>
-					</div>
-				</div>
-				<div class="clearfix"> </div>
-			</div>
-		</div>
-	</div>
-	<!-- //special-deals -->
+  <!-- ===== Cómo comprar online (es una secuencia real) ===== -->
+  <section class="ich-pasos-fondo" aria-labelledby="ich-pasos-titulo">
+    <div class="ich-wrap">
+      <h2 id="ich-pasos-titulo">Cómo comprar desde casa</h2>
+      <ol class="ich-pasos">
+        <li>
+          <h3>Elige tu montura</h3>
+          <p>Filtra por marca, forma o talla. Cada ficha tiene fotos y medidas en milímetros.</p>
+        </li>
+        <li>
+          <h3>Envíanos tu receta</h3>
+          <p>Mándanos una foto por WhatsApp. Si no tienes receta, te medimos la vista en tienda.</p>
+        </li>
+        <li>
+          <h3>Recibe tus lentes</h3>
+          <p>Preparamos tus lunas y te las enviamos a todo el Perú, o las recoges en Jr. Camaná 560.</p>
+        </li>
+      </ol>
+      <a class="ich-btn ich-btn--azul" href="{{ wa }}" target="_blank" rel="noopener">Enviar mi receta por WhatsApp</a>
+    </div>
+  </section>
 
-	<!-- banner-bottom1 -->
-	<!-- //banner-bottom1 --> 
+  <!-- ===== Forma + tienda ===== -->
+  <section class="ich-wrap ich-dos">
+    <div>
+      <h2>¿Ya sabes qué forma te queda?</h2>
+      <ul class="ich-formas">
+        <li><a href="{% url 'lentes_forma' 'cuadrado' %}">Cuadrados</a></li>
+        <li><a href="{% url 'lentes_forma' 'redondo' %}">Redondos</a></li>
+        <li><a href="{% url 'lentes_forma' 'agatado' %}">Agatados</a></li>
+        <li><a href="{% url 'lentes_forma' 'piloto' %}">Piloto</a></li>
+        <li><a href="{% url 'lentes_forma' 'almendra' %}">Almendra</a></li>
+        <li><a href="{% url 'lentes_forma' 'exagonal' %}">Hexagonales</a></li>
+      </ul>
+      <p class="ich-nota">¿No estás seguro? Escríbenos con una foto de frente y te recomendamos modelos.</p>
+    </div>
+    <div class="ich-tienda">
+      <h2>Visítanos en el Centro de Lima</h2>
+      <p>Pruébate las monturas, mídete la vista y llévate tus lentes listos.</p>
+      <address>Jr. Camaná 560, Cercado de Lima<br>WhatsApp 952 305 913</address>
+      <a class="ich-btn ich-btn--azul" href="https://www.google.com/maps/search/?api=1&amp;query=%C3%93ptica%20IC%20Jr.%20Caman%C3%A1%20560%20Lima" target="_blank" rel="noopener">Ver cómo llegar</a>
+    </div>
+  </section>
 
-	<!-- new-products -->
+  <!-- ===== Preguntas frecuentes ===== -->
+  <section class="ich-wrap ich-faq" aria-labelledby="ich-faq-titulo">
+    <h2 id="ich-faq-titulo">Preguntas frecuentes</h2>
+    <details>
+      <summary>¿Las monturas son originales?</summary>
+      <p>Sí. Trabajamos solo con monturas originales de cada marca.</p>
+    </details>
+    <details>
+      <summary>¿Hacen envíos a provincias?</summary>
+      <p>Sí, enviamos a todo el Perú por agencia de transporte o delivery. El costo y el plazo dependen del destino; te los confirmamos por WhatsApp antes de pagar.</p>
+    </details>
+    <details>
+      <summary>¿Puedo devolver mis lentes?</summary>
+      <p>Tienes 7 días calendario desde tu compra para pedir un cambio o devolución, y nosotros pagamos el envío de vuelta. Revisa las condiciones en <a href="{% url 'legal' %}">términos y condiciones</a>.</p>
+    </details>
+    <details>
+      <summary>¿Qué garantía tienen?</summary>
+      <p>Las monturas tienen 1 año de garantía y las lunas 6 meses, por defectos de fabricación.</p>
+    </details>
+  </section>
 
-	<!-- //new-products -->
-	<!-- top-brands -->
-	<div class="top-brands">
-		<div class="container">
-			<h3>Grandes Marcas</h3>
-			<div class="">
-				<ul id="flexiselDemo1">			
-					<li>
-						<img src="{% static 'images/tb1.jpg' %}" alt="#" class="img-responsive" />
-					</li>
-					<li>
-						<img src="{% static 'images/tb2.jpg' %}" alt=" " class="img-responsive" />
-					</li>
-					<li>
-						<img src="{% static 'images/tb3.jpg' %}" alt=" " class="img-responsive" />
-					</li>
-					<li>
-						<img src="{% static 'images/tb4.jpg' %}" alt=" " class="img-responsive" />
-					</li>
-					<li>
-						<img src="{% static 'images/tb5.jpg' %}" alt=" " class="img-responsive" />
-					</li>
-					<li>
-						<img src="{% static 'images/tb6.jpg' %}" alt=" " class="img-responsive" />
-					</li>
-					<li>
-						<img src="{% static 'images/tb7.jpg' %}" alt=" " class="img-responsive" />
-					</li>
-				</ul>
-			</div>
-			<script type="text/javascript">
-					$(window).load(function() {
-						$("#flexiselDemo1").flexisel({
-							visibleItems: 4,
-							animationSpeed: 1000,
-							autoPlay: true,
-							autoPlaySpeed: 3000,    		
-							pauseOnHover: true,
-							enableResponsiveBreakpoints: true,
-							responsiveBreakpoints: { 
-								portrait: { 
-									changePoint:480,
-									visibleItems: 1
-								}, 
-								landscape: { 
-									changePoint:640,
-									visibleItems:2
-								},
-								tablet: { 
-									changePoint:768,
-									visibleItems: 3
-								}
-							}
-						});
-						
-					});
-			</script>
-			<script type="text/javascript" src="{% static 'js/jquery.flexisel.js' %}"></script>
-		</div>
-	</div>
-	<!-- //top-brands --> 
-	<!-- newsletter -->
-	<div class="newsletter">
-		<div class="container">
-			<div class="col-md-6 w3agile_newsletter_left">
-				<h3>Boletín informativo</h3>
-				<p> Suscríbete y mantente informado de las últimas promociones y tendencias.</p>
-			</div>
-			<div class="col-md-6 w3agile_newsletter_right">
-				<form action="#" method="post">
-					<input type="email" name="Email" placeholder="Email" required="">
-					<input type="submit" value="" />
-				</form>
-			</div>
-			<div class="clearfix"> </div>
-		</div>
-	</div>
-	<!-- //newsletter -->
+  <!-- ===== Cierre ===== -->
+  <section class="ich-cierre">
+    <div class="ich-wrap">
+      <p>¿Dudas con la medida o el modelo? Te asesoramos por WhatsApp.</p>
+      <a class="ich-btn ich-btn--claro" href="{{ wa }}" target="_blank" rel="noopener">Escribir al 952 305 913</a>
+    </div>
+  </section>
 
-<br>
-<br>
+</div>
+{% endwith %}
 
+<style>
+/* ===== Home Óptica IC — todo dentro de .ich para no chocar con el tema ===== */
+.ich{
+  --azul:#0469BE;        /* azul del logo */
+  --azul-osc:#034F8F;
+  --tinta:#13243A;       /* texto principal */
+  --gris:#5A6B80;        /* texto secundario */
+  --niebla:#EEF3F8;      /* fondos suaves */
+  --linea:#D3DDE8;
+  font-family:"Archivo", "Open Sans", Arial, sans-serif;
+  color:var(--tinta);
+  font-size:16px; line-height:1.55;
+}
+.ich *, .ich *::before, .ich *::after{ box-sizing:border-box; }
+.ich h1, .ich h2, .ich h3{ font-family:inherit; color:var(--tinta); margin:0; text-align:left; text-transform:none; letter-spacing:0; }
+.ich p{ margin:0; }
+.ich a{ color:var(--azul); }
+.ich a:focus-visible, .ich summary:focus-visible{ outline:3px solid var(--azul); outline-offset:3px; }
+.ich-wrap{ max-width:1200px; margin-left:auto; margin-right:auto; padding-left:24px; padding-right:24px; }
 
+/* Botones */
+.ich .ich-btn{
+  display:inline-flex; align-items:center; justify-content:center; min-height:48px; padding:12px 24px;
+  border-radius:999px; font-weight:700; font-size:15px; text-decoration:none; transition:background-color .15s, color .15s;
+}
+.ich .ich-btn--azul{ background:var(--azul); color:#fff; }
+.ich .ich-btn--azul:hover{ background:var(--azul-osc); color:#fff; }
+.ich .ich-btn--claro{ background:#fff; color:var(--tinta); }
+.ich .ich-btn--claro:hover{ background:var(--niebla); color:var(--tinta); }
+.ich .ich-btn--borde{ border:2px solid rgba(255,255,255,.8); color:#fff; }
+.ich .ich-btn--borde:hover{ background:rgba(255,255,255,.12); color:#fff; }
+
+/* Portada */
+.ich-hero{ position:relative; min-height:500px; display:flex; align-items:center; background:#062645; overflow:hidden; }
+.ich-hero-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:70% center; }
+.ich-hero::after{ content:""; position:absolute; inset:0; background:linear-gradient(90deg, rgba(4,26,52,.88) 0%, rgba(4,26,52,.55) 45%, rgba(4,26,52,0) 75%); }
+.ich-hero-texto{ position:relative; z-index:1; width:100%; padding-top:64px; padding-bottom:64px; }
+.ich .ich-hero h1{
+  color:#fff; max-width:13ch; font-size:clamp(2.6rem, 6vw, 4.6rem); line-height:1; font-weight:800; font-stretch:112%;
+}
+.ich .ich-hero p{ color:rgba(255,255,255,.88); max-width:46ch; margin-top:20px; font-size:17px; }
+.ich-acciones{ display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
+
+/* Garantías */
+.ich-confianza{ list-style:none; display:grid; grid-template-columns:repeat(4, 1fr); gap:0; margin-top:0; margin-bottom:0; padding-top:24px; padding-bottom:24px; border-bottom:1px solid var(--linea); }
+.ich-confianza li{ padding:4px 20px; border-left:1px solid var(--linea); }
+.ich-confianza li:first-child{ border-left:0; padding-left:0; }
+.ich-confianza strong{ display:block; font-size:15px; font-weight:700; }
+.ich-confianza span{ display:block; font-size:14px; color:var(--gris); }
+
+/* Directorio de marcas */
+.ich-marcas{ display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 2fr); gap:48px; padding-top:72px; padding-bottom:72px; }
+.ich .ich-marcas h2{ font-size:clamp(1.7rem, 3vw, 2.3rem); font-weight:800; font-stretch:105%; line-height:1.1; }
+.ich-marcas-intro p{ margin-top:12px; color:var(--gris); max-width:34ch; }
+.ich .ich-marcas-otras{ margin-top:24px; font-size:15px; }
+.ich-directorio{ list-style:none; margin:0; padding:0; border-top:2px solid var(--tinta); }
+.ich-directorio li{ border-bottom:1px solid var(--linea); }
+.ich-directorio a, .ich-marca-fila{
+  display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:14px 4px; text-decoration:none; color:var(--tinta);
+}
+.ich .ich-directorio a{ color:var(--tinta); }
+.ich-marca-nombre{ font-size:clamp(1.9rem, 4.6vw, 3.4rem); font-weight:800; font-stretch:125%; line-height:1.05; letter-spacing:-.01em; transition:color .15s; }
+.ich-marca-n{ font-size:14px; color:var(--gris); white-space:nowrap; }
+.ich .ich-directorio a:hover .ich-marca-nombre, .ich .ich-directorio a:focus-visible .ich-marca-nombre{ color:var(--azul); }
+.ich-marca-fila--pronto .ich-marca-nombre{ color:#A9B6C6; }
+
+/* Categorías */
+.ich-categorias{ display:grid; grid-template-columns:2fr 1fr; grid-template-rows:auto auto auto; gap:16px; padding-bottom:72px; }
+.ich-cat{ display:block; overflow:hidden; border-radius:6px; background:var(--niebla); }
+.ich-cat img{ display:block; width:100%; height:100%; object-fit:cover; }
+.ich-cat--hombre{ grid-column:1; grid-row:1; }
+.ich-cat--mujer{ grid-column:1; grid-row:2; }
+.ich-cat--ninos{ grid-column:2; grid-row:1 / span 2; }
+.ich-cat-links{ grid-column:1 / -1; display:flex; flex-wrap:wrap; gap:12px; }
+.ich .ich-cat-links a{ padding:10px 18px; border:1px solid var(--linea); border-radius:999px; text-decoration:none; color:var(--tinta); font-weight:600; font-size:15px; }
+.ich .ich-cat-links a:hover{ border-color:var(--azul); color:var(--azul); }
+
+/* Recién llegados */
+.ich-nuevos{ padding-bottom:72px; }
+.ich-cabecera{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:16px; margin-bottom:24px; }
+.ich .ich-cabecera h2, .ich .ich-pasos-fondo h2, .ich .ich-dos h2, .ich .ich-faq h2{ font-size:clamp(1.5rem, 2.6vw, 2rem); font-weight:800; font-stretch:105%; line-height:1.15; }
+.ich .ich-cabecera a{ font-weight:600; font-size:15px; }
+.ich-productos{ display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:32px 24px; }
+.ich .ich-producto{ display:block; text-decoration:none; color:var(--tinta); }
+.ich-producto-img{ aspect-ratio:1 / 1; display:flex; align-items:center; justify-content:center; padding:16px; background:#fff; border:1px solid var(--linea); border-radius:6px; }
+.ich-producto-img img{ max-width:100%; max-height:100%; object-fit:contain; }
+.ich .ich-producto:hover .ich-producto-img{ border-color:var(--azul); }
+.ich-producto-marca{ margin-top:12px !important; font-size:13px; font-weight:700; color:var(--azul); }
+.ich-producto-nombre{ font-size:15px; line-height:1.35; margin-top:2px !important; overflow-wrap:anywhere; }
+.ich-producto-precio{ display:flex; gap:10px; align-items:baseline; margin-top:6px !important; }
+.ich-producto-precio strong{ font-size:17px; font-weight:800; text-decoration:none !important; color:var(--tinta); }
+.ich-producto-precio s{ font-size:14px; color:var(--gris); }
+
+/* Cómo comprar */
+.ich-pasos-fondo{ background:var(--niebla); padding:64px 0; }
+.ich-pasos{ list-style:none; counter-reset:paso; display:grid; grid-template-columns:repeat(3, 1fr); gap:32px; margin:32px 0; padding:0; }
+.ich-pasos li{ counter-increment:paso; }
+.ich-pasos li::before{
+  content:counter(paso); display:flex; align-items:center; justify-content:center; width:44px; height:44px; margin-bottom:16px;
+  border-radius:50%; background:var(--azul); color:#fff; font-weight:800; font-size:18px;
+}
+.ich .ich-pasos h3{ font-size:19px; font-weight:700; margin-bottom:6px; }
+.ich-pasos p{ color:var(--gris); max-width:36ch; }
+
+/* Forma + tienda */
+.ich-dos{ display:grid; grid-template-columns:1fr 1fr; gap:48px; padding-top:72px; padding-bottom:72px; }
+.ich-formas{ list-style:none; display:flex; flex-wrap:wrap; gap:10px; margin:24px 0 16px; padding:0; }
+.ich .ich-formas a{ display:inline-block; padding:10px 18px; border:1px solid var(--linea); border-radius:999px; text-decoration:none; color:var(--tinta); font-weight:600; font-size:15px; }
+.ich .ich-formas a:hover{ border-color:var(--azul); color:var(--azul); }
+.ich-nota{ color:var(--gris); font-size:15px; max-width:44ch; }
+.ich-tienda{ padding:32px; border:2px solid var(--tinta); border-radius:6px; }
+.ich-tienda p{ margin-top:10px !important; color:var(--gris); }
+.ich-tienda address{ font-style:normal; margin:16px 0 24px; font-weight:600; line-height:1.6; }
+
+/* Preguntas frecuentes */
+.ich-faq{ padding-bottom:72px; }
+.ich-faq details, .ich-faq h2{ max-width:820px; }
+.ich-faq h2{ margin-bottom:16px !important; }
+.ich-faq details{ border-bottom:1px solid var(--linea); }
+.ich-faq summary{ cursor:pointer; list-style:none; display:flex; justify-content:space-between; gap:16px; padding:18px 0; font-weight:700; font-size:17px; }
+.ich-faq summary::-webkit-details-marker{ display:none; }
+.ich-faq summary::after{ content:"+"; font-size:22px; line-height:1; color:var(--azul); }
+.ich-faq details[open] summary::after{ content:"–"; }
+.ich-faq details p{ padding:0 0 18px; color:var(--gris); max-width:65ch; }
+
+/* Cierre */
+.ich-cierre{ background:var(--azul); padding:40px 0; }
+.ich-cierre .ich-wrap{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:20px; }
+.ich-cierre p{ color:#fff; font-size:clamp(1.2rem, 2.2vw, 1.5rem); font-weight:700; font-stretch:105%; max-width:40ch; }
+
+/* ===== Tablet ===== */
+@media (max-width: 991px){
+  .ich-confianza{ grid-template-columns:repeat(2, 1fr); row-gap:16px; }
+  .ich-confianza li:nth-child(3){ border-left:0; padding-left:0; }
+  .ich-marcas{ grid-template-columns:1fr; gap:24px; padding-top:56px; padding-bottom:56px; }
+  .ich-productos{ grid-template-columns:repeat(3, minmax(0, 1fr)); }
+  .ich-dos{ grid-template-columns:1fr; gap:40px; }
+}
+
+/* ===== Celular ===== */
+@media (max-width: 640px){
+  .ich-wrap{ padding-left:18px; padding-right:18px; }
+  .ich-hero{ min-height:460px; align-items:flex-end; }
+  .ich-hero-img{ object-position:80% center; }
+  .ich-hero::after{ background:linear-gradient(0deg, rgba(4,26,52,.92) 0%, rgba(4,26,52,.7) 55%, rgba(4,26,52,.25) 100%); }
+  .ich-hero-texto{ padding-top:120px; padding-bottom:40px; }
+  .ich-acciones .ich-btn{ flex:1 1 100%; }
+  .ich-confianza{ grid-template-columns:1fr; }
+  .ich-confianza li{ border-left:0; padding-left:0; }
+  .ich-marca-n{ font-size:13px; }
+  .ich-categorias{ grid-template-columns:1fr; }
+  .ich-cat--hombre, .ich-cat--mujer, .ich-cat--ninos{ grid-column:1; grid-row:auto; }
+  .ich-cat--ninos img{ aspect-ratio:16 / 9; object-position:center 30%; }
+  .ich-productos{ grid-template-columns:repeat(2, minmax(0, 1fr)); gap:24px 14px; }
+  .ich-pasos{ grid-template-columns:1fr; gap:24px; }
+  .ich-tienda{ padding:24px; }
+  .ich-cierre .ich-btn{ width:100%; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .ich *{ transition:none !important; }
+}
+</style>
 {% endblock content %}

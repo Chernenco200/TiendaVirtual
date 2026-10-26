@@ -21,18 +21,67 @@ import os
 import requests
 
 
+# ---------- HOME ----------
+from django.urls import reverse as _reverse
+
+TIPOS_MONTURA = ["Monturas oftálmicas", "Monturas Solares"]
+
+# (valor guardado en la BD, slug de la URL, nombre que se muestra)
+MARCAS_HOME = [
+    ("Nike", "nike", "Nike"),
+    ("Lacoste", "lacoste", "Lacoste"),
+    ("Skechers", "skechers", "Skechers"),
+    ("Tommy-Hilfiger", "tommy-hilfiger", "Tommy Hilfiger"),
+    ("Guess", "guess", "Guess"),
+    ("Nano", "nano", "Nano Vista"),
+    ("Razza", "razza", "Razza"),
+]
+MARCAS_HOME_OTRAS = [
+    ("Ray-Ban", "ray-ban", "Ray-Ban"),
+    ("OaKley", "oakley", "Oakley"),
+    ("Arnette", "arnette", "Arnette"),
+]
+
+
+def _monturas_disponibles():
+    return (Producto.objects
+            .filter(activo=True, stock__gte=1, tipo__in=TIPOS_MONTURA)
+            .exclude(imagenF__isnull=True).exclude(imagenF=""))
+
+
+def _marcas_con_conteo(lista):
+    """Cuántos modelos disponibles tiene cada marca y a qué catálogo enlazar."""
+    base = _monturas_disponibles()
+    def conteo(tipo):
+        filas = base.filter(tipo=tipo).values_list("marca").annotate(n=Count("id"))
+        return {(marca or "").lower(): n for marca, n in filas}
+    oft, sol = conteo("Monturas oftálmicas"), conteo("Monturas Solares")
+    marcas = []
+    for valor, slug, nombre in lista:
+        n_oft, n_sol = oft.get(valor.lower(), 0), sol.get(valor.lower(), 0)
+        if n_oft:
+            url = _reverse("lentes_marca", args=[slug])
+        elif n_sol:
+            url = _reverse("gafas_marca", args=[slug])
+        else:
+            url = None
+        marcas.append({"nombre": nombre, "url": url, "n": n_oft + n_sol})
+    return marcas
+
+
 def home(request):
-    products = Producto.objects.filter(nuevo=1)
-    myFilter = ProductoFilter(request.GET, queryset=products)
-    Lproducts=myFilter.qs
-    paginator=Paginator(Lproducts,24)
-    pagina=request.GET.get("page") or 1
-    products=paginator.get_page(pagina)
-    pagina_actual=int(pagina)
-    paginas=range(1, products.paginator.num_pages + 1)
-    
-    context = {'products':products, 'paginas':paginas,'pagina_actual': pagina_actual, 'myFilter': myFilter}
-    return render(request, 'store/home.html', context)
+    # Nuevos ingresos: primero los marcados como "nuevo", luego los más recientes
+    base = _monturas_disponibles()
+    nuevos = list(base.filter(nuevo=True).order_by("-pk")[:8])
+    if len(nuevos) < 8:
+        nuevos += list(base.exclude(pk__in=[p.pk for p in nuevos]).order_by("-pk")[:8 - len(nuevos)])
+
+    context = {
+        "nuevos": nuevos,
+        "marcas_home": _marcas_con_conteo(MARCAS_HOME),
+        "marcas_home_otras": [m for m in _marcas_con_conteo(MARCAS_HOME_OTRAS) if m["url"]],
+    }
+    return render(request, "store/home.html", context)
 
 
 def lentes_oftalmicos(request):
@@ -321,6 +370,8 @@ def lentes_marca(request, valor):
         'arnette': 'Arnette',
         'nano': 'Nano',
         'razza': 'Razza',
+        'lacoste': 'Lacoste',
+        'skechers': 'Skechers',
         'otros': 'Otros',
     }
 
@@ -557,6 +608,8 @@ def gafas_marca(request, valor):
         'arnette': 'Arnette',
         'nano': 'Nano',
         'razza': 'Razza',
+        'lacoste': 'Lacoste',
+        'skechers': 'Skechers',
         'otros': 'Otros',
     }
 
