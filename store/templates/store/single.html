@@ -1,10 +1,10 @@
 {% extends 'store/main.html' %}
 {% load static %}
 {% load myapp_extras %}
-{% block title %}{{ product.descripcion }}{% if product.color %} {{ product.color }}{% endif %} | Ópticas IC{% endblock title %}
-{% block og_title %}{{ product.descripcion }} | Ópticas IC{% endblock og_title %}
+{% block title %}{{ product.descripcion }}{% if product.color %} {{ product.color }}{% endif %} | Óptica IC{% endblock title %}
+{% block og_title %}{{ product.descripcion }} | Óptica IC{% endblock og_title %}
 {% block og_type %}product{% endblock og_type %}
-{% block meta_description %}{{ product.descripcion }}{% if product.marca %}, marca {{ product.marca }}{% endif %}{% if product.material %}, {{ product.material|lower }}{% endif %}{% if product.color %}, color {{ product.color|lower }}{% endif %}. Precio S/ {{ product.precio_venta }}. Compra online o por WhatsApp en Ópticas IC.{% endblock meta_description %}
+{% block meta_description %}{{ product.descripcion }}{% if product.marca %}, marca {{ product.marca }}{% endif %}{% if product.material %}, {{ product.material|lower }}{% endif %}{% if product.color %}, color {{ product.color|lower }}{% endif %}. Precio S/ {{ product.precio_venta }}. Compra online o por WhatsApp en Óptica IC.{% endblock meta_description %}
 {% block canonical %}{{ SITE_URL }}{{ product.get_absolute_url }}{% endblock canonical %}
 {% block og_image %}{% if product.imagenF %}<meta property="og:image" content="{{ product.imagenF.url }}">{% endif %}{% endblock og_image %}
 {% block extra_head %}
@@ -25,7 +25,7 @@
     "price": "{{ product.precio_venta|stringformat:'.2f' }}",
     "itemCondition": "https://schema.org/NewCondition",
     "availability": "{% if product.stock and product.stock > 0 %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
-    "seller": {"@type": "Organization", "name": "Ópticas IC"}
+    "seller": {"@type": "Organization", "name": "Óptica IC"}
   }
 }
 </script>

@@ -10,6 +10,6 @@ def seo(request):
         canonical += f"?page={pagina}"
     return {
         "SITE_URL": site_url,
-        "SITE_NAME": "Ópticas IC",
+        "SITE_NAME": "Óptica IC",
         "canonical_url": canonical,
     }

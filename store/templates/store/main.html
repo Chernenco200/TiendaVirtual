@@ -3,8 +3,8 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<title>{% block title %}Ópticas IC | Lentes oftálmicos, lentes de sol y lentes de contacto en Lima{% endblock title %}</title>
-<meta name="description" content="{% block meta_description %}Ópticas IC: monturas oftálmicas, lentes de sol y lentes de contacto de marcas originales como Ray-Ban, Oakley, Guess y Tommy Hilfiger. Compra online o por WhatsApp.{% endblock meta_description %}">
+<title>{% block title %}Óptica IC | Lentes oftálmicos, lentes de sol y lentes de contacto en Lima{% endblock title %}</title>
+<meta name="description" content="{% block meta_description %}Óptica IC: monturas oftálmicas, lentes de sol y lentes de contacto de marcas originales como Ray-Ban, Oakley, Guess y Tommy Hilfiger. Compra online o por WhatsApp.{% endblock meta_description %}">
 <meta name="robots" content="{% block meta_robots %}index, follow{% endblock meta_robots %}">
 <link rel="canonical" href="{% block canonical %}{{ canonical_url }}{% endblock canonical %}">
 <!-- Open Graph (vista previa en WhatsApp y Facebook) -->
@@ -13,7 +13,10 @@
 <meta property="og:type" content="{% block og_type %}website{% endblock og_type %}">
 <meta property="og:title" content="{% block og_title %}{{ SITE_NAME }}{% endblock og_title %}">
 <meta property="og:url" content="{{ canonical_url }}">
-
+<!-- Favicon (ícono que Google muestra junto al resultado) -->
+<link rel="icon" href="{% static 'images/favicon.ico' %}" sizes="48x48">
+<link rel="icon" type="image/png" href="{% static 'images/icon-192.png' %}" sizes="192x192">
+<link rel="apple-touch-icon" href="{% static 'images/apple-touch-icon.png' %}">
 {% block og_image %}{% endblock og_image %}
 {% block extra_head %}{% endblock extra_head %}
 <!-- for-mobile-apps -->
@@ -22,7 +25,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="keywords" content="Lentes en Centro de Lima, Camaná ic, tommy hilfiger, nano, guess, Rayban, oackley, nike, meta, fiorella Conte, lentes niños" />
 <meta name="facebook-domain-verification" content="hig9y68y4z408lxr0is85vlufltboy" />
-<meta name="google-site-verification" content="e0QaO6R70-txgfnPuaBC-3JQVhd_bSOXNR8USThQgqs" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
@@ -366,7 +368,7 @@
 				</div>
 			</div>
 			<div class="container">
-				<p>&copy; 2023 Ópticas IC. Todos los derechos reservados.</p>
+				<p>&copy; 2023 Óptica IC. Todos los derechos reservados.</p>
 			</div>
 		</div>
 	</div>

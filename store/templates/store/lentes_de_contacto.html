@@ -1,8 +1,8 @@
 {% extends 'store/main.html' %}
 {% load myapp_extras %}
-{% block title %}Lentes de contacto{% if marca_actual %} {{ marca_actual|texto_seo }}{% endif %}{% if uso_actual %} de uso {{ uso_actual|texto_seo|lower }}{% endif %}{% if condicion_actual %} para {{ condicion_actual|texto_seo|lower }}{% endif %}{% if pagina_actual and pagina_actual > 1 %} – Página {{ pagina_actual }}{% endif %} | Ópticas IC{% endblock title %}
-{% block og_title %}Lentes de contacto{% if marca_actual %} {{ marca_actual|texto_seo }}{% endif %}{% if uso_actual %} de uso {{ uso_actual|texto_seo|lower }}{% endif %}{% if condicion_actual %} para {{ condicion_actual|texto_seo|lower }}{% endif %}{% if pagina_actual and pagina_actual > 1 %} – Página {{ pagina_actual }}{% endif %} | Ópticas IC{% endblock og_title %}
-{% block meta_description %}Lentes de contacto{% if marca_actual %} {{ marca_actual|texto_seo }}{% endif %} diarios, mensuales y cosméticos para miopía, astigmatismo y presbicia. Compra online o por WhatsApp en Ópticas IC.{% endblock meta_description %}
+{% block title %}Lentes de contacto{% if marca_actual %} {{ marca_actual|texto_seo }}{% endif %}{% if uso_actual %} de uso {{ uso_actual|texto_seo|lower }}{% endif %}{% if condicion_actual %} para {{ condicion_actual|texto_seo|lower }}{% endif %}{% if pagina_actual and pagina_actual > 1 %} – Página {{ pagina_actual }}{% endif %} | Óptica IC{% endblock title %}
+{% block og_title %}Lentes de contacto{% if marca_actual %} {{ marca_actual|texto_seo }}{% endif %}{% if uso_actual %} de uso {{ uso_actual|texto_seo|lower }}{% endif %}{% if condicion_actual %} para {{ condicion_actual|texto_seo|lower }}{% endif %}{% if pagina_actual and pagina_actual > 1 %} – Página {{ pagina_actual }}{% endif %} | Óptica IC{% endblock og_title %}
+{% block meta_description %}Lentes de contacto{% if marca_actual %} {{ marca_actual|texto_seo }}{% endif %} diarios, mensuales y cosméticos para miopía, astigmatismo y presbicia. Compra online o por WhatsApp en Óptica IC.{% endblock meta_description %}
 {% load static %}
 {% block content %}
 
