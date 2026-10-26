@@ -70,14 +70,20 @@ def _marcas_con_conteo(lista):
 
 
 def home(request):
-    # Nuevos ingresos: primero los marcados como "nuevo", luego los más recientes
-    base = _monturas_disponibles()
-    nuevos = list(base.filter(nuevo=True).order_by("-pk")[:8])
-    if len(nuevos) < 8:
-        nuevos += list(base.exclude(pk__in=[p.pk for p in nuevos]).order_by("-pk")[:8 - len(nuevos)])
+    # Destacadas: las 4 monturas oftálmicas de mayor precio de cada categoría
+    base = _monturas_disponibles().filter(tipo="Monturas oftálmicas")
+    destacadas = []
+    for valor, slug, titulo in [("Mujer", "mujer", "Mujer"), ("Hombre", "hombre", "Hombre"), ("Nino", "nino", "Niños")]:
+        productos = list(base.filter(categoria__iexact=valor).order_by("-precio_venta", "-pk")[:4])
+        if productos:
+            destacadas.append({
+                "titulo": titulo,
+                "url": _reverse("lentes_categoria", args=[slug]),
+                "productos": productos,
+            })
 
     context = {
-        "nuevos": nuevos,
+        "destacadas": destacadas,
         "marcas_home": _marcas_con_conteo(MARCAS_HOME),
         "marcas_home_otras": [m for m in _marcas_con_conteo(MARCAS_HOME_OTRAS) if m["url"]],
     }

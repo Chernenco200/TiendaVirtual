@@ -117,28 +117,33 @@
     </div>
   </section>
 
-  <!-- ===== Nuevos ingresos ===== -->
-  {% if nuevos %}
+  <!-- ===== Monturas destacadas: 4 de mujer, 4 de hombre y 4 de niños (mayor precio) ===== -->
+  {% if destacadas %}
   <section class="ich-wrap ich-nuevos" aria-labelledby="ich-nuevos-titulo">
-    <div class="ich-cabecera">
-      <h2 id="ich-nuevos-titulo">Recién llegados</h2>
-      <a href="{% url 'lentes_oftalmicos' %}">Ver todas las monturas</a>
+    <h2 id="ich-nuevos-titulo" class="ich-destacadas-titulo">Monturas destacadas</h2>
+    {% for grupo in destacadas %}
+    <div class="ich-grupo">
+      <div class="ich-cabecera">
+        <h3>{{ grupo.titulo }}</h3>
+        <a href="{{ grupo.url }}">Ver todas las de {{ grupo.titulo|lower }}</a>
+      </div>
+      <div class="ich-productos">
+        {% for p in grupo.productos %}
+        <a class="ich-producto" href="{{ p.get_absolute_url }}">
+          <div class="ich-producto-img">
+            <img src="{{ p.imagenF.url }}" alt="{{ p.descripcion }}" loading="lazy">
+          </div>
+          {% if p.marca %}<p class="ich-producto-marca">{{ p.marca|texto_seo }}</p>{% endif %}
+          <p class="ich-producto-nombre">{{ p.descripcion }}</p>
+          <p class="ich-producto-precio">
+            <strong>S/ {{ p.precio_venta }}</strong>
+            {% if p.precio_anterior and p.precio_anterior > p.precio_venta %}<s>S/ {{ p.precio_anterior }}</s>{% endif %}
+          </p>
+        </a>
+        {% endfor %}
+      </div>
     </div>
-    <div class="ich-productos">
-      {% for p in nuevos %}
-      <a class="ich-producto" href="{{ p.get_absolute_url }}">
-        <div class="ich-producto-img">
-          <img src="{{ p.imagenF.url }}" alt="{{ p.descripcion }}" loading="lazy">
-        </div>
-        {% if p.marca %}<p class="ich-producto-marca">{{ p.marca|texto_seo }}</p>{% endif %}
-        <p class="ich-producto-nombre">{{ p.descripcion }}</p>
-        <p class="ich-producto-precio">
-          <strong>S/ {{ p.precio_venta }}</strong>
-          {% if p.precio_anterior and p.precio_anterior > p.precio_venta %}<s>S/ {{ p.precio_anterior }}</s>{% endif %}
-        </p>
-      </a>
-      {% endfor %}
-    </div>
+    {% endfor %}
   </section>
   {% endif %}
 
@@ -295,8 +300,13 @@
 .ich .ich-cat-links a{ padding:10px 18px; border:1px solid var(--linea); border-radius:999px; text-decoration:none; color:var(--tinta); font-weight:600; font-size:15px; }
 .ich .ich-cat-links a:hover{ border-color:var(--azul); color:var(--azul); }
 
-/* Recién llegados */
+/* Monturas destacadas */
 .ich-nuevos{ padding-bottom:72px; }
+.ich .ich-destacadas-titulo{ font-size:clamp(1.5rem, 2.6vw, 2rem); font-weight:800; font-stretch:105%; line-height:1.15; margin-bottom:8px; }
+.ich-grupo{ padding-top:24px; }
+.ich-grupo + .ich-grupo{ margin-top:40px; border-top:1px solid var(--linea); }
+.ich .ich-cabecera h3{ font-size:19px; font-weight:700; }
+/* en celular: 2 por fila (2 x 2) */
 .ich-cabecera{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:16px; margin-bottom:24px; }
 .ich .ich-cabecera h2, .ich .ich-pasos-fondo h2, .ich .ich-dos h2, .ich .ich-faq h2{ font-size:clamp(1.5rem, 2.6vw, 2rem); font-weight:800; font-stretch:105%; line-height:1.15; }
 .ich .ich-cabecera a{ font-weight:600; font-size:15px; }
@@ -353,9 +363,11 @@
   .ich-confianza{ grid-template-columns:repeat(2, 1fr); row-gap:16px; }
   .ich-confianza li:nth-child(3){ border-left:0; padding-left:0; }
   .ich-marcas{ grid-template-columns:1fr; gap:24px; padding-top:56px; padding-bottom:56px; }
-  .ich-productos{ grid-template-columns:repeat(3, minmax(0, 1fr)); }
+
   .ich-dos{ grid-template-columns:1fr; gap:40px; }
 }
+
+@media (max-width: 767px){ .ich-productos{ grid-template-columns:repeat(2, minmax(0, 1fr)); } }
 
 /* ===== Celular ===== */
 @media (max-width: 640px){
