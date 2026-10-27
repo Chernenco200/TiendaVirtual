@@ -1,7 +1,14 @@
+import re
 from urllib.parse import urlsplit
 
 from django.conf import settings
 from django.http import HttpResponsePermanentRedirect
+
+
+# Páginas de filtro como /lentes-oftalmicos/forma/Almendra/
+RUTA_FILTRO = re.compile(
+    r"^/(lentes-oftalmicos|lentes-de-sol|lentes-de-contacto)/(genero|forma|marca|talla|uso|condicion)/[^/]+/$"
+)
 
 
 class DominioCanonicoMiddleware:
@@ -27,4 +34,10 @@ class DominioCanonicoMiddleware:
             and request.method in ("GET", "HEAD")
         ):
             return HttpResponsePermanentRedirect(f"{settings.SITE_URL}{request.get_full_path()}")
+        # Una sola versión de cada página de filtro: siempre en minúsculas
+        if request.method in ("GET", "HEAD") and RUTA_FILTRO.match(request.path) and request.path != request.path.lower():
+            destino = request.path.lower()
+            if request.META.get("QUERY_STRING"):
+                destino += "?" + request.META["QUERY_STRING"]
+            return HttpResponsePermanentRedirect(destino)
         return self.get_response(request)

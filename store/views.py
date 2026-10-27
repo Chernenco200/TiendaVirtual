@@ -43,10 +43,13 @@ MARCAS_HOME_OTRAS = [
 ]
 
 
+def con_foto(qs):
+    """Solo productos que ya tienen foto principal (imagenF) cargada en facturación."""
+    return qs.exclude(imagenF__isnull=True).exclude(imagenF="")
+
+
 def _monturas_disponibles():
-    return (Producto.objects
-            .filter(activo=True, stock__gte=1, tipo__in=TIPOS_MONTURA)
-            .exclude(imagenF__isnull=True).exclude(imagenF=""))
+    return con_foto(Producto.objects.filter(activo=True, stock__gte=1, tipo__in=TIPOS_MONTURA))
 
 
 def _marcas_con_conteo(lista):
@@ -155,11 +158,11 @@ def producto_detalle(request, slug):
         activo=True
     )
 
-    productos_relacionados = Producto.objects.filter(
+    productos_relacionados = con_foto(Producto.objects.filter(
         tipo=product.tipo,
         activo=True,
         stock__gte=1
-    ).exclude(pk=product.pk)[:8]
+    )).exclude(pk=product.pk)[:8]
 
     context = {
         'product': product,
@@ -421,11 +424,11 @@ def _render_lentes_de_sol(request, filtros_iniciales=None):
     color = filtros_iniciales.get('color', request.GET.get('color', '').strip())
     precio = filtros_iniciales.get('precio', request.GET.get('precio', '').strip())
 
-    base_products = Producto.objects.filter(
+    base_products = con_foto(Producto.objects.filter(
         tipo="Monturas Solares",
         stock__gte=1,
         activo=True
-    ).order_by('-precio_venta')
+    )).order_by('-precio_venta')
 
     def aplicar_filtros(qs, exclude_field=None):
         if categoria and exclude_field != 'categoria':
@@ -653,11 +656,11 @@ def _render_lentes_de_contacto(request, filtros_iniciales=None):
     condicion = filtros_iniciales.get('condicion', request.GET.get('condicion', '').strip())
     precio = filtros_iniciales.get('precio', request.GET.get('precio', '').strip())
 
-    base_products = Producto.objects.filter(
+    base_products = con_foto(Producto.objects.filter(
         tipo="Lentes de Contacto",
         stock__gte=0,
         activo=True
-    ).order_by('-precio_venta')
+    )).order_by('-precio_venta')
 
     def aplicar_filtros(qs, exclude_field=None):
         if marca and exclude_field != 'marca':
@@ -834,6 +837,8 @@ def buscar_productos(request):
         Q(cod__icontains=q) |
         Q(marca__icontains=q)
     ).filter(activo=True) if q else []
+    if q:
+        productos = con_foto(productos)
 
     return render(request, "store/resultados_busqueda.html", {
         "productos": productos,
@@ -851,7 +856,8 @@ def autocomplete_productos(request):
             Q(descripcion__icontains=q) |
             Q(cod__icontains=q) |
             Q(marca__icontains=q)
-        ).filter(activo=True)[:10]
+        ).filter(activo=True)
+        productos = con_foto(productos)[:10]
 
         for p in productos:
             resultados.append({

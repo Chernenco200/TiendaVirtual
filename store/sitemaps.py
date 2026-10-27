@@ -37,7 +37,10 @@ PAGINAS_FILTRO = [
 
 
 def _disponibles():
-    return Producto.objects.filter(activo=True, stock__gte=1)
+    # Solo productos activos, con stock y con foto principal.
+    # Cuando subes la foto en facturación, el producto entra solo al sitemap.
+    return (Producto.objects.filter(activo=True, stock__gte=1)
+            .exclude(imagenF__isnull=True).exclude(imagenF=""))
 
 
 class PaginasPrincipalesSitemap(Sitemap):

@@ -255,9 +255,23 @@ class Producto(models.Model):
         ('Tommy-Hilfiger', 'Tommy-Hilfiger'),
         ('Arnette', 'Arnette'),
         ('Nano', 'Nano'),
+        ('AX', 'Armani Exchange'),
+        ('Emporio', 'Emporio Armani'),
+        ('Skechers', 'Skechers'),
+        ('Harley', 'Harley Davidson'),
+        ('Police', 'Police'),
+        ('Adidas', 'Adidas'),
+        ('Fila', 'Fila'),
+        ('Polo', 'Polo'),
+        ('Timberland', 'Timberland'),
+        ('Ralph', 'Ralph'),
+        ('Carolina', 'Carolina Herrera'),
+        ('Tous', 'Tous'),
+        ('Vogue', 'Vogue'),
+
         ('Lacoste', 'Lacoste'),      # nueva
-        ('Skechers', 'Skechers'),    # nueva
         ('Razza', 'Razza'),          # nueva
+        ('Fiorela', 'Fiorella Conti'),          # nueva
         ('Otros', 'Otros'),
 
         ('Acuvue', 'Acuvue'),
