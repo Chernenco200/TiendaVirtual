@@ -43,6 +43,17 @@ MARCAS_HOME_OTRAS = [
 ]
 
 
+from django.core.paginator import EmptyPage, PageNotAnInteger
+
+
+def pagina_o_404(paginator, pagina):
+    """Si piden una página que ya no existe (por ejemplo ?page=22), responde 404."""
+    try:
+        return paginator.page(pagina or 1)
+    except (EmptyPage, PageNotAnInteger):
+        raise Http404("Página no encontrada")
+
+
 def con_foto(qs):
     """Solo productos que ya tienen foto principal (imagenF) cargada en facturación."""
     return qs.exclude(imagenF__isnull=True).exclude(imagenF="")
@@ -157,6 +168,9 @@ def producto_detalle(request, slug):
         slug=slug,
         activo=True
     )
+    # Mientras no tenga foto en facturación, la ficha "no existe" para la web y para Google
+    if not product.imagenF:
+        raise Http404("Producto sin foto")
 
     productos_relacionados = con_foto(Producto.objects.filter(
         tipo=product.tipo,
@@ -264,7 +278,7 @@ def _render_lentes_oftalmicos(request, filtros_iniciales=None):
 
     paginator = Paginator(products_qs, 24)
     pagina = request.GET.get("page") or 1
-    products = paginator.get_page(pagina)
+    products = pagina_o_404(paginator, pagina)
 
     try:
         pagina_actual = int(pagina)
@@ -503,7 +517,7 @@ def _render_lentes_de_sol(request, filtros_iniciales=None):
 
     paginator = Paginator(products_qs, 24)
     pagina = request.GET.get("page") or 1
-    products = paginator.get_page(pagina)
+    products = pagina_o_404(paginator, pagina)
 
     try:
         pagina_actual = int(pagina)
@@ -726,7 +740,7 @@ def _render_lentes_de_contacto(request, filtros_iniciales=None):
 
     paginator = Paginator(products_qs, 24)
     pagina = request.GET.get("page") or 1
-    products = paginator.get_page(pagina)
+    products = pagina_o_404(paginator, pagina)
 
     try:
         pagina_actual = int(pagina)
