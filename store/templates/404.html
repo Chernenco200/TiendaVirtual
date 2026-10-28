@@ -1,0 +1,39 @@
+{% extends 'store/main.html' %}
+{% block title %}Página no encontrada | Óptica IC{% endblock title %}
+{% block meta_robots %}noindex, follow{% endblock meta_robots %}
+
+{% block content %}
+<section class="ic404">
+  <div class="ic404-caja">
+    <p class="ic404-codigo">Error 404</p>
+    <h1>Esta página ya no está disponible</h1>
+    <p>Puede que el producto se haya agotado o que el enlace haya cambiado. Mira nuestras monturas disponibles o escríbenos y te ayudamos a encontrarlo.</p>
+    <div class="ic404-acciones">
+      <a class="ic404-btn ic404-btn--azul" href="{% url 'lentes_oftalmicos' %}">Ver lentes oftálmicos</a>
+      <a class="ic404-btn" href="{% url 'lentes_de_sol' %}">Ver lentes de sol</a>
+      <a class="ic404-btn" href="https://wa.me/51952305913?text=Hola%2C%20busco%20un%20modelo%20de%20lentes" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    </div>
+    <p class="ic404-inicio"><a href="/">Volver al inicio</a></p>
+  </div>
+</section>
+
+<style>
+.ic404{ padding:72px 20px 88px; font-family:"Archivo","Open Sans",Arial,sans-serif; color:#13243A; }
+.ic404-caja{ max-width:640px; margin:0 auto; text-align:center; }
+.ic404 .ic404-codigo{ margin:0 0 8px; font-size:15px; font-weight:700; color:#0469BE; }
+.ic404 h1{ margin:0 0 16px; font-family:inherit; font-size:clamp(1.8rem, 4vw, 2.6rem); font-weight:800; line-height:1.15; color:#13243A; }
+.ic404 p{ margin:0; font-size:17px; line-height:1.55; color:#5A6B80; }
+.ic404-acciones{ display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-top:28px; }
+.ic404 .ic404-btn{
+  display:inline-flex; align-items:center; min-height:48px; padding:12px 22px; border-radius:999px;
+  border:1px solid #D3DDE8; color:#13243A; font-weight:700; font-size:15px; text-decoration:none;
+}
+.ic404 .ic404-btn:hover{ border-color:#0469BE; color:#0469BE; text-decoration:none; }
+.ic404 .ic404-btn--azul{ background:#0469BE; border-color:#0469BE; color:#fff; }
+.ic404 .ic404-btn--azul:hover{ background:#034F8F; color:#fff; }
+.ic404 .ic404-btn:focus-visible{ outline:3px solid #0469BE; outline-offset:3px; }
+.ic404 .ic404-inicio{ margin-top:24px; font-size:15px; }
+.ic404 .ic404-inicio a{ color:#0469BE; }
+@media (max-width: 520px){ .ic404 .ic404-btn{ flex:1 1 100%; justify-content:center; } }
+</style>
+{% endblock content %}

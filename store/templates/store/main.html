@@ -57,6 +57,169 @@
 	});
 </script>
 <!-- //end-smooth-scrolling --> 
+<!-- ===== Estilos del header (estilo Vision Center) ===== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<style>
+.icn{
+  --icn-indigo:#3c43a4;      /* color de tu barra de menú */
+  --icn-indigo-osc:#2f3586;
+  --icn-azul:#0469BE;        /* azul del logo */
+  --icn-tinta:#13243A;
+  --icn-gris:#5A6B80;
+  --icn-niebla:#EEF3F8;
+  --icn-linea:#D3DDE8;
+  position:relative; z-index:1000; background:#fff;
+  font-family:"Archivo","Open Sans",Arial,sans-serif; color:var(--icn-tinta);
+}
+.icn *, .icn *::before, .icn *::after{ box-sizing:border-box; }
+.icn ul{ list-style:none; margin:0; padding:0; }
+.icn p{ margin:0; }
+.icn a{ text-decoration:none; }
+.icn button{ font-family:inherit; cursor:pointer; }
+.icn a:focus-visible, .icn button:focus-visible, .icn input:focus-visible{ outline:3px solid var(--icn-azul); outline-offset:2px; }
+.icn .icn-wrap{ max-width:1280px; margin-left:auto; margin-right:auto; padding-left:24px; padding-right:24px; }
+
+/* ---------- Fila 1 ---------- */
+.icn-top-in{ display:flex; align-items:center; gap:32px; min-height:92px; }
+.icn-logo{ flex:none; display:block; }
+.icn-logo img{ display:block; width:150px; height:auto; }
+.icn-burger{ display:none; }
+
+.icn-buscar{ position:relative; flex:1; display:flex; max-width:880px; margin:0; }
+.icn .icn-buscar input{
+  flex:1; min-width:0; height:50px; margin:0; padding:0 16px;
+  border:1px solid var(--icn-linea); border-right:0; border-radius:4px 0 0 4px;
+  font:inherit; font-size:16px; color:var(--icn-tinta); background:#fff; box-shadow:none;
+}
+.icn .icn-buscar input::placeholder{ color:#8A98AA; }
+.icn .icn-buscar input:focus{ border-color:var(--icn-indigo); outline:none; }
+.icn .icn-buscar > button{
+  flex:none; width:60px; height:50px; display:flex; align-items:center; justify-content:center;
+  border:0; border-radius:0 4px 4px 0; background:var(--icn-indigo); color:#fff;
+}
+.icn .icn-buscar > button:hover{ background:var(--icn-indigo-osc); }
+.icn-buscar > button svg{ width:24px; height:24px; }
+
+/* resultados del autocompletado */
+.icn .icn-resultados{
+  display:none; position:absolute; top:calc(100% + 4px); left:0; right:60px; z-index:1005;
+  max-height:420px; overflow:auto; padding:6px 0; background:#fff;
+  border:1px solid var(--icn-linea); border-radius:4px; box-shadow:0 12px 28px rgba(19,36,58,.14);
+}
+.icn .icn-resultados a{ display:flex; padding:8px 14px; color:var(--icn-tinta); font-size:15px; }
+.icn .icn-resultados a:hover, .icn .icn-resultados a:focus-visible{ background:var(--icn-niebla); }
+.icn .icn-resultados small{ color:var(--icn-gris); }
+
+/* carrito */
+.icn .icn-carrito{ flex:none; margin:0 !important; float:none; }
+.icn .icn-carrito form{ margin:0; }
+.icn .icn-carrito .w3view-cart{
+  position:static !important; width:auto; height:auto; top:auto; right:auto; border-radius:0;
+  display:flex; flex-direction:column; align-items:center; gap:2px; padding:6px 4px; margin:0;
+  background:none !important; border:0; box-shadow:none; color:var(--icn-tinta); font-size:14px; font-weight:700; line-height:1.2;
+}
+.icn .icn-carrito .w3view-cart svg{ flex:none; width:32px; height:32px; color:var(--icn-indigo); }
+.icn .icn-carrito .w3view-cart:hover svg{ color:var(--icn-azul); }
+
+/* ---------- Fila 2: barra ---------- */
+.icn-barra{ position:relative; background:var(--icn-indigo); }
+.icn-cajon-cabecera, .icn-fondo{ display:none; }
+.icn-menu{ display:flex; align-items:stretch; }
+.icn-item{ display:flex; align-items:stretch; }
+.icn .icn-link{
+  display:flex; align-items:center; height:52px; padding:0 4px 0 18px;
+  color:#fff; font-size:14px; font-weight:600; letter-spacing:.04em; text-transform:uppercase;
+  border-bottom:3px solid transparent; border-top:3px solid transparent;
+}
+.icn-item:not(.icn-tiene-panel) .icn-link{ padding-right:18px; }
+@media (min-width: 992px){ .icn-menu > .icn-item:first-child .icn-link{ margin-left:-18px; } }
+.icn .icn-link:hover, .icn .icn-link:focus{ color:#fff; }
+.icn .icn-link.is-actual{ border-bottom-color:#fff; }
+.icn .icn-abrir{
+  display:flex; align-items:center; padding:0 14px 0 4px; background:none; border:0; color:#fff;
+}
+.icn-abrir svg{ width:18px; height:18px; transition:transform .2s; }
+.icn-item.is-open .icn-abrir svg{ transform:rotate(180deg); }
+
+/* panel desplegable */
+.icn-panel{
+  display:none; position:absolute; left:0; right:0; top:100%;
+  background:#fff; border-top:1px solid var(--icn-linea); box-shadow:0 18px 30px rgba(19,36,58,.16);
+}
+.icn-item.is-open > .icn-panel{ display:block; }
+.icn-panel-in{ display:flex; flex-wrap:wrap; gap:16px 56px; padding-top:28px; padding-bottom:24px; }
+.icn-col{ min-width:150px; }
+.icn .icn-col-titulo{ margin-bottom:10px; font-size:15px; font-weight:700; color:var(--icn-indigo); }
+.icn .icn-col a{ display:block; padding:5px 0; color:var(--icn-tinta); font-size:15px; }
+.icn .icn-col a:hover{ color:var(--icn-azul); text-decoration:underline; }
+.icn-promo{ margin-left:auto; flex:none; }
+.icn-promo img{ display:block; width:250px; height:auto; border-radius:4px; }
+.icn .icn-ver-todo{ flex-basis:100%; padding-top:14px; border-top:1px solid var(--icn-linea); color:var(--icn-azul); font-weight:700; font-size:15px; }
+.icn .icn-ver-todo:hover{ text-decoration:underline; }
+
+/* escritorio: abrir al pasar el mouse o al navegar con teclado */
+@media (min-width: 992px){
+  .icn-item:hover .icn-link{ background:rgba(255,255,255,.1); }
+  .icn-item:hover .icn-abrir{ background:rgba(255,255,255,.1); }
+}
+@media (min-width: 992px) and (hover: hover){
+  .icn-tiene-panel:hover > .icn-panel{ display:block; }
+  .icn-tiene-panel:hover .icn-abrir svg{ transform:rotate(180deg); }
+}
+@media (min-width: 992px){
+  .icn-tiene-panel:has(:focus-visible) > .icn-panel{ display:block; }
+}
+
+/* ---------- Celular y tablet ---------- */
+@media (max-width: 991px){
+  .icn-top-in{ flex-wrap:wrap; gap:10px 14px; min-height:0; padding-top:10px; padding-bottom:12px; }
+  .icn .icn-burger{
+    display:flex; align-items:center; justify-content:center; order:1; width:44px; height:44px;
+    padding:0; background:none; border:0; color:var(--icn-indigo);
+  }
+  .icn-burger svg{ width:28px; height:28px; }
+  .icn-logo{ order:2; margin-right:auto; }
+  .icn-logo img{ width:118px; }
+  .icn-carrito{ order:3; }
+  .icn .icn-carrito .w3view-cart{ font-size:12px; }
+  .icn .icn-carrito .w3view-cart svg{ width:28px; height:28px; }
+  .icn-buscar{ order:4; flex-basis:100%; max-width:none; }
+  .icn .icn-buscar input, .icn .icn-buscar > button{ height:46px; }
+
+  /* el menú se convierte en un cajón lateral */
+  .icn-barra{
+    position:fixed; top:0; bottom:0; left:0; z-index:1002; width:min(86vw, 360px); overflow-y:auto;
+    background:#fff; transform:translateX(-100%); visibility:hidden;
+    transition:transform .25s ease, visibility 0s linear .25s;
+  }
+  .icn-barra.is-abierto{ transform:none; visibility:visible; transition:transform .25s ease, visibility 0s; }
+  .icn-fondo:not([hidden]){ display:block; position:fixed; inset:0; z-index:1001; background:rgba(19,36,58,.55); }
+  .icn-cajon-cabecera{
+    display:flex; align-items:center; justify-content:space-between; padding:6px 8px 6px 20px;
+    background:var(--icn-indigo); color:#fff; font-weight:700; font-size:16px;
+  }
+  .icn .icn-cerrar{ display:flex; align-items:center; justify-content:center; width:44px; height:44px; padding:0; background:none; border:0; color:#fff; }
+  .icn-cerrar svg{ width:24px; height:24px; }
+  .icn .icn-wrap.icn-menu{ display:block; padding:0; }
+  .icn-item{ flex-wrap:wrap; border-bottom:1px solid var(--icn-linea); }
+  .icn .icn-link{ flex:1; height:auto; padding:16px 20px; color:var(--icn-tinta); border:0; font-size:15px; }
+  .icn .icn-link:hover, .icn .icn-link:focus{ color:var(--icn-tinta); }
+  .icn .icn-link.is-actual{ color:var(--icn-indigo); }
+  .icn .icn-abrir{ width:56px; justify-content:center; padding:0; color:var(--icn-indigo); }
+  .icn-panel{ position:static; flex-basis:100%; border-top:0; box-shadow:none; background:var(--icn-niebla); }
+  .icn-panel-in{ display:block; padding:12px 20px 16px; }
+  .icn-col{ margin-bottom:14px; }
+  .icn-promo{ display:none; }
+}
+body.icn-sin-scroll{ overflow:hidden; }
+
+@media (prefers-reduced-motion: reduce){
+  .icn *{ transition:none !important; }
+}
+</style>
+
 </head> 
 <body>
 	<!-- for bootstrap working -->
@@ -67,243 +230,207 @@
 		$('#myModal88').modal('show');
 	</script>  
 	<!-- header modal -->
-	<!-- header -->
-<div class="header" id="home1"> 
-    <div class="container header-flex">
+	<!-- ===== HEADER (estilo Vision Center) ===== -->
+	<header class="icn" id="home1">
 
-        <!-- CARRITO IZQUIERDA -->
-        <div class="header-left">
-            <div class="cart box_1"> 
-                <form action="#" method="post" class="last"> 
-                    <input type="hidden" name="cmd" value="_cart" />
-                    <input type="hidden" name="display" value="1" />
+		<!-- Fila 1: logo, buscador y carrito -->
+		<div class="icn-top">
+			<div class="icn-wrap icn-top-in">
+				<button type="button" class="icn-burger" aria-label="Abrir menú" aria-controls="icn-menu" aria-expanded="false">
+					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+				</button>
 
-                    <button class="w3view-cart" type="submit">
-                        <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
-                    </button>
-                </form>   
-            </div>
-        </div>
+				<a class="icn-logo" href="{% url 'home' %}">
+					<img src="{% static 'images/logo2.png' %}" width="160" height="62" alt="Óptica IC - Inicio">
+				</a>
 
-        <!-- LOGO + BUSCADOR CENTRO -->
-        <div class="header-center">
-
-            <div class="logo-search">
-
-                <div class="w3l_logo">
-                    <h1>
-                        <a href="{% url 'home' %}">
-                            <img src="{% static 'images/logo2.png' %}" width="160" height="70" alt="">
-                        </a>
-                    </h1>
-                </div>
-
-                <form action="{% url 'buscar_productos' %}" method="get" autocomplete="off" class="search-form">
-                    <div class="search-wrapper">
-
-                        <input 
-                            type="text" 
-                            id="buscador"
-                            name="q" 
-                            class="form-control search-input"
-                            placeholder="Buscar producto..."
-                        >
-
-                        <button class="search-toggle" type="button" id="btn-search">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                        </button>
-
-                        <ul id="resultados" class="dropdown-menu"></ul>
-
-                    </div>
-                </form>
-
-            </div>
-
-        </div>
-
-        <!-- DERECHA VACÍA PARA CENTRAR -->
-        <div class="header-right"></div>
-
-    </div>
-</div>
-	<!-- //header -->
-	<!-- navigation -->
-	<div class="navigation">
-		<div class="container">
-			<nav class="navbar navbar-default">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header nav_2">
-					<button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
+				<form action="{% url 'buscar_productos' %}" method="get" autocomplete="off" class="icn-buscar" role="search">
+					<label for="buscador" class="sr-only">Buscar producto</label>
+					<input type="search" id="buscador" name="q" placeholder="Buscar producto" value="{{ q|default:'' }}">
+					<button type="submit" aria-label="Buscar">
+						<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="m15.5 15.5 5 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
 					</button>
-				</div> 
-				<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
-					<ul class="nav navbar-nav">
-						<li><a href="{% url 'home' %}" class="act">Home</a></li>	
-						<!-- Mega Menu -->
-						<li class="dropdown">
-							<a href="{% url 'lentes_oftalmicos' %}" class="dropdown-toggle" data-toggle="dropdown">Lentes Oftálmicas<b class="caret"></b></a>
-							<ul class="dropdown-menu multi-column columns-3">
-								<div class="row">
-									<div class="col-sm-2">
-										<ul class="multi-column-dropdown">
-											<h6>Categorias</h6>
-											<li><a href="{% url 'lentes_categoria' 'hombre' %}">Hombre</a></li>
-											<li><a href="{% url 'lentes_categoria' 'mujer' %}">Mujer</a></li> 
-											<li><a href="{% url 'lentes_categoria' 'nino' %}">Niños</a></li>
-											<li><a href="{% url 'lentes_oftalmicos' %}">Ver Todo</a></li>
-										</ul>
-									</div>
-									<div class="col-sm-2">
-										<ul class="multi-column-dropdown">
-											<h6>Marcas</h6>
-											<li><a href="{% url 'lentes_marca' 'ray-ban' %}">Ray-Ban</a></li>
-											<li><a href="{% url 'lentes_marca' 'oakley' %}">OaKley</a></li>
-											<li><a href="{% url 'lentes_marca' 'nike' %}">Nike<span>New</span></a></li>
-											<li><a href="{% url 'lentes_marca' 'guess' %}">Guess</a></li>
-											<li><a href="{% url 'lentes_marca' 'tommy-hilfiger' %}">Tommy Hilfiger</a></li>
-											<li><a href="{% url 'lentes_marca' 'arnette' %}">Arnette<span>New</span></a></li>
-											<li><a href="{% url 'lentes_marca' 'nano' %}">NANO <span>New</span></a></li>
-											
-											<li><a href="{% url 'lentes_oftalmicos' %}">Ver Todo</a></li>
-										</ul>
-									</div>
-									<div class="col-sm-2">
-										<ul class="multi-column-dropdown">
-											<h6>Talla</h6>
-											<li><a href="{% url 'lentes_talla' 'grande' %}">Grande</a></li>
-											<li><a href="{% url 'lentes_talla' 'mediana' %}">Mediana</a></li>
-											<li><a href="{% url 'lentes_talla' 'chica' %}">Chica</a></li>
-											<li><a href="{% url 'lentes_oftalmicos' %}">Ver Todo</a></li>
-										</ul>
-									</div>
+					<ul id="resultados" class="icn-resultados"></ul>
+				</form>
 
-									<div class="col-sm-2">
-										<ul class="multi-column-dropdown">
-											<h6>Forma</h6>
-											<li><a href="{% url 'lentes_forma' 'agatado' %}">Agatado</a></li>
-											<li><a href="{% url 'lentes_forma' 'almendra' %}">Almendra</a></li>
-											<li><a href="{% url 'lentes_forma' 'piloto' %}">Piloto</a></li>
-											<li><a href="{% url 'lentes_forma' 'cuadrado' %}">Cuadro</a></li>
-											<li><a href="{% url 'lentes_forma' 'redondo' %}">Redondo</a></li>
-											<li><a href="{% url 'lentes_forma' 'exagonal' %}">Exagonal</a></li>
-											<li><a href="{% url 'lentes_forma' 'otros' %}">Otros</a></li>
-											<li><a href="{% url 'lentes_oftalmicos' %}">Ver Todo</a></li>
-										</ul>
-									</div>
-
-
-
-									<div class="col-sm-4">
-										<div class="w3ls_products_pos">
-											<h4>30%<i>Off/-</i></h4>
-											<img src="{% static 'images/1.jpg' %}" alt=" " class="img-responsive" />
-										</div>
-									</div>
-									<div class="clearfix"></div>
-								</div>
-							</ul>
-						</li>
-						<li class="dropdown">
-							<a href="{% url 'lentes_de_sol' %}" class="dropdown-toggle" data-toggle="dropdown">Lentes de sol<b class="caret"></b></a>
-							<ul class="dropdown-menu multi-column columns-3">
-								<div class="row">
-									<div class="col-sm-3">
-										<ul class="multi-column-dropdown">
-											<h6>Categorias</h6>
-											<li><a href="{% url 'gafas_genero' 'hombre' %}">Hombre</a></li>
-											<li><a href="{% url 'gafas_genero' 'mujer' %}" >Mujer</a></li> 
-											<li><a href="{% url 'gafas_genero' 'nino' %}">Niño</a></li>
-											<li><a href="{% url 'lentes_de_sol' %}">Ver Todo<span>New</span></a></li>
-										</ul>
-									</div>
-									<div class="col-sm-3">
-										<ul class="multi-column-dropdown">
-											<h6>Marcas</h6>
-											<li><a href="{% url 'gafas_marca' 'ray-ban' %}">Ray-Ban</a></li>
-											<li><a href="{% url 'gafas_marca' 'oakley' %}">Oakley</a></li>
-											<li><a href="{% url 'gafas_marca' 'arnette' %}">Arnette</a></li>
-											<li><a href="{% url 'gafas_marca' 'nano' %}">Nano</a></li>
-											<li><a href="{% url 'gafas_marca' 'razza' %}">Razza</a></li>
-											<li><a href="{% url 'lentes_de_sol' %}">Ver Todo<span>New</span></a></li>
-
-										</ul>
-									</div>
-									<div class="col-sm-2">
-										<ul class="multi-column-dropdown">
-											<h6>Talla</h6>
-                            				<li><a href="{% url 'gafas_talla' 'grande' %}">Grande</a></li>
-											<li><a href="{% url 'gafas_talla' 'mediana' %}">Mediana</a></li>
-											<li><a href="{% url 'gafas_talla' 'chica' %}">Chica</a></li>
-											<li><a href="{% url 'lentes_de_sol' %}">Ver Todo</a></li>
-										</ul>
-									</div>
-									<div class="col-sm-4">
-										<div class="w3ls_products_pos">
-											<h4>30%<i>Off/-</i></h4>
-											<img src="{% static 'images/1.jpg' %}" alt=" " class="img-responsive" />
-										</div>
-									</div>
-									<div class="clearfix"></div>
-								</div>
-							</ul>
-						</li>
-						<li class="dropdown">
-							<a href="{% url 'lentes_de_contacto' %}" class="dropdown-toggle" data-toggle="dropdown">Lentes de Concato<b class="caret"></b></a>
-							<ul class="dropdown-menu multi-column columns-3">
-								<div class="row">
-									<div class="col-sm-3">
-										<ul class="multi-column-dropdown">
-											<h6>Uso</h6>
-											<li><a href="{% url 'lentes_uso_contacto' 'diario' %}">Diario</a></li>
-											<li><a href="{% url 'lentes_uso_contacto' 'mensual' %}">Mensual <span>New</span></a></li> 
-											<li><a href="{% url 'lentes_uso_contacto' 'anual' %}">Anual</a></li>
-											<li><a href="{% url 'lentes_uso_contacto' 'cosmetico' %}">Cosmético</a></li>
-											<li><a href="{% url 'lentes_de_contacto' %}">Ver Todo<span>New</span></a></li>
-										</ul>
-									</div>
-									<div class="col-sm-3">
-										<ul class="multi-column-dropdown">
-											<h6>Marcas</h6>
-											<li><a href="{% url 'lentes_marca_contacto' 'acuvue' %}">Acuvue</a></li>
-											<li><a href="{% url 'lentes_marca_contacto' 'air-optix' %}">Air Optix</a></li>
-											<li><a href="{% url 'lentes_marca_contacto' 'dailies-aqua' %}">Dailies Aqua <span>New</span></a></li>
-											<li><a href="{% url 'lentes_marca_contacto' 'freshlook' %}">Freshlook</a></li>
-											<li><a href="{% url 'lentes_marca_contacto' 'licryl' %}">Licryl</a></li>
-											<li><a href="{% url 'lentes_marca_contacto' 'soflens' %}">Soflens <span>New</span></a></li>
-											<li><a href="{% url 'lentes_marca_contacto' 'purevision' %}">Purevision <span>New</span></a></li>
-											<li><a href="{% url 'lentes_de_contacto' %}">Ver Todas<span>New</span></a></li>
-										</ul>
-									</div>
-									<div class="col-sm-2">
-										<ul class="multi-column-dropdown">
-											<h6>Condición</h6>
-											<li><a href="{% url 'lentes_condicion_contacto' 'miopia-e-hipermetropia' %}">Miopia e Hipermetropia</a></li>
-											<li><a href="{% url 'lentes_condicion_contacto' 'astigmatismo' %}">Astigmatismo</a></li>
-											<li><a href="{% url 'lentes_condicion_contacto' 'presbicia' %}">Presbicia</a></li>
-											<li><a href="{% url 'lentes_de_contacto' %}">Ver Todas</a></li>
-										</ul>
-									</div>
-									<div class="col-sm-4">
-										<div class="w3ls_products_pos">
-											<h4>30%<i>Off/-</i></h4>
-											<img src="{% static 'images/1.jpg' %}" alt=" " class="img-responsive" />
-										</div>
-									</div>
-									<div class="clearfix"></div>
-								</div>
-							</ul>
-						</li>
-					</ul>
+				<!-- Carrito (minicart) -->
+				<div class="icn-carrito cart box_1">
+					<form action="#" method="post" class="last">
+						<input type="hidden" name="cmd" value="_cart" />
+						<input type="hidden" name="display" value="1" />
+						<button class="w3view-cart" type="submit">
+							<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 3.5h2.6l2.2 11.2h11.2l2-8H6.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="9" cy="19.5" r="1.6" fill="currentColor"/><circle cx="17" cy="19.5" r="1.6" fill="currentColor"/></svg>
+							<span>Carrito</span>
+						</button>
+					</form>
 				</div>
-			</nav>
+			</div>
 		</div>
-	</div>
-	<!-- //navigation -->
+
+		<!-- Fila 2: barra de menú -->
+		<div class="icn-fondo" hidden></div>
+		<nav class="icn-barra" id="icn-menu" aria-label="Menú principal">
+			<div class="icn-cajon-cabecera">
+				<span>Menú</span>
+				<button type="button" class="icn-cerrar" aria-label="Cerrar menú">
+					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+				</button>
+			</div>
+
+			<ul class="icn-wrap icn-menu">
+				<li class="icn-item">
+					<a class="icn-link{% if request.path == '/' or request.path == '/home/' %} is-actual{% endif %}" href="{% url 'home' %}">Home</a>
+				</li>
+
+				<!-- Lentes oftálmicos -->
+				<li class="icn-item icn-tiene-panel">
+					<a class="icn-link{% if '/lentes-oftalmicos/' in request.path %} is-actual{% endif %}" href="{% url 'lentes_oftalmicos' %}">Lentes oftálmicos</a>
+					<button type="button" class="icn-abrir" aria-expanded="false" aria-controls="icn-p1" aria-label="Ver opciones de lentes oftálmicos">
+						<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+					</button>
+					<div class="icn-panel" id="icn-p1">
+						<div class="icn-wrap icn-panel-in">
+							<div class="icn-col">
+								<p class="icn-col-titulo">Categorías</p>
+								<ul>
+									<li><a href="{% url 'lentes_categoria' 'hombre' %}">Hombre</a></li>
+									<li><a href="{% url 'lentes_categoria' 'mujer' %}">Mujer</a></li>
+									<li><a href="{% url 'lentes_categoria' 'nino' %}">Niños</a></li>
+								</ul>
+							</div>
+							<div class="icn-col">
+								<p class="icn-col-titulo">Marcas</p>
+								<ul>
+									<li><a href="{% url 'lentes_marca' 'nike' %}">Nike</a></li>
+									<li><a href="{% url 'lentes_marca' 'lacoste' %}">Lacoste</a></li>
+									<li><a href="{% url 'lentes_marca' 'skechers' %}">Skechers</a></li>
+									<li><a href="{% url 'lentes_marca' 'tommy-hilfiger' %}">Tommy Hilfiger</a></li>
+									<li><a href="{% url 'lentes_marca' 'guess' %}">Guess</a></li>
+									<li><a href="{% url 'lentes_marca' 'nano' %}">Nano Vista</a></li>
+									<li><a href="{% url 'lentes_marca' 'ray-ban' %}">Ray-Ban</a></li>
+									<li><a href="{% url 'lentes_marca' 'oakley' %}">Oakley</a></li>
+									<li><a href="{% url 'lentes_marca' 'arnette' %}">Arnette</a></li>
+								</ul>
+							</div>
+							<div class="icn-col">
+								<p class="icn-col-titulo">Talla</p>
+								<ul>
+									<li><a href="{% url 'lentes_talla' 'grande' %}">Grande</a></li>
+									<li><a href="{% url 'lentes_talla' 'mediana' %}">Mediana</a></li>
+									<li><a href="{% url 'lentes_talla' 'chica' %}">Chica</a></li>
+								</ul>
+							</div>
+							<div class="icn-col">
+								<p class="icn-col-titulo">Forma</p>
+								<ul>
+									<li><a href="{% url 'lentes_forma' 'agatado' %}">Agatado</a></li>
+									<li><a href="{% url 'lentes_forma' 'almendra' %}">Almendra</a></li>
+									<li><a href="{% url 'lentes_forma' 'piloto' %}">Piloto</a></li>
+									<li><a href="{% url 'lentes_forma' 'cuadrado' %}">Cuadrado</a></li>
+									<li><a href="{% url 'lentes_forma' 'redondo' %}">Redondo</a></li>
+									<li><a href="{% url 'lentes_forma' 'exagonal' %}">Hexagonal</a></li>
+									<li><a href="{% url 'lentes_forma' 'otros' %}">Otros</a></li>
+								</ul>
+							</div>
+							<a class="icn-promo" href="{% url 'lentes_oftalmicos' %}">
+								<img src="{% static 'images/1.jpg' %}" alt="Promoción de lentes" loading="lazy" width="1402" height="1122">
+							</a>
+							<a class="icn-ver-todo" href="{% url 'lentes_oftalmicos' %}">Ver todos los lentes oftálmicos</a>
+						</div>
+					</div>
+				</li>
+
+				<!-- Lentes de sol -->
+				<li class="icn-item icn-tiene-panel">
+					<a class="icn-link{% if '/lentes-de-sol/' in request.path %} is-actual{% endif %}" href="{% url 'lentes_de_sol' %}">Lentes de sol</a>
+					<button type="button" class="icn-abrir" aria-expanded="false" aria-controls="icn-p2" aria-label="Ver opciones de lentes de sol">
+						<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+					</button>
+					<div class="icn-panel" id="icn-p2">
+						<div class="icn-wrap icn-panel-in">
+							<div class="icn-col">
+								<p class="icn-col-titulo">Categorías</p>
+								<ul>
+									<li><a href="{% url 'gafas_genero' 'hombre' %}">Hombre</a></li>
+									<li><a href="{% url 'gafas_genero' 'mujer' %}">Mujer</a></li>
+									<li><a href="{% url 'gafas_genero' 'nino' %}">Niños</a></li>
+								</ul>
+							</div>
+							<div class="icn-col">
+								<p class="icn-col-titulo">Marcas</p>
+								<ul>
+									<li><a href="{% url 'gafas_marca' 'ray-ban' %}">Ray-Ban</a></li>
+									<li><a href="{% url 'gafas_marca' 'oakley' %}">Oakley</a></li>
+									<li><a href="{% url 'gafas_marca' 'arnette' %}">Arnette</a></li>
+									<li><a href="{% url 'gafas_marca' 'nano' %}">Nano Vista</a></li>
+									<li><a href="{% url 'gafas_marca' 'razza' %}">Razza</a></li>
+								</ul>
+							</div>
+							<div class="icn-col">
+								<p class="icn-col-titulo">Talla</p>
+								<ul>
+									<li><a href="{% url 'gafas_talla' 'grande' %}">Grande</a></li>
+									<li><a href="{% url 'gafas_talla' 'mediana' %}">Mediana</a></li>
+									<li><a href="{% url 'gafas_talla' 'chica' %}">Chica</a></li>
+								</ul>
+							</div>
+							<a class="icn-promo" href="{% url 'lentes_de_sol' %}">
+								<img src="{% static 'images/1.jpg' %}" alt="Promoción de lentes" loading="lazy" width="1402" height="1122">
+							</a>
+							<a class="icn-ver-todo" href="{% url 'lentes_de_sol' %}">Ver todos los lentes de sol</a>
+						</div>
+					</div>
+				</li>
+
+				<!-- Lentes de contacto -->
+				<li class="icn-item icn-tiene-panel">
+					<a class="icn-link{% if '/lentes-de-contacto/' in request.path %} is-actual{% endif %}" href="{% url 'lentes_de_contacto' %}">Lentes de contacto</a>
+					<button type="button" class="icn-abrir" aria-expanded="false" aria-controls="icn-p3" aria-label="Ver opciones de lentes de contacto">
+						<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+					</button>
+					<div class="icn-panel" id="icn-p3">
+						<div class="icn-wrap icn-panel-in">
+							<div class="icn-col">
+								<p class="icn-col-titulo">Uso</p>
+								<ul>
+									<li><a href="{% url 'lentes_uso_contacto' 'diario' %}">Diario</a></li>
+									<li><a href="{% url 'lentes_uso_contacto' 'mensual' %}">Mensual</a></li>
+									<li><a href="{% url 'lentes_uso_contacto' 'anual' %}">Anual</a></li>
+									<li><a href="{% url 'lentes_uso_contacto' 'cosmetico' %}">Cosmético</a></li>
+								</ul>
+							</div>
+							<div class="icn-col">
+								<p class="icn-col-titulo">Marcas</p>
+								<ul>
+									<li><a href="{% url 'lentes_marca_contacto' 'acuvue' %}">Acuvue</a></li>
+									<li><a href="{% url 'lentes_marca_contacto' 'air-optix' %}">Air Optix</a></li>
+									<li><a href="{% url 'lentes_marca_contacto' 'dailies-aqua' %}">Dailies Aqua</a></li>
+									<li><a href="{% url 'lentes_marca_contacto' 'freshlook' %}">Freshlook</a></li>
+									<li><a href="{% url 'lentes_marca_contacto' 'licryl' %}">Licryl</a></li>
+									<li><a href="{% url 'lentes_marca_contacto' 'soflens' %}">Soflens</a></li>
+									<li><a href="{% url 'lentes_marca_contacto' 'purevision' %}">Purevision</a></li>
+								</ul>
+							</div>
+							<div class="icn-col">
+								<p class="icn-col-titulo">Condición</p>
+								<ul>
+									<li><a href="{% url 'lentes_condicion_contacto' 'miopia-e-hipermetropia' %}">Miopía e hipermetropía</a></li>
+									<li><a href="{% url 'lentes_condicion_contacto' 'astigmatismo' %}">Astigmatismo</a></li>
+									<li><a href="{% url 'lentes_condicion_contacto' 'presbicia' %}">Presbicia</a></li>
+								</ul>
+							</div>
+							<a class="icn-promo" href="{% url 'lentes_de_contacto' %}">
+								<img src="{% static 'images/1.jpg' %}" alt="Promoción de lentes" loading="lazy" width="1402" height="1122">
+							</a>
+							<a class="icn-ver-todo" href="{% url 'lentes_de_contacto' %}">Ver todos los lentes de contacto</a>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</nav>
+	</header>
+	<!-- ===== //HEADER ===== -->
+
 
 	{% block content %}
 	{% endblock content %}
@@ -451,104 +578,76 @@
 	});
 	</script>	
 
-<style>
-.header .container {
-    position: relative;
-}
 
-.header-actions {
-    position: absolute;
-    right: 15px;
-    top: 35px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.search-form {
-    margin: 0;
-}
-
-.search-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 45px;
-    transition: width 0.3s ease;
-}
-
-.search-input {
-    width: 0 !important;
-    opacity: 0;
-    padding: 0;
-    border: 0;
-    height: 42px;
-    transition: all 0.3s ease;
-}
-
-.search-wrapper.active {
-    width: 420px;
-}
-
-.search-wrapper.active .search-input {
-    width: 100% !important;
-    opacity: 1;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-}
-
-.search-toggle {
-    width: 45px;
-    height: 42px;
-    border: none;
-    background: rgb(255, 255, 255);
-    color: rgb(13, 30, 222);
-    font-size: 17px;
-    border-radius: 4px;
-}
-
-#resultados {
-    width: 100%;
-    display: none;
-    position: absolute;
-    top: 44px;
-    left: 0;
-    z-index: 9999;
-}
-
-.cart {
-    margin: 0 !important;
-}
-</style>
 
 <script>
-document.addEventListener("DOMContentLoaded", function(){
+/* Menú estilo Vision Center: paneles en escritorio y cajón lateral en celular */
+document.addEventListener("DOMContentLoaded", function () {
+  var hdr = document.querySelector(".icn");
+  if (!hdr) return;
+  var barra = hdr.querySelector(".icn-barra");
+  var fondo = hdr.querySelector(".icn-fondo");
+  var burger = hdr.querySelector(".icn-burger");
+  var cerrar = hdr.querySelector(".icn-cerrar");
+  var items = hdr.querySelectorAll(".icn-tiene-panel");
+  var esEscritorio = function () { return window.matchMedia("(min-width: 992px)").matches; };
 
-    const box = document.querySelector(".search-wrapper");
-    const btn = document.getElementById("btn-search");
-    const input = document.getElementById("buscador");
-    const resultados = document.getElementById("resultados");
-
-    btn.addEventListener("click", function(e){
-        e.preventDefault();
-        box.classList.toggle("active");
-
-        if(box.classList.contains("active")){
-            input.focus();
-        } else {
-            resultados.style.display = "none";
-        }
+  function abrirCajon() {
+    barra.classList.add("is-abierto");
+    fondo.hidden = false;
+    burger.setAttribute("aria-expanded", "true");
+    document.body.classList.add("icn-sin-scroll");
+    cerrar.focus();
+  }
+  function cerrarCajon() {
+    barra.classList.remove("is-abierto");
+    fondo.hidden = true;
+    burger.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("icn-sin-scroll");
+  }
+  function cerrarPaneles(excepto) {
+    items.forEach(function (it) {
+      if (it !== excepto) {
+        it.classList.remove("is-open");
+        it.querySelector(".icn-abrir").setAttribute("aria-expanded", "false");
+      }
     });
+  }
 
-    document.addEventListener("click", function(e){
-        if(!box.contains(e.target)){
-            box.classList.remove("active");
-            resultados.style.display = "none";
-        }
+  burger.addEventListener("click", abrirCajon);
+  cerrar.addEventListener("click", function () { cerrarCajon(); burger.focus(); });
+  fondo.addEventListener("click", cerrarCajon);
+
+  items.forEach(function (it) {
+    var boton = it.querySelector(".icn-abrir");
+    boton.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var abierto = it.classList.toggle("is-open");
+      boton.setAttribute("aria-expanded", abierto ? "true" : "false");
+      cerrarPaneles(it);
     });
+    it.addEventListener("mouseleave", function () {
+      if (esEscritorio()) {
+        it.classList.remove("is-open");
+        boton.setAttribute("aria-expanded", "false");
+      }
+    });
+  });
 
+  document.addEventListener("click", function (e) {
+    if (esEscritorio() && !barra.contains(e.target)) cerrarPaneles(null);
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    cerrarPaneles(null);
+    if (barra.classList.contains("is-abierto")) { cerrarCajon(); burger.focus(); }
+  });
+  window.addEventListener("resize", function () {
+    if (esEscritorio() && barra.classList.contains("is-abierto")) cerrarCajon();
+  });
 });
 </script>
+
 	
 	
 </body>
