@@ -70,6 +70,51 @@
     <li><strong>Tienda física</strong><span>Jr. Camaná 560, Cercado de Lima</span></li>
   </ul>
 
+  <!-- ===== Grandes marcas (carrusel restaurado) ===== -->
+  <section class="top-brands ich-carrusel" aria-labelledby="ich-carrusel-titulo">
+    <div class="container">
+      <h3 id="ich-carrusel-titulo">Grandes Marcas</h3>
+      <ul id="flexiselDemo1">
+        <li>
+          <a href="{% url 'lentes_marca' 'ray-ban' %}"><img src="{% static 'images/tb1.jpg' %}" alt="Ray-Ban" class="img-responsive" width="200" height="85"></a>
+        </li>
+        <li>
+          <a href="{% url 'lentes_marca' 'oakley' %}"><img src="{% static 'images/tb2.jpg' %}" alt="Oakley" class="img-responsive" width="200" height="85"></a>
+        </li>
+        <li>
+          <a href="{% url 'lentes_marca' 'guess' %}"><img src="{% static 'images/tb3.jpg' %}" alt="Guess" class="img-responsive" width="200" height="85"></a>
+        </li>
+        <li>
+          <a href="{% url 'lentes_marca' 'tommy-hilfiger' %}"><img src="{% static 'images/tb4.jpg' %}" alt="Tommy Hilfiger" class="img-responsive" width="200" height="85"></a>
+        </li>
+        <li>
+          <a href="{% url 'lentes_marca' 'nike' %}"><img src="{% static 'images/tb5.jpg' %}" alt="Nike" class="img-responsive" width="200" height="85"></a>
+        </li>
+        <li>
+          <a href="{% url 'lentes_marca' 'nano' %}"><img src="{% static 'images/tb6.jpg' %}" alt="Nano Vista" class="img-responsive" width="200" height="85"></a>
+        </li>
+        <li>
+          <img src="{% static 'images/tb7.jpg' %}" alt="Adidas" class="img-responsive" width="198" height="85">
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== Los 4 productos con mayor descuento ===== -->
+  {% if descuentos %}
+  <section class="ich-wrap ich-descuentos" aria-labelledby="ich-descuentos-titulo">
+    <div class="ich-cabecera">
+      <h2 id="ich-descuentos-titulo">Mayores descuentos</h2>
+      <a href="{% url 'lentes_oftalmicos' %}">Ver todas las monturas</a>
+    </div>
+    <div class="ich-productos ich-tarjetas">
+      {% for producto in descuentos %}
+        {% include 'store/_tarjeta_producto.html' %}
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
   <!-- ===== Directorio de marcas (elemento principal) ===== -->
   <section class="ich-wrap ich-marcas" aria-labelledby="ich-marcas-titulo">
     <div class="ich-marcas-intro">
@@ -127,19 +172,9 @@
         <h3>{{ grupo.titulo }}</h3>
         <a href="{{ grupo.url }}">Ver todas las de {{ grupo.titulo|lower }}</a>
       </div>
-      <div class="ich-productos">
-        {% for p in grupo.productos %}
-        <a class="ich-producto" href="{{ p.get_absolute_url }}">
-          <div class="ich-producto-img">
-            <img src="{{ p.imagenF.url }}" alt="{{ p.descripcion }}" loading="lazy">
-          </div>
-          {% if p.marca %}<p class="ich-producto-marca">{{ p.marca|texto_seo }}</p>{% endif %}
-          <p class="ich-producto-nombre">{{ p.descripcion }}</p>
-          <p class="ich-producto-precio">
-            <strong>S/ {{ p.precio_venta }}</strong>
-            {% if p.precio_anterior and p.precio_anterior > p.precio_venta %}<s>S/ {{ p.precio_anterior }}</s>{% endif %}
-          </p>
-        </a>
+      <div class="ich-productos ich-tarjetas">
+        {% for producto in grupo.productos %}
+          {% include 'store/_tarjeta_producto.html' %}
         {% endfor %}
       </div>
     </div>
@@ -222,6 +257,25 @@
 
 </div>
 {% endwith %}
+<script type="text/javascript" src="{% static 'js/jquery.flexisel.js' %}"></script>
+<script type="text/javascript">
+  $(window).load(function() {
+    $("#flexiselDemo1").flexisel({
+      visibleItems: 4,
+      animationSpeed: 1000,
+      autoPlay: true,
+      autoPlaySpeed: 3000,
+      pauseOnHover: true,
+      enableResponsiveBreakpoints: true,
+      responsiveBreakpoints: {
+        portrait:  { changePoint: 480, visibleItems: 1 },
+        landscape: { changePoint: 640, visibleItems: 2 },
+        tablet:    { changePoint: 768, visibleItems: 3 }
+      }
+    });
+  });
+</script>
+
 
 <style>
 /* ===== Home Óptica IC — todo dentro de .ich para no chocar con el tema ===== */
@@ -357,6 +411,53 @@
 .ich-cierre{ background:var(--azul); padding:40px 0; }
 .ich-cierre .ich-wrap{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:20px; }
 .ich-cierre p{ color:#fff; font-size:clamp(1.2rem, 2.2vw, 1.5rem); font-weight:700; font-stretch:105%; max-width:40ch; }
+
+
+/* ===== Tarjetas de producto: el mismo recuadro que los catálogos ===== */
+.ich{ --ic-fondo-card:#fff; --ic-navbar:#3c43a4; --ic-badge:#efefef; --ic-rojo:#D32F2F; --ic-suave:#6b6b6b; --ic-texto:#1a1a1a; }
+.ich .ich-tarjetas{ gap:40px 28px; }
+.ich .ic-producto{ min-width:0; display:flex; flex-direction:column; text-align:left; }
+.ich .ic-producto-card{ position:relative; display:flex; flex-direction:column; background:var(--ic-fondo-card); box-shadow:0 1px 6px rgba(0,0,0,.12); text-decoration:none; color:inherit; transition:box-shadow .2s ease; }
+.ich .ic-producto-card:hover{ box-shadow:0 4px 16px rgba(0,0,0,.18); text-decoration:none; }
+.ich .ic-producto-card:focus-visible{ outline:2px solid var(--ic-navbar); outline-offset:3px; }
+.ich .ic-producto-badges{ position:absolute; top:18px; left:0; right:0; z-index:1; display:flex; flex-direction:column; align-items:center; gap:6px; pointer-events:none; }
+.ich .ic-badge{ background:var(--ic-badge); color:#333; font-size:11px; letter-spacing:.04em; text-transform:uppercase; padding:5px 8px; line-height:1.2; }
+.ich .ic-badge--oferta{ background:var(--ic-rojo); color:#fff; }
+.ich .ic-producto-imagen{ aspect-ratio:1 / 1; display:flex; align-items:center; justify-content:center; padding:64px 18px 24px; }
+.ich .ic-producto-imagen img{ display:block; max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; transition:transform .3s ease; }
+.ich .ic-producto-card:hover .ic-producto-imagen img{ transform:scale(1.04); }
+.ich .ic-producto-banda{ display:block; background:var(--ic-navbar); color:#fff; text-align:center; font-size:15px; letter-spacing:.03em; padding:9px 10px; }
+.ich .ic-producto-info{ display:flex; flex-direction:column; flex:1; padding-top:16px; }
+.ich .ic-producto-marca{ margin:0 0 6px; font-size:13px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--ic-texto); }
+.ich .ic-producto-nombre{ margin:0 0 8px; font-size:15px; font-weight:400; line-height:1.4; letter-spacing:.02em; font-family:inherit; }
+.ich .ic-producto-nombre a{ color:var(--ic-texto); text-decoration:none; overflow-wrap:anywhere; }
+.ich .ic-producto-nombre a:hover{ text-decoration:underline; }
+.ich .ic-producto-compra{ margin-top:auto; }
+.ich .ic-producto-precio{ display:flex; flex-wrap:wrap; align-items:center; gap:4px 10px; margin:0 0 12px; }
+.ich .ic-producto-precio .ic-precio-anterior{ text-decoration:line-through !important; color:var(--ic-suave) !important; font-size:14px !important; font-weight:400 !important; font-style:normal !important; }
+.ich .ic-producto-precio .ic-precio-actual{ text-decoration:none !important; color:var(--ic-texto) !important; font-size:17px !important; font-weight:700 !important; letter-spacing:.04em; font-style:normal !important; }
+.ich .ic-producto-precio .ic-dcto{ text-decoration:none !important; font-style:normal !important; background:var(--ic-rojo); color:#fff !important; font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:3px 7px; }
+.ich .ic-producto-compra form{ margin:0; }
+.ich .ic-btn-carrito{ width:100%; background:#fff; color:var(--ic-texto); border:1px solid var(--ic-texto); border-radius:0; padding:10px 12px; font-size:14px; letter-spacing:.04em; cursor:pointer; transition:background .2s ease, color .2s ease; }
+.ich .ic-btn-carrito:hover, .ich .ic-btn-carrito:focus-visible{ background:var(--ic-texto); color:#fff; }
+
+/* ===== Carrusel de marcas ===== */
+.ich .ich-carrusel{ padding:48px 0 8px; }
+.ich .ich-carrusel h3{ text-align:center; font-size:clamp(1.4rem, 2.4vw, 1.8rem); font-weight:800; margin-bottom:24px; }
+.ich .ich-carrusel h3::before, .ich .ich-carrusel h3::after{ display:none; }
+.ich .ich-carrusel img{ display:block; margin:0 auto; max-width:180px; height:auto; }
+
+@media (max-width: 640px){
+  .ich .ich-tarjetas{ gap:28px 12px; }
+  .ich .ic-badge{ font-size:10px; padding:4px 6px; }
+  .ich .ic-producto-badges{ top:12px; left:6px; right:6px; text-align:center; }
+  .ich .ic-producto-imagen{ padding:78px 10px 14px; }
+  .ich .ic-producto-banda{ font-size:14px; }
+  .ich .ic-btn-carrito{ font-size:13px; padding:9px 6px; }
+}
+/* ===== Mayores descuentos ===== */
+.ich-descuentos{ padding-top:48px; padding-bottom:24px; }
+.ich .ich-descuentos .ich-cabecera h2{ font-size:clamp(1.5rem, 2.6vw, 2rem); font-weight:800; font-stretch:105%; line-height:1.15; }
 
 /* ===== Tablet ===== */
 @media (max-width: 991px){

@@ -1,0 +1,43 @@
+{% load myapp_extras %}
+{# Tarjeta de producto igual a la de los catálogos. Recibe la variable "producto". #}
+<article class="ic-producto">
+  <a class="ic-producto-card" href="{{ producto.get_absolute_url }}">
+    <div class="ic-producto-badges">
+      {% if producto.precio_anterior > producto.precio_venta %}
+        <span class="ic-badge ic-badge--oferta">Oferta</span>
+      {% endif %}
+      <span class="ic-badge">Obtén 50% en el 2do par</span>
+    </div>
+    <div class="ic-producto-imagen">
+      <img src="{{ producto.imagenF.url }}" alt="{{ producto.descripcion }}" loading="lazy">
+    </div>
+    <span class="ic-producto-banda">Ver detalle</span>
+  </a>
+
+  <div class="ic-producto-info">
+    {% if producto.marca %}<p class="ic-producto-marca">{{ producto.marca|texto_seo }}</p>{% endif %}
+    <h3 class="ic-producto-nombre">
+      <a href="{{ producto.get_absolute_url }}">{{ producto.descripcion }}</a>
+    </h3>
+    <div class="simpleCart_shelfItem ic-producto-compra">
+      <p class="ic-producto-precio">
+        {% if producto.precio_anterior > producto.precio_venta %}
+          <s class="ic-precio-anterior">S/{{ producto.precio_anterior }}</s>
+        {% endif %}
+        <strong class="item_price ic-precio-actual">S/{{ producto.precio_venta }}</strong>
+        {% if producto.precio_anterior > producto.precio_venta %}
+          {% widthratio producto.precio_venta producto.precio_anterior -100 as pct_neg %}
+          <em class="ic-dcto">{{ pct_neg|add:100 }}% dcto</em>
+        {% endif %}
+      </p>
+      <form action="#" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="cmd" value="_cart">
+        <input type="hidden" name="add" value="1">
+        <input type="hidden" name="w3ls_item" value="{{ producto.descripcion }}">
+        <input type="hidden" name="amount" value="{{ producto.precio_venta }}">
+        <button type="submit" class="w3ls-cart ic-btn-carrito">Agregar al carrito</button>
+      </form>
+    </div>
+  </div>
+</article>

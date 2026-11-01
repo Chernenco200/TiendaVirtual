@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.utils.text import slugify
 
-from django.db.models import Count, Q
+from django.db.models import Count, F, Q
 
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
@@ -83,6 +83,16 @@ def _marcas_con_conteo(lista):
     return marcas
 
 
+def _mayores_descuentos(n=4):
+    """Los n productos (con foto y stock) con mayor % de descuento."""
+    qs = con_foto(Producto.objects.filter(activo=True, stock__gte=1)
+                  .filter(precio_anterior__gt=0)
+                  .filter(precio_anterior__gt=F("precio_venta")))
+    productos = list(qs)
+    productos.sort(key=lambda p: (p.precio_venta / p.precio_anterior, -p.pk))
+    return productos[:n]
+
+
 def home(request):
     # Destacadas: las 4 monturas oftálmicas de mayor precio de cada categoría
     base = _monturas_disponibles().filter(tipo="Monturas oftálmicas")
@@ -98,6 +108,7 @@ def home(request):
 
     context = {
         "destacadas": destacadas,
+        "descuentos": _mayores_descuentos(4),
         "marcas_home": _marcas_con_conteo(MARCAS_HOME),
         "marcas_home_otras": [m for m in _marcas_con_conteo(MARCAS_HOME_OTRAS) if m["url"]],
     }
