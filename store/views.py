@@ -93,6 +93,44 @@ def _mayores_descuentos(n=4):
     return productos[:n]
 
 
+# Logos de la portada: (valor en la BD, slug de la URL, nombre, archivo del logo en static/)
+# Para agregar un logo nuevo (por ejemplo Lacoste), guarda la imagen en
+# static/images/marcas/lacoste.png y aparecerá sola en lugar del nombre en texto.
+MARCAS_PORTADA = [
+    ("Nike", "nike", "Nike", "images/tb5.jpg"),
+    ("Lacoste", "lacoste", "Lacoste", "images/marcas/lacoste.png"),
+    ("Skechers", "skechers", "Skechers", "images/marcas/skechers.png"),
+    ("Tommy-Hilfiger", "tommy-hilfiger", "Tommy Hilfiger", "images/tb4.jpg"),
+    ("Guess", "guess", "Guess", "images/tb3.jpg"),
+    ("Nano", "nano", "Nano Vista", "images/tb6.jpg"),
+    ("Ray-Ban", "ray-ban", "Ray-Ban", "images/tb1.jpg"),
+    ("OaKley", "oakley", "Oakley", "images/tb2.jpg"),
+    ("Razza", "razza", "Razza", "images/marcas/razza.png"),
+]
+
+
+def _marcas_portada():
+    from django.contrib.staticfiles import finders
+    conteos = _marcas_con_conteo([(v, s, n) for v, s, n, _logo in MARCAS_PORTADA])
+    marcas = []
+    for (valor, slug, nombre, logo), info in zip(MARCAS_PORTADA, conteos):
+        marcas.append({
+            "nombre": nombre,
+            "url": info["url"],              # None si la marca aún no tiene productos con foto
+            "logo": logo if finders.find(logo) else None,
+        })
+    return marcas
+
+
+def _maximo_descuento():
+    """El mayor % de descuento entre los productos con foto y stock (0 si no hay ofertas)."""
+    top = _mayores_descuentos(1)
+    if not top:
+        return 0
+    p = top[0]
+    return int((1 - p.precio_venta / p.precio_anterior) * 100)
+
+
 def home(request):
     # Destacadas: las 4 monturas oftálmicas de mayor precio de cada categoría
     base = _monturas_disponibles().filter(tipo="Monturas oftálmicas")
@@ -109,6 +147,8 @@ def home(request):
     context = {
         "destacadas": destacadas,
         "descuentos": _mayores_descuentos(4),
+        # % de descuento más alto real (redondeado hacia abajo) para el banner de portada
+        "max_dcto": _maximo_descuento(),
         "marcas_home": _marcas_con_conteo(MARCAS_HOME),
         "marcas_home_otras": [m for m in _marcas_con_conteo(MARCAS_HOME_OTRAS) if m["url"]],
     }
@@ -907,6 +947,17 @@ def robots_txt(request):
         "Disallow: /admin/",
         "Disallow: /buscar/",
         "Disallow: /autocomplete-productos/",
+        # combinaciones de filtros por parámetros (las páginas /marca/, /genero/, etc. sí se rastrean)
+        "Disallow: /*?*marca=",
+        "Disallow: /*?*categoria=",
+        "Disallow: /*?*talla=",
+        "Disallow: /*?*forma=",
+        "Disallow: /*?*material=",
+        "Disallow: /*?*color=",
+        "Disallow: /*?*precio=",
+        "Disallow: /*?*uso=",
+        "Disallow: /*?*condicion=",
+        "Disallow: /*%22",
         "",
         f"Sitemap: {_settings.SITE_URL}/sitemap.xml",
     ]

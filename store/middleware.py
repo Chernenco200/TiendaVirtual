@@ -1,5 +1,5 @@
 import re
-from urllib.parse import urlsplit
+from urllib.parse import parse_qsl, unquote_plus, urlencode, urlsplit
 
 from django.conf import settings
 from django.http import HttpResponsePermanentRedirect
@@ -9,6 +9,21 @@ from django.http import HttpResponsePermanentRedirect
 RUTA_FILTRO = re.compile(
     r"^/(lentes-oftalmicos|lentes-de-sol|lentes-de-contacto)/(genero|forma|marca|talla|uso|condicion)/[^/]+/$"
 )
+
+
+# Direcciones de catálogo con basura en los filtros (comillas acumuladas, textos enormes)
+RUTA_CATALOGO = re.compile(r"^/(lentes-oftalmicos|lentes-de-sol|lentes-de-contacto)/")
+MAX_QUERY = 600
+
+
+def _query_limpia(query_string):
+    """Quita comillas y espacios sobrantes de los valores; descarta los vacíos."""
+    limpios = []
+    for clave, valor in parse_qsl(query_string, keep_blank_values=False):
+        valor = valor.replace('"', "").strip()
+        if valor and clave not in dict(limpios):
+            limpios.append((clave, valor))
+    return urlencode(limpios)
 
 
 class DominioCanonicoMiddleware:
@@ -40,4 +55,13 @@ class DominioCanonicoMiddleware:
             if request.META.get("QUERY_STRING"):
                 destino += "?" + request.META["QUERY_STRING"]
             return HttpResponsePermanentRedirect(destino)
+        # Cortar el bucle de direcciones con comillas acumuladas (%22%22%22...)
+        qs = request.META.get("QUERY_STRING", "")
+        if request.method in ("GET", "HEAD") and qs and RUTA_CATALOGO.match(request.path):
+            sucia = '"' in unquote_plus(qs)
+            if sucia or len(qs) > MAX_QUERY:
+                limpia = _query_limpia(qs) if len(qs) <= 4 * MAX_QUERY else ""
+                if len(limpia) > MAX_QUERY:
+                    limpia = ""
+                return HttpResponsePermanentRedirect(request.path + ("?" + limpia if limpia else ""))
         return self.get_response(request)
