@@ -64,9 +64,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
 <style>
 .icn{
-  --icn-indigo:#3c43a4;      /* color de tu barra de menú */
-  --icn-indigo-osc:#2f3586;
-  --icn-azul:#0469BE;        /* azul del logo */
+  --icn-indigo:#0069BE;      /* azul del logo: buscador, carrito y acentos */
+  --icn-barra:#111111;       /* franja negra del menú */
+  --icn-indigo-osc:#005498;
+  --icn-azul:#0069BE;        /* azul del logo */
   --icn-tinta:#13243A;
   --icn-gris:#5A6B80;
   --icn-niebla:#EEF3F8;
@@ -125,7 +126,7 @@
 .icn .icn-carrito .w3view-cart:hover svg{ color:var(--icn-azul); }
 
 /* ---------- Fila 2: barra ---------- */
-.icn-barra{ position:relative; background:var(--icn-indigo); }
+.icn-barra{ position:relative; background:var(--icn-barra); }
 .icn-cajon-cabecera, .icn-fondo{ display:none; }
 .icn-menu{ display:flex; align-items:stretch; }
 .icn-item{ display:flex; align-items:stretch; }
@@ -137,7 +138,7 @@
 .icn-item:not(.icn-tiene-panel) .icn-link{ padding-right:18px; }
 @media (min-width: 992px){ .icn-menu > .icn-item:first-child .icn-link{ margin-left:-18px; } }
 .icn .icn-link:hover, .icn .icn-link:focus{ color:#fff; }
-.icn .icn-link.is-actual{ border-bottom-color:#fff; }
+.icn .icn-link.is-actual{ border-bottom-color:var(--icn-indigo); }
 .icn .icn-abrir{
   display:flex; align-items:center; padding:0 14px 0 4px; background:none; border:0; color:#fff;
 }
@@ -162,8 +163,8 @@
 
 /* escritorio: abrir al pasar el mouse o al navegar con teclado */
 @media (min-width: 992px){
-  .icn-item:hover .icn-link{ background:rgba(255,255,255,.1); }
-  .icn-item:hover .icn-abrir{ background:rgba(255,255,255,.1); }
+  .icn-item:hover .icn-link{ background:rgba(255,255,255,.12); }
+  .icn-item:hover .icn-abrir{ background:rgba(255,255,255,.12); }
 }
 @media (min-width: 992px) and (hover: hover){
   .icn-tiene-panel:hover > .icn-panel{ display:block; }
@@ -199,7 +200,7 @@
   .icn-fondo:not([hidden]){ display:block; position:fixed; inset:0; z-index:1001; background:rgba(19,36,58,.55); }
   .icn-cajon-cabecera{
     display:flex; align-items:center; justify-content:space-between; padding:6px 8px 6px 20px;
-    background:var(--icn-indigo); color:#fff; font-weight:700; font-size:16px;
+    background:var(--icn-barra); color:#fff; font-weight:700; font-size:16px;
   }
   .icn .icn-cerrar{ display:flex; align-items:center; justify-content:center; width:44px; height:44px; padding:0; background:none; border:0; color:#fff; }
   .icn-cerrar svg{ width:24px; height:24px; }

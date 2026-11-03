@@ -49,16 +49,30 @@
 {% with wa="https://wa.me/51952305913?text=Hola%2C%20quiero%20comprar%20unos%20lentes" %}
 <div class="ich">
 
-  <!-- ===== Portada ===== -->
-  <section class="ich-hero">
-    <img class="ich-hero-img" src="{% static 'images/bg1.jpg' %}" alt="" width="1279" height="387">
-    <div class="ich-wrap ich-hero-texto">
-      <h1>Monturas de marca, sin pagar de más</h1>
-      <p>Nike, Lacoste, Skechers, Tommy Hilfiger, Guess y Nano Vista. Compra online y te lo enviamos a todo el Perú, o pruébatelos en nuestra tienda del Centro de Lima.</p>
-      <div class="ich-acciones">
-        <a class="ich-btn ich-btn--claro" href="{% url 'lentes_oftalmicos' %}">Ver monturas</a>
-        <a class="ich-btn ich-btn--borde" href="{{ wa }}" target="_blank" rel="noopener">Comprar por WhatsApp</a>
+  <!-- ===== Portada: banner de campaña (estilo Econolentes) ===== -->
+  <section class="ich-banner">
+    <div class="ich-banner-foto">
+      <img src="{% static 'images/portada/banner-lentes.jpg' %}" alt="Mujer sonriendo con lentes de sol en la playa" width="1020" height="750" fetchpriority="high">
+    </div>
+    <div class="ich-banner-panel">
+      <div class="ich-banner-izq">
+        <div class="ich-banner-caja">
+          <span class="ich-banner-etiqueta">Compra online</span>
+          <h1>Monturas de marca</h1>
+        </div>
+        <p class="ich-banner-sub">Sin pagar de más. Envío a todo el Perú y devolución en 7 días.</p>
       </div>
+      <div class="ich-banner-der">
+        {% if max_dcto >= 5 %}
+          <p class="ich-banner-hasta">Hasta</p>
+          <p class="ich-banner-pct">{{ max_dcto }}%</p>
+          <p class="ich-banner-cat">en monturas y lentes de sol</p>
+          <a class="ich-banner-btn" href="#ofertas">Comprar aquí</a>
+        {% else %}
+          <a class="ich-banner-btn" href="{% url 'lentes_oftalmicos' %}">Ver monturas</a>
+        {% endif %}
+      </div>
+      <p class="ich-banner-legal">{% if max_dcto >= 5 %}Descuento máximo según modelo y stock disponible. {% endif %}<a href="{% url 'legal' %}">Ver términos y condiciones</a></p>
     </div>
   </section>
 
@@ -102,7 +116,7 @@
 
   <!-- ===== Los 4 productos con mayor descuento ===== -->
   {% if descuentos %}
-  <section class="ich-wrap ich-descuentos" aria-labelledby="ich-descuentos-titulo">
+  <section class="ich-wrap ich-descuentos" id="ofertas" aria-labelledby="ich-descuentos-titulo">
     <div class="ich-cabecera">
       <h2 id="ich-descuentos-titulo">Mayores descuentos</h2>
       <a href="{% url 'lentes_oftalmicos' %}">Ver todas las monturas</a>
@@ -280,8 +294,8 @@
 <style>
 /* ===== Home Óptica IC — todo dentro de .ich para no chocar con el tema ===== */
 .ich{
-  --azul:#0469BE;        /* azul del logo */
-  --azul-osc:#034F8F;
+  --azul:#0069BE;        /* azul del logo */
+  --azul-osc:#005498;
   --tinta:#13243A;       /* texto principal */
   --gris:#5A6B80;        /* texto secundario */
   --niebla:#EEF3F8;      /* fondos suaves */
@@ -309,16 +323,34 @@
 .ich .ich-btn--borde{ border:2px solid rgba(255,255,255,.8); color:#fff; }
 .ich .ich-btn--borde:hover{ background:rgba(255,255,255,.12); color:#fff; }
 
-/* Portada */
-.ich-hero{ position:relative; min-height:500px; display:flex; align-items:center; background:#062645; overflow:hidden; }
-.ich-hero-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:70% center; }
-.ich-hero::after{ content:""; position:absolute; inset:0; background:linear-gradient(90deg, rgba(4,26,52,.88) 0%, rgba(4,26,52,.55) 45%, rgba(4,26,52,0) 75%); }
-.ich-hero-texto{ position:relative; z-index:1; width:100%; padding-top:64px; padding-bottom:64px; }
-.ich .ich-hero h1{
-  color:#fff; max-width:13ch; font-size:clamp(2.6rem, 6vw, 4.6rem); line-height:1; font-weight:800; font-stretch:112%;
+/* Portada: banner de campaña */
+.ich-banner{ display:grid; grid-template-columns:minmax(0, 48fr) minmax(0, 52fr); min-height:360px; background:#0069BE; }
+.ich-banner-foto{ position:relative; overflow:hidden; }
+.ich-banner-foto img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 30%; }
+.ich-banner-panel{
+  position:relative; display:grid; grid-template-columns:auto auto; align-items:center; justify-content:center;
+  column-gap:56px; padding:40px 48px 48px; color:#fff;
 }
-.ich .ich-hero p{ color:rgba(255,255,255,.88); max-width:46ch; margin-top:20px; font-size:17px; }
-.ich-acciones{ display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
+.ich-banner-izq{ text-align:center; }
+.ich-banner-caja{ position:relative; padding:18px 30px 14px; border:3px solid #fff; border-radius:22px; }
+.ich-banner-etiqueta{
+  position:absolute; top:-0.9em; left:50%; transform:translateX(-50%); padding:0 10px;
+  background:#0069BE; font-size:19px; font-weight:500; white-space:nowrap; line-height:1.4;
+}
+.ich .ich-banner h1{ color:#fff; text-align:center; font-size:clamp(1.9rem, 3.3vw, 3rem); font-weight:600; font-stretch:95%; line-height:1; text-transform:uppercase; letter-spacing:.01em; }
+.ich .ich-banner-sub{ margin-top:14px; font-size:16px; text-transform:uppercase; letter-spacing:.03em; color:#fff; max-width:30ch; margin-left:auto; margin-right:auto; }
+.ich-banner-der{ text-align:center; }
+.ich .ich-banner-hasta{ font-size:17px; font-weight:600; text-transform:uppercase; text-align:left; color:#fff; }
+.ich .ich-banner-pct{ font-size:clamp(4rem, 8vw, 6.6rem); font-weight:800; font-stretch:105%; line-height:.9; letter-spacing:-.03em; color:#fff; }
+.ich .ich-banner-cat{ margin-top:8px; font-size:15px; text-transform:uppercase; letter-spacing:.03em; color:#fff; }
+.ich .ich-banner-btn{
+  display:inline-flex; align-items:center; justify-content:center; min-height:40px; margin-top:16px; padding:8px 30px;
+  background:#fff; color:#0069BE; border-radius:999px; font-weight:700; font-size:16px; text-decoration:none;
+}
+.ich .ich-banner-btn:hover{ background:#EEF3F8; color:#0069BE; text-decoration:none; }
+.ich .ich-banner-btn:focus-visible{ outline:3px solid #fff; outline-offset:3px; }
+.ich .ich-banner-legal{ position:absolute; left:0; right:0; bottom:12px; text-align:center; font-size:12px; color:rgba(255,255,255,.85); }
+.ich .ich-banner-legal a{ color:#fff; text-decoration:underline; }
 
 /* Garantías */
 .ich-confianza{ list-style:none; display:grid; grid-template-columns:repeat(4, 1fr); gap:0; margin-top:0; margin-bottom:0; padding-top:24px; padding-bottom:24px; border-bottom:1px solid var(--linea); }
@@ -414,7 +446,7 @@
 
 
 /* ===== Tarjetas de producto: el mismo recuadro que los catálogos ===== */
-.ich{ --ic-fondo-card:#fff; --ic-navbar:#3c43a4; --ic-badge:#efefef; --ic-rojo:#D32F2F; --ic-suave:#6b6b6b; --ic-texto:#1a1a1a; }
+.ich{ --ic-fondo-card:#fff; --ic-navbar:#0069BE; --ic-badge:#efefef; --ic-rojo:#D32F2F; --ic-suave:#6b6b6b; --ic-texto:#1a1a1a; }
 .ich .ich-tarjetas{ gap:40px 28px; }
 .ich .ic-producto{ min-width:0; display:flex; flex-direction:column; text-align:left; }
 .ich .ic-producto-card{ position:relative; display:flex; flex-direction:column; background:var(--ic-fondo-card); box-shadow:0 1px 6px rgba(0,0,0,.12); text-decoration:none; color:inherit; transition:box-shadow .2s ease; }
@@ -448,6 +480,13 @@
 .ich .ich-carrusel img{ display:block; margin:0 auto; max-width:180px; height:auto; }
 
 @media (max-width: 640px){
+  .ich-banner{ grid-template-columns:1fr; }
+  .ich-banner-foto{ aspect-ratio:4 / 3; }
+  .ich-banner-panel{ padding:32px 20px 56px; }
+  .ich-banner-caja{ padding:16px 18px 12px; }
+  .ich-banner-etiqueta{ font-size:16px; }
+  .ich .ich-banner-sub{ font-size:14px; }
+  .ich .ich-banner-hasta{ text-align:center; }
   .ich .ich-tarjetas{ gap:28px 12px; }
   .ich .ic-badge{ font-size:10px; padding:4px 6px; }
   .ich .ic-producto-badges{ top:12px; left:6px; right:6px; text-align:center; }
@@ -461,6 +500,7 @@
 
 /* ===== Tablet ===== */
 @media (max-width: 991px){
+  .ich-banner-panel{ grid-template-columns:1fr; row-gap:24px; padding:36px 28px 52px; }
   .ich-confianza{ grid-template-columns:repeat(2, 1fr); row-gap:16px; }
   .ich-confianza li:nth-child(3){ border-left:0; padding-left:0; }
   .ich-marcas{ grid-template-columns:1fr; gap:24px; padding-top:56px; padding-bottom:56px; }
@@ -473,10 +513,6 @@
 /* ===== Celular ===== */
 @media (max-width: 640px){
   .ich-wrap{ padding-left:18px; padding-right:18px; }
-  .ich-hero{ min-height:460px; align-items:flex-end; }
-  .ich-hero-img{ object-position:80% center; }
-  .ich-hero::after{ background:linear-gradient(0deg, rgba(4,26,52,.92) 0%, rgba(4,26,52,.7) 55%, rgba(4,26,52,.25) 100%); }
-  .ich-hero-texto{ padding-top:120px; padding-bottom:40px; }
   .ich-acciones .ich-btn{ flex:1 1 100%; }
   .ich-confianza{ grid-template-columns:1fr; }
   .ich-confianza li{ border-left:0; padding-left:0; }

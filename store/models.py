@@ -271,8 +271,9 @@ class Producto(models.Model):
 
         ('Lacoste', 'Lacoste'),      # nueva
         ('Razza', 'Razza'),          # nueva
-        ('Fiorela', 'Fiorella Conti'),          # nueva
-        ('Otros', 'Otros'),
+        ('Fiorela Conti', 'Fiorella Conti'),          # nueva
+        ('Converse', 'Converse'),
+		('Calvin Klein', 'Calvin Klein'),
 
         ('Acuvue', 'Acuvue'),
         ('Air-Optix', 'Air-Optix'),
