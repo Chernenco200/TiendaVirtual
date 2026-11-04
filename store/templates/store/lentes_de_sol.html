@@ -43,7 +43,7 @@
 		<ul class="dropdown-menu">
         {% for item in marcas_opciones %}
           <li>
-            <a class="dropdown-item"
+            <a rel="nofollow" class="dropdown-item"
                href="?{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}marca={{ item.valor|urlencode }}">
               {{ item.valor }} ({{ item.total }})
             </a>
@@ -62,7 +62,7 @@
 		<ul class="dropdown-menu">
         {% for item in categorias_opciones %}
           <li>
-            <a class="dropdown-item"
+            <a rel="nofollow" class="dropdown-item"
                href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}categoria={{ item.valor|urlencode }}">
               {{ item.valor }} ({{ item.total }})
             </a>
@@ -81,7 +81,7 @@
 		<ul class="dropdown-menu">
         {% for item in tallas_opciones %}
           <li>
-            <a class="dropdown-item"
+            <a rel="nofollow" class="dropdown-item"
                href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}talla={{ item.valor|urlencode }}">
               {{ item.valor }} ({{ item.total }})
             </a>
@@ -100,7 +100,7 @@
 		<ul class="dropdown-menu">
         {% for item in formas_opciones %}
           <li>
-            <a class="dropdown-item"
+            <a rel="nofollow" class="dropdown-item"
                href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}forma={{ item.valor|urlencode }}">
               {{ item.valor }} ({{ item.total }})
             </a>
@@ -119,7 +119,7 @@
 		<ul class="dropdown-menu">
         {% for item in materiales_opciones %}
           <li>
-            <a class="dropdown-item"
+            <a rel="nofollow" class="dropdown-item"
                href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}material={{ item.valor|urlencode }}">
               {{ item.valor }} ({{ item.total }})
             </a>
@@ -138,7 +138,7 @@
 		<ul class="dropdown-menu">
         {% for item in colores_opciones %}
           <li>
-            <a class="dropdown-item"
+            <a rel="nofollow" class="dropdown-item"
                href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}color={{ item.valor|urlencode }}">
               {{ item.valor }} ({{ item.total }})
             </a>
@@ -158,7 +158,7 @@
         <li class="dropdown-header">Desde:</li>
         {% for item in precios_opciones %}
           <li>
-            <a class="dropdown-item"
+            <a rel="nofollow" class="dropdown-item"
                href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}precio={{ item.valor|urlencode }}">
               {{ item.label }} ({{ item.total }})
             </a>
@@ -179,37 +179,37 @@
         {% for f in filtros_activos %}
           {% if f.tipo == 'marca' %}
             <a href="?{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
-               class="ic-chip">
+               class="ic-chip" rel="nofollow">
               {{ f.label }} <span aria-hidden="true">×</span><span class="sr-only">Quitar filtro</span>
             </a>
           {% elif f.tipo == 'categoria' %}
             <a href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
-               class="ic-chip">
+               class="ic-chip" rel="nofollow">
               {{ f.label }} <span aria-hidden="true">×</span><span class="sr-only">Quitar filtro</span>
             </a>
           {% elif f.tipo == 'talla' %}
             <a href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
-               class="ic-chip">
+               class="ic-chip" rel="nofollow">
               {{ f.label }} <span aria-hidden="true">×</span><span class="sr-only">Quitar filtro</span>
             </a>
           {% elif f.tipo == 'forma' %}
             <a href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
-               class="ic-chip">
+               class="ic-chip" rel="nofollow">
               {{ f.label }} <span aria-hidden="true">×</span><span class="sr-only">Quitar filtro</span>
             </a>
           {% elif f.tipo == 'material' %}
             <a href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
-               class="ic-chip">
+               class="ic-chip" rel="nofollow">
               {{ f.label }} <span aria-hidden="true">×</span><span class="sr-only">Quitar filtro</span>
             </a>
           {% elif f.tipo == 'color' %}
             <a href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if precio_actual %}precio={{ precio_actual|urlencode }}&{% endif %}"
-               class="ic-chip">
+               class="ic-chip" rel="nofollow">
               {{ f.label }} <span aria-hidden="true">×</span><span class="sr-only">Quitar filtro</span>
             </a>
           {% elif f.tipo == 'precio' %}
             <a href="?{% if marca_actual %}marca={{ marca_actual|urlencode }}&{% endif %}{% if categoria_actual %}categoria={{ categoria_actual|urlencode }}&{% endif %}{% if talla_actual %}talla={{ talla_actual|urlencode }}&{% endif %}{% if forma_actual %}forma={{ forma_actual|urlencode }}&{% endif %}{% if material_actual %}material={{ material_actual|urlencode }}&{% endif %}{% if color_actual %}color={{ color_actual|urlencode }}&{% endif %}"
-               class="ic-chip">
+               class="ic-chip" rel="nofollow">
               {{ f.label }} <span aria-hidden="true">×</span><span class="sr-only">Quitar filtro</span>
             </a>
           {% endif %}
@@ -297,7 +297,7 @@
   --ic-fondo-card:#ffffff;
   --ic-banda:#33434d;
   --ic-rojo:#D32F2F;      /* fondo de "Oferta" y "% dcto" */
-  --ic-navbar:#3c43a4; /* azul de la barra de menú */
+  --ic-navbar:#0069BE; /* azul de la barra de menú */
   --ic-badge:#efefef;
   padding:10px 0 50px;
   color:var(--ic-texto);
@@ -439,6 +439,16 @@
 
 /* ===== Celular: 1 por fila ===== */
 @media (max-width: 575px){
+  /* Filtros en celular: el menú se abre a todo el ancho, debajo de los botones */
+  .ic-catalogo .ic-filtros{ position:relative; width:100%; }
+  .ic-catalogo .filtros-barra{ width:100%; }
+  .ic-catalogo .filtros-barra .dropdown{ position:static; }
+  .ic-catalogo .filtros-barra .dropdown-menu{
+    left:0 !important; right:0 !important; top:100%; width:auto; min-width:0; max-height:60vh;
+    margin-top:6px; padding:6px 0; box-shadow:0 10px 24px rgba(0,0,0,.18);
+  }
+  .ic-catalogo .filtros-barra .dropdown-menu > li > a, .ic-catalogo .filtros-barra .dropdown-menu > li > span{ display:block; padding:10px 16px; font-size:15px; white-space:normal; }
+  .ic-catalogo .filtros-barra .btn{ padding:9px 14px; }
   .ic-catalogo .ic-productos-grid{ grid-template-columns:1fr; gap:36px; }
   .ic-catalogo .ic-titulo{ font-size:28px; }
   .ic-catalogo .ic-toolbar{ flex-direction:column; align-items:flex-start; }
